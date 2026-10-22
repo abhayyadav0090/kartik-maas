@@ -1,7 +1,7 @@
 # Kartik Maas — deployment and reminder operations
 
 ## Calendar
-The 30-day tracker is aligned to the supplied calendar: **26 November through 25 December 2026 (India calendar)**. Day 1 is 26 November; Day 30 is 25 December. The frontend and backend use the same start date. The date gate prevents scheduled reminders before Day 1 and after Day 30.
+The 30-day tracker is aligned to the supplied calendar: **26 October through 24 November 2026 (India calendar)**. Day 1 is 26 October; Day 30 is 24 November. The frontend and backend use the same start date. The date gate prevents scheduled reminders before Day 1 and after Day 30.
 
 ## Existing Render service
 This repository is a standalone Node/Express Web Service. Keep the existing environment values for `MONGO_URI`, `GOOGLE_CLIENT_ID`, `JWT_SECRET`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT`. No MongoDB collections or saved tracker data need to be deleted or reset.
@@ -13,7 +13,7 @@ Health endpoint: `https://kartik-maas.onrender.com/api/health`
 ## Reminder scheduler
 The server now starts an in-process reminder checker automatically and checks once per minute. Render logs include `[Kartik scheduler]` messages so it can be verified without setting up a separate cron provider. A reminder is attempted only if:
 
-- the India calendar date is between 26 Nov and 25 Dec 2026;
+- the India calendar date is between 26 Oct and 24 Nov 2026;
 - the devotee has reminders enabled and a valid push subscription;
 - the selected reminder time has arrived (within a four-hour delivery window); and
 - at least one active vow remains incomplete for that day.
@@ -29,9 +29,13 @@ You do **not** need cron-job.org when the in-process scheduler and UptimeRobot h
 ## Deploy and verify
 1. Upload the contents of this ZIP's `kartik-maas-main/` folder to the root of the existing `kartik-maas` GitHub repository.
 2. Let Render deploy the latest commit.
-3. In Render logs, confirm `Kartik reminder scheduler started: one-minute checks; journey 26 Nov–25 Dec 2026`.
-4. Confirm repeated `[Kartik scheduler]` log lines appear about every five minutes; before 26 November, these should show `outsideJourney: true` and should not send any reminders.
-5. After 26 November begins, a push is attempted only for devotees who opted in and still have incomplete vows.
+3. In Render logs, confirm `Kartik reminder scheduler started: one-minute checks; journey 26 Oct–24 Nov 2026`.
+4. Confirm repeated `[Kartik scheduler]` log lines appear about every five minutes; before 26 October, these should show `outsideJourney: true` and should not send any reminders.
+5. After 26 October begins, a push is attempted only for devotees who opted in and still have incomplete vows.
 
 ## Preserving existing user data
 Do not delete MongoDB collections. The backend continues to use the existing `User` and `KartikState` collection names. Existing Day 1 test progress is not deleted by the date change; consider clearing test entries through the app before the journey begins if you don't want them in Day 1.
+
+
+## Notification preview
+See [`NOTIFICATION-PREVIEW.md`](NOTIFICATION-PREVIEW.md) for English and Hindi examples to share with devotees.

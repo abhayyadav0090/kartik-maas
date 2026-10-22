@@ -115,7 +115,7 @@ app.put('/api/me', requireAuth, wrap(async (req, res) => {
   res.json({ name: user.name, email: user.email, picture: user.picture });
 }));
 
-const KARTIK_START_UTC = Date.UTC(2026, 10, 26); // Day 1 = 26 Nov 2026 (India calendar)
+const KARTIK_START_UTC = Date.UTC(2026, 9, 26); // Day 1 = 26 Oct 2026 (India calendar)
 function dayIndexIndia() {
   const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' })
     .formatToParts(new Date()).reduce((o, x) => { if (x.type !== 'literal') o[x.type] = Number(x.value); return o; }, {});
@@ -249,7 +249,7 @@ let alertSchedulerRuns = 0;
 function startAlertScheduler() {
   if (alertSchedulerStarted) return;
   alertSchedulerStarted = true;
-  console.log('[Kartik scheduler] started: one-minute checks; journey 26 Nov–25 Dec 2026 (Asia/Kolkata)');
+  console.log('[Kartik scheduler] started: one-minute checks; journey 26 Oct–24 Nov 2026 (Asia/Kolkata)');
   const run = async () => {
     alertSchedulerRuns += 1;
     try {

@@ -1,0 +1,541 @@
+:root{--bg:#1a0618;--card:rgba(40,12,38,.78);--line:rgba(240,200,120,.28);--gold:#f3c969;--rose:#f08fb0;--txt:#fbeedd;--mut:#cdb4b8;--ok:#8fd694;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--txt);font-family:Inter,system-ui,sans-serif;background:var(--bg)}
+#bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 50% 0%,#7a1f5c 0,#3a0f36 40%,#12040f 100%);background-size:cover;background-position:center}
+#bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(255,170,60,.18),transparent 40%),radial-gradient(circle at 80% 20%,rgba(240,143,176,.15),transparent 40%),rgba(10,2,10,.35)}
+#float{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.fl{position:absolute;bottom:-60px;font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-style:italic;color:var(--gold);opacity:0;white-space:nowrap;text-shadow:0 0 12px rgba(243,201,105,.6);animation:up linear forwards}
+@keyframes up{0%{transform:translateY(0);opacity:0}15%{opacity:.7}85%{opacity:.5}100%{transform:translateY(-115vh);opacity:0}}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+h1,h2{font-family:'Cinzel Decorative',serif;color:var(--gold);margin:0}
+.hero{text-align:center;padding:26px 8px 8px}
+.hero h1{font-size:clamp(28px,6vw,52px);text-shadow:0 0 24px rgba(243,201,105,.4)}
+.hero p{font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:20px;color:var(--mut);margin:6px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;backdrop-filter:blur(8px)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sp{justify-content:space-between}
+button,input,select{font:inherit}
+button{background:linear-gradient(135deg,#c9892b,#f3c969);color:#2a0a22;border:0;border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer}
+button.g{background:transparent;color:var(--gold);border:1px solid var(--line)}
+button.sm{padding:5px 12px;font-size:13px}
+input,select{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--txt);border-radius:12px;padding:10px 12px;width:100%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{text-align:center;padding:12px;border:1px solid var(--line);border-radius:14px}
+.stat b{display:block;font-size:26px;color:var(--gold);font-family:'Cinzel Decorative',serif}
+.stat span{font-size:12px;color:var(--mut)}
+.days{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px}
+.d{flex:0 0 auto;width:44px;height:52px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--txt);font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.d b{font-size:15px}.d.sel{outline:2px solid var(--gold)}.d.today{border-color:var(--rose)}
+.d:disabled{opacity:.32;cursor:not-allowed;filter:grayscale(.65);outline:0}
+#lockHint{font-size:12px;line-height:1.5;color:var(--mut);margin:4px 0 10px}
+#clearTest{margin:0 0 10px}
+.d.full{background:rgba(143,214,148,.25)}.d.part{background:rgba(243,201,105,.2)}
+.vow{display:flex;gap:12px;align-items:center;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.07)}
+.vow:last-child{border:0}
+.vow.core{background:rgba(243,201,105,.09);border-radius:12px;border-left:3px solid var(--gold)}
+.vow input[type=checkbox]{width:24px;height:24px;accent-color:#f3c969;flex:0 0 auto}
+.vow .t{flex:1}.vow .t small{display:block;color:var(--mut)}
+.vow.done .t b{text-decoration:line-through;opacity:.6}
+.bar{height:10px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:9px}
+.heat{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.heat div{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;border:1px solid var(--line)}
+.shloka{text-align:center;font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:22px;color:#ffe9b8;line-height:1.4}
+.shloka small{display:block;font-size:15px;color:var(--mut);margin-top:4px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button.on{box-shadow:0 0 0 2px var(--gold)}
+.hide{display:none!important}
+.auth{max-width:380px;margin:24px auto}.auth input{margin:6px 0}
+.err{color:#ff9a9a;font-size:14px;min-height:18px}
+.fl{white-space:pre-line;width:max-content;max-width:calc(100vw - 24px);text-align:center;line-height:1.35}
+.nav{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+.nav button{background:transparent;color:var(--gold);border:1px solid var(--line);box-shadow:none}
+.nav button.on{background:linear-gradient(135deg,#c9892b,#f3c969);color:#2a0a22}
+#out{flex:0 0 auto}
+@media(max-width:700px){
+ .wrap{padding:10px 10px 96px}
+ .hero{padding:14px 4px 0}.hero p{font-size:17px}
+ .card{padding:12px;border-radius:16px;margin:10px 0;background:rgba(40,12,38,.88)}
+ .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;gap:4px;flex-wrap:nowrap;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(22,5,20,.97);border-top:1px solid var(--line)}
+ .nav button{flex:1;border:0;border-radius:12px;padding:10px 2px;font-size:13px;min-height:46px}
+ input,select{font-size:16px}
+ .vow{flex-wrap:wrap;gap:8px}.vow .t{min-width:62%}
+ .vow input[type=checkbox]{width:28px;height:28px}
+ #list .vow{padding:14px 8px}
+ .row label{flex:1 1 100%!important}
+ .heat{grid-template-columns:repeat(6,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .shloka{font-size:19px}
+ .d{width:46px}
+}
+
+/* ---- Darshan: real painting of Damodara lila (Mata Yashoda & Sri Krishna), device-aware ---- */
+#bg{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Cg fill=%22none%22 stroke=%22%23f3c969%22 stroke-width=%221%22 opacity=%22.5%22%3E%3Cpath d=%22M70 96C58 88 56 76 70 62C84 76 82 88 70 96Z%22/%3E%3Cpath d=%22M70 96C54 94 42 84 42 72C58 74 66 82 70 96Z%22/%3E%3Cpath d=%22M70 96C86 94 98 84 98 72C82 74 74 82 70 96Z%22/%3E%3Ccircle cx=%220%22 cy=%220%22 r=%226%22/%3E%3Ccircle cx=%22140%22 cy=%220%22 r=%226%22/%3E%3Ccircle cx=%220%22 cy=%22140%22 r=%226%22/%3E%3Ccircle cx=%22140%22 cy=%22140%22 r=%226%22/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(ellipse at 50% 0%,#7a1f5c 0,#3a0f36 40%,#12040f 100%);background-size:140px 140px,cover;background-repeat:repeat,no-repeat;background-position:0 0,center}
+#bg::after{background:radial-gradient(circle at 80% 85%,rgba(255,170,60,.16),transparent 45%),radial-gradient(circle at 85% 15%,rgba(240,143,176,.12),transparent 45%),rgba(10,2,10,.55)}
+#art{position:fixed;z-index:-1;pointer-events:none;background-repeat:no-repeat;background-color:#12040f}
+#art::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px rgba(10,2,10,.55)}
+#frame{position:fixed;inset:8px;z-index:0;pointer-events:none;border:1px solid rgba(243,201,105,.22);border-radius:6px}
+#frame .c{position:absolute;width:44px;height:44px;opacity:.55}#frame .c svg{width:100%;height:100%;display:block}
+#frame .tl{top:-1px;left:-1px}#frame .tr{top:-1px;right:-1px;transform:scaleX(-1)}
+#frame .bl{bottom:-1px;left:-1px;transform:scaleY(-1)}#frame .br{bottom:-1px;right:-1px;transform:scale(-1,-1)}
+.orn{display:block;width:min(460px,86%);height:auto;margin:2px auto 8px;opacity:.75}
+/* Laptop / desktop: the full painting stands on the left, content on the right */
+@media (min-aspect-ratio:11/10) and (min-width:900px){
+ #art{left:0;top:0;height:100vh;width:67.1vh;background-image:url(/kartik-assets/darshan-side.webp);background-size:cover;background-position:center;
+  -webkit-mask-image:linear-gradient(90deg,#000 82%,transparent 100%);mask-image:linear-gradient(90deg,#000 82%,transparent 100%)}
+ .wrap{margin:0 auto 0 calc(67.1vh + 2.5vw)!important;max-width:1000px;width:auto}
+}
+/* Tablet / phone (portrait): painting banner at the top, content slides over it */
+@media (max-aspect-ratio:11/10),(max-width:899px){
+ #art{left:0;right:0;top:0;height:36vh;background-image:url(/kartik-assets/darshan-banner.webp);background-size:cover;background-position:50% 35%;
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
+ .wrap{padding-top:calc(36vh - 34px)!important}
+}
+@media (max-height:520px) and (max-aspect-ratio:11/10){#art{height:30vh}.wrap{padding-top:calc(30vh - 20px)!important}}
+
+/* ============================================================================
+   [UI-PATCH START: Restrained Luxury Devotional Theme & Darshan Positioning]
+   ============================================================================ */
+:root {
+  --bg: #140513;
+  --card: rgba(29, 9, 28, 0.86);
+  --line: rgba(232, 190, 98, 0.28);
+  --gold: #e8be62;
+  --rose: #d9829f;
+  --txt: #fdf3e4;
+  --mut: #cbb5ba;
+  --ok: #84cf8a;
+}
+
+body {
+  background-color: var(--bg);
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Velvet-smooth custom scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(20, 5, 19, 0.9); }
+::-webkit-scrollbar-thumb { background: rgba(232, 190, 98, 0.35); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(232, 190, 98, 0.6); }
+
+/* Eliminate distracting floating-text clutter while keeping DOM intact */
+#float {
+  display: none !important;
+}
+
+/* Deep plum ambient foundation */
+#bg {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(92, 23, 69, 0.55) 0%, rgba(36, 9, 34, 0.85) 50%, #11030f 100%) !important;
+  background-size: cover !important;
+}
+#bg::after {
+  background:
+    radial-gradient(circle at 25% 25%, rgba(232, 190, 98, 0.08), transparent 50%),
+    rgba(12, 3, 12, 0.45) !important;
+}
+
+/* Authentic Damodar Lila painting positioning across Desktop, Tablet, and Mobile */
+@media (min-aspect-ratio: 11/10) and (min-width: 900px) {
+  #art {
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: clamp(380px, 44vw, 65vh);
+    background-image: url(/kartik-assets/darshan-side.webp);
+    background-size: cover;
+    background-position: 50% 58%;
+    -webkit-mask-image: linear-gradient(90deg, #000 76%, rgba(0,0,0,0.55) 90%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 76%, rgba(0,0,0,0.55) 90%, transparent 100%);
+  }
+  #art::after {
+    background: linear-gradient(180deg, rgba(18, 4, 15, 0.22) 0%, rgba(18, 4, 15, 0.05) 45%, rgba(18, 4, 15, 0.48) 100%);
+    box-shadow: inset 0 0 72px rgba(14, 3, 12, 0.65);
+  }
+  .wrap {
+    margin: 0 auto 0 clamp(370px, 42vw, 63vh) !important;
+    max-width: 920px;
+    padding: 22px 28px 48px;
+  }
+}
+
+@media (max-aspect-ratio: 11/10), (max-width: 899px) {
+  #art {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: clamp(240px, 38vh, 380px);
+    background-image: url(/kartik-assets/darshan-banner.webp);
+    background-size: cover;
+    background-position: 50% 28%;
+    -webkit-mask-image: linear-gradient(180deg, #000 64%, rgba(0,0,0,0.5) 86%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 64%, rgba(0,0,0,0.5) 86%, transparent 100%);
+  }
+  #art::after {
+    background: linear-gradient(180deg, rgba(16, 4, 14, 0.18) 0%, rgba(16, 4, 14, 0.35) 70%, rgba(20, 5, 19, 0.92) 100%);
+    box-shadow: inset 0 0 44px rgba(12, 3, 11, 0.5);
+  }
+  .wrap {
+    padding-top: calc(clamp(240px, 38vh, 380px) - 48px) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #art {
+    height: clamp(215px, 34vh, 300px);
+    background-position: 48% 24%;
+  }
+  .wrap {
+    padding-top: calc(clamp(215px, 34vh, 300px) - 42px) !important;
+  }
+}
+
+#frame {
+  inset: 10px;
+  border-color: rgba(232, 190, 98, 0.18);
+}
+#frame .c { opacity: 0.45; }
+
+/* Hero Typography & Header Polish */
+.hero h1 {
+  letter-spacing: 0.03em;
+  color: #f7d784;
+  text-shadow: 0 2px 18px rgba(12, 3, 11, 0.85), 0 0 28px rgba(232, 190, 98, 0.28);
+}
+.hero p {
+  color: #ead8dc;
+  text-shadow: 0 1px 10px rgba(10, 2, 10, 0.9);
+}
+#heroTagline {
+  color: rgba(232, 190, 98, 0.88);
+  font-style: italic;
+}
+
+/* Cards: Deep Plum Glass, Antique Gold Hairline Border & Sacred Watermark */
+.card {
+  background: linear-gradient(165deg, rgba(42, 13, 39, 0.88) 0%, rgba(24, 7, 23, 0.92) 100%);
+  border: 1px solid rgba(232, 190, 98, 0.26);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  box-shadow: 0 12px 40px rgba(10, 2, 10, 0.65), inset 0 1px 0 rgba(255, 220, 150, 0.15), 0 0 20px rgba(232, 190, 98, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 90px;
+  height: 90px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23e8be62' stroke-width='0.8' opacity='0.04'%3E%3Cpath d='M50 0 C60 30 70 40 100 50 C70 60 60 70 50 100 C40 70 30 60 0 50 C30 40 40 30 50 0 Z'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* Shloka Card Highlight */
+.shloka {
+  background: linear-gradient(165deg, rgba(50, 15, 46, 0.9) 0%, rgba(28, 8, 27, 0.94) 100%);
+  border-color: rgba(232, 190, 98, 0.36);
+  color: #fcebc2;
+  padding: 20px 22px;
+  line-height: 1.55;
+}
+.shloka small {
+  color: #d6c3c7;
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+/* Buttons & Shimmer Effect */
+button {
+  background: linear-gradient(135deg, #c78c2e 0%, #e8be62 50%, #f7dc88 100%);
+  color: #23071d;
+  border: 1px solid rgba(255, 238, 190, 0.35);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+button:not(.g)::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(0deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: rotate(45deg) translateY(-100%);
+  transition: transform 0.6s ease;
+}
+button:not(.g):hover::after {
+  transform: rotate(45deg) translateY(100%);
+}
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(232, 190, 98, 0.25);
+}
+button.g {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--gold);
+  border: 1px solid rgba(232, 190, 98, 0.32);
+  box-shadow: none;
+}
+button.g:hover:not(:disabled) {
+  background: rgba(232, 190, 98, 0.11);
+  border-color: rgba(232, 190, 98, 0.55);
+}
+
+/* Navigation Tabs */
+.nav button {
+  background: rgba(29, 9, 28, 0.72);
+  border: 1px solid rgba(232, 190, 98, 0.28);
+  padding: 9px 20px;
+}
+.nav button.on {
+  background: linear-gradient(135deg, #c28326 0%, #e8be62 100%);
+  color: #23071d;
+  border-color: #f5d782;
+  box-shadow: 0 0 16px rgba(232, 190, 98, 0.28);
+}
+
+/* Inputs & Selects */
+input, select {
+  background: rgba(14, 3, 13, 0.55);
+  border: 1px solid rgba(232, 190, 98, 0.28);
+  color: var(--txt);
+  border-radius: 10px;
+  padding: 10px 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(232, 190, 98, 0.2);
+}
+
+/* 30-Day Selector Strip */
+.days {
+  gap: 7px;
+  padding: 6px 2px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 190, 98, 0.35) transparent;
+}
+.d {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(232, 190, 98, 0.24);
+  border-radius: 11px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.d:hover:not(:disabled) {
+  border-color: rgba(232, 190, 98, 0.55);
+  background: rgba(232, 190, 98, 0.09);
+}
+.d.sel {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+  background: rgba(232, 190, 98, 0.15);
+}
+.d.today { border-color: var(--rose); }
+.d.full {
+  background: rgba(132, 207, 138, 0.22);
+  border-color: rgba(132, 207, 138, 0.5);
+}
+.d.part { background: rgba(232, 190, 98, 0.18); }
+
+/* Progress Bars */
+.bar {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(12, 3, 12, 0.65);
+  border: 1px solid rgba(232, 190, 98, 0.18);
+}
+.bar i {
+  background: linear-gradient(90deg, #c97392 0%, #e8be62 65%, #f7d988 100%);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+/* Vow Rows */
+.vow {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(232, 190, 98, 0.1);
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+.vow:hover { background: rgba(255, 255, 255, 0.025); }
+.vow.core {
+  background: linear-gradient(90deg, rgba(232, 190, 98, 0.11) 0%, rgba(232, 190, 98, 0.03) 100%);
+  border-left: 3px solid var(--gold);
+  margin: 4px 0;
+}
+.vow input[type=checkbox] {
+  width: 22px; height: 22px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+/* KPI Stats & Journey Heatmap */
+.stat {
+  background: rgba(18, 4, 17, 0.45);
+  border: 1px solid rgba(232, 190, 98, 0.22);
+  border-radius: 12px;
+  padding: 14px 10px;
+}
+.stat b {
+  font-size: 24px;
+  color: #f5d57e;
+  margin-bottom: 2px;
+}
+.heat div {
+  border-color: rgba(232, 190, 98, 0.22);
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .card {
+    padding: 14px;
+    border-radius: 15px;
+    background: linear-gradient(165deg, rgba(38, 11, 36, 0.92) 0%, rgba(22, 6, 21, 0.95) 100%);
+  }
+  .nav {
+    background: rgba(18, 4, 17, 0.97);
+    border-top: 1px solid rgba(232, 190, 98, 0.28);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+/* ============================================================================
+   [UI-PATCH END]
+   ============================================================================ */
+.switch{position:relative;display:inline-block;width:54px;height:30px;flex:0 0 auto}
+.switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:pointer;z-index:2}
+.slider{position:absolute;inset:0;background:rgba(255,255,255,.16);border:1px solid var(--line);border-radius:999px;transition:.2s}
+.slider:before{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked+.slider{background:linear-gradient(135deg,#c9892b,#f3c969)}
+.switch input:checked+.slider:before{transform:translateX(24px);background:#2a0a22}
+.switch input:focus-visible+.slider{outline:2px solid var(--gold);outline-offset:2px}
+#addrModal{position:fixed;inset:0;z-index:100;background:rgba(10,3,16,.8);display:flex;align-items:center;justify-content:center;padding:16px}
+#addrModal .box{max-width:420px;width:100%;background:#2a0c28;border:1px solid var(--line);border-radius:20px;padding:22px;text-align:center}
+#addrModal .box h2{margin:0 0 6px;font-size:20px}
+#addrModal button.opt{display:block;width:100%;margin:9px 0;min-height:48px;font-size:16px}
+#addrModal p{color:var(--mut);font-size:13px;margin:8px 0 0}
+
+
+/* Static styles moved out of kartik.html for easier manual editing. */
+/* Moved from a static HTML style attribute */
+.kartik-inline-01.kartik-inline-01 {color:var(--txt)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-02.kartik-inline-02 {font-size:16px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-03.kartik-inline-03 {font-size:20px;text-align:center}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-04.kartik-inline-04 {text-align:center;color:var(--mut);margin:6px 0 14px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-05.kartik-inline-05 {justify-content:center;margin:0 0 8px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-06.kartik-inline-06 {display:flex;justify-content:center;min-height:44px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-07.kartik-inline-07 {text-align:center}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-08.kartik-inline-08 {flex:1;min-width:180px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-09.kartik-inline-09 {padding:2px 9px;margin-left:8px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-10.kartik-inline-10 {color:var(--mut);font-size:14px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-11.kartik-inline-11 {font-size:12px;color:var(--mut)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-12.kartik-inline-12 {flex:1;min-width:200px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-13.kartik-inline-13 {color:var(--mut);font-size:13px;margin-top:2px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-14.kartik-inline-14 {gap:10px;flex-wrap:nowrap}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-15.kartik-inline-15 {width:auto}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-16.kartik-inline-16 {margin-top:8px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-17.kartik-inline-17 {color:var(--mut)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-18.kartik-inline-18 {font-size:19px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-19.kartik-inline-19 {color:var(--gold)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-20.kartik-inline-20 {margin:8px 0}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-21.kartik-inline-21 {font-size:13px;color:var(--mut)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-22.kartik-inline-22 {margin:4px 0 8px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-23.kartik-inline-23 {background:var(--gold)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-24.kartik-inline-24 {margin-top:12px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-25.kartik-inline-25 {flex:1;min-width:150px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-26.kartik-inline-26 {flex:2;min-width:200px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-27.kartik-inline-27 {font-size:19px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-28.kartik-inline-28 {color:var(--mut)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-29.kartik-inline-29 {margin-top:12px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-30.kartik-inline-30 {flex:1}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-31.kartik-inline-31 {margin-top:12px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-32.kartik-inline-32 {width:110px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-33.kartik-inline-33 {font-size:19px;margin-bottom:10px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-34.kartik-inline-34 {font-size:12px;color:var(--mut)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-35.kartik-inline-35 {font-size:19px;margin-bottom:10px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-36.kartik-inline-36 {font-size:19px;margin-bottom:10px}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-37.kartik-inline-37 {width:100%}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-38.kartik-inline-38 {cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--gold)}
+
+/* Moved from a static HTML style attribute */
+.kartik-inline-39.kartik-inline-39 {text-align:center;color:var(--mut);font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:18px}
