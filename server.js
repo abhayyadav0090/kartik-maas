@@ -115,7 +115,7 @@ app.put('/api/me', requireAuth, wrap(async (req, res) => {
   res.json({ name: user.name, email: user.email, picture: user.picture });
 }));
 
-const KARTIK_START_UTC = Date.UTC(2026, 9, 27);
+const KARTIK_START_UTC = Date.UTC(2026, 10, 26); // Day 1 = 26 Nov 2026 (India calendar)
 function dayIndexIndia() {
   const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' })
     .formatToParts(new Date()).reduce((o, x) => { if (x.type !== 'literal') o[x.type] = Number(x.value); return o; }, {});
@@ -211,7 +211,7 @@ app.post('/api/kartik/alerts/test', requireAuth, wrap(async (req, res) => {
   const [subs, a, st] = await Promise.all([PushSubscription.find({ userId: req.userId, app: 'kartik' }), KartikAlert.findOne({ userId: req.userId }).lean(), KartikState.findOne({ userId: req.userId }).select('data').lean()]);
   if (!subs.length) return res.status(404).json({ error: 'This device is not subscribed yet. Turn reminders off and on again.' });
   const state = st && st.data || {}; const when = `${((a ? a.hour : 18) + 11) % 12 + 1}:${String(a ? a.minute : 0).padStart(2, '0')} ${(a ? a.hour : 18) < 12 ? 'AM' : 'PM'}`; const hi = state.lang === 'hi';
-  const payload = { title: hi ? `🔔 ${greeting(state)} — रिमाइंडर चालू हो गया` : `🔔 ${greeting(state)} — reminders are ON`, body: hi ? `परीक्षण सफल रहा। जिस दिन व्रत अधूरे होंगे, आपको हर शाम ${when} पर याद दिलाया जाएगा।` : `Test successful. If any vow is incomplete you will get a reminder every evening at ${when}.`, url: '/kartik', tag: 'kartik-test', kind: 'kartik' };
+  const payload = { title: hi ? `🔔 ${greeting(state)} — रिमाइंडर चालू हो गया` : `🔔 ${greeting(state)} — reminders are ON`, body: hi ? `परीक्षण सफल रहा। यदि आज कोई व्रत अधूरा होगा, तो ${when} पर रिमाइंडर मिलेगा।` : `Test successful. If any vow is incomplete, you will get a reminder at ${when}.`, url: '/kartik', tag: 'kartik-test', kind: 'kartik' };
   let delivered = 0;
   for (const sub of subs) { try { await webpush.sendNotification({ endpoint: sub.endpoint, keys: sub.keys }, JSON.stringify(payload), { TTL: 600, urgency: 'high' }); delivered++; } catch (err) { if (err.statusCode === 404 || err.statusCode === 410) await PushSubscription.deleteOne({ _id: sub._id }); else console.warn('Test push failed:', err.message); } }
   if (!delivered) return res.status(502).json({ error: 'The push service rejected the test. Turn reminders off and on again.' });
@@ -241,6 +241,38 @@ async function sweepAlerts() {
   } finally { sweepRunning = false; }
   return stats;
 }
+// Reliable reminder checks while the web service process is running.
+// UptimeRobot should request /api/health every 5 minutes on the Render Free plan.
+// The scheduler checks every minute; all day calculations use the India calendar.
+let alertSchedulerStarted = false;
+let alertSchedulerRuns = 0;
+function startAlertScheduler() {
+  if (alertSchedulerStarted) return;
+  alertSchedulerStarted = true;
+  console.log('[Kartik scheduler] started: one-minute checks; journey 26 Nov–25 Dec 2026 (Asia/Kolkata)');
+  const run = async () => {
+    alertSchedulerRuns += 1;
+    try {
+      if (!pushConfigured()) {
+        if (alertSchedulerRuns === 1 || alertSchedulerRuns % 5 === 0) {
+          console.warn('[Kartik scheduler] skipped: VAPID keys are not configured');
+        }
+        return;
+      }
+      await connectDB();
+      const stats = await sweepAlerts();
+      // Log every five minutes as well as any meaningful due/send/result event.
+      if (alertSchedulerRuns % 5 === 1 || stats.due || stats.sent || stats.complete || stats.skipped) {
+        console.log(`[Kartik scheduler] ${new Date().toISOString()} ${JSON.stringify(stats)}`);
+      }
+    } catch (err) {
+      console.error('[Kartik scheduler] check failed:', err && err.message ? err.message : err);
+    }
+  };
+  void run();
+  setInterval(run, 60 * 1000);
+}
+
 app.all('/api/kartik/alerts/tick', wrap(async (req, res) => {
   const secret = String(process.env.KARTIK_CRON_KEY || ''); const given = String(req.query.key || req.get('x-cron-key') || '');
   const a = Buffer.from(secret); const b = Buffer.from(given);
@@ -254,5 +286,5 @@ app.use(express.static(SITE_DIR, { maxAge: isProd ? '1h' : 0, etag: true }));
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 app.use((err, req, res, next) => { console.error('Request error:', err); if (res.headersSent) return next(err); res.status(500).json({ error: 'Something went wrong.' }); });
 
-if (require.main === module) app.listen(PORT, () => console.log(`Kartik service listening on ${PORT}`));
+if (require.main === module) app.listen(PORT, () => { console.log(`Kartik service listening on ${PORT}`); startAlertScheduler(); });
 module.exports = app;
