@@ -11,6 +11,8 @@ Start command: `npm start`
 Health endpoint: `https://kartik-maas.onrender.com/api/health`
 
 ## Reminder scheduler
+
+The selected time is saved even while reminders are OFF, so devotees can configure it in advance. The app sends a test notification when reminders are enabled. Web notifications use the phone/browser notification sound; the website cannot force a particular ringtone or devotional tune, and vibration is device/browser-dependent.
 The server now starts an in-process reminder checker automatically and checks once per minute. Render logs include `[Kartik scheduler]` messages so it can be verified without setting up a separate cron provider. A reminder is attempted only if:
 
 - the India calendar date is between 26 Oct and 24 Nov 2026;
@@ -24,7 +26,7 @@ The server now starts an in-process reminder checker automatically and checks on
 If using UptimeRobot, the monitor should request `https://kartik-maas.onrender.com/api/health` every 5 minutes and expect HTTP 200. This keeps sending inbound requests, which can prevent an idle spin-down while the monitor is healthy; it does not guarantee uptime or prevent Render restarts. Render Free has a shared workspace pool of 750 instance-hours per calendar month. If multiple Free web services are continuously kept awake, the workspace can exhaust that pool and all Free web services may be suspended until the next month. For a service that devotees depend on, use an always-on paid instance if dependable availability is required.
 
 ## External tick endpoint (optional)
-You do **not** need cron-job.org when the in-process scheduler and UptimeRobot health monitor are enabled. The protected endpoint `/api/kartik/alerts/tick` remains available only for optional external/manual triggering; it requires `KARTIK_CRON_KEY` in the environment and either the `x-cron-key` header or `?key=` query parameter. Do not expose the secret publicly. Prefer the header if you configure an external cron service.
+You do **not** need cron-job.org when the in-process scheduler and UptimeRobot health monitor are enabled. The protected endpoint `/api/kartik/alerts/tick` remains available only for optional external/manual triggering; it requires `KARTIK_CRON_KEY` in the environment and the `x-cron-key` header. The `?key=` query form was removed in 1.0.2 so the secret can never appear in URLs or logs. Do not expose the secret publicly.
 
 ## Deploy and verify
 1. Upload the contents of this ZIP's `kartik-maas-main/` folder to the root of the existing `kartik-maas` GitHub repository.

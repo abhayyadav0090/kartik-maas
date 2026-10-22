@@ -15,19 +15,22 @@
 <!-- [UI-PATCH START: Updated social-sharing metadata to kartik-maas.onrender.com] -->
 <link rel="canonical" href="https://kartik-maas.onrender.com/kartik">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
 <meta property="og:title" content="Damodar Vows – Kartik Sadhana Tracker">
 <meta property="og:description" content="Follow a 30-day journey of devotion, daily vows, japa and reflection. Hare Krishna!">
 <meta property="og:url" content="https://kartik-maas.onrender.com/kartik">
 <meta property="og:image" content="https://kartik-maas.onrender.com/kartik-share-26-oct-2026.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Damodar Vows — 30-day Kartik Sadhana Tracker, 26 October to 24 November 2026">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Damodar Vows – Kartik Sadhana Tracker">
 <meta name="twitter:description" content="A 30-day devotional tracker for Kartik Maas.">
 <meta name="twitter:image" content="https://kartik-maas.onrender.com/kartik-share-26-oct-2026.png">
+<meta name="twitter:image:alt" content="Damodar Vows — 30-day Kartik Sadhana Tracker, 26 October to 24 November 2026">
 <!-- [UI-PATCH END] -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;600&family=Noto+Serif+Devanagari:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/kartik.css?v=20261022-final"></head><body>
+<link rel="stylesheet" href="/kartik.css?v=20261022-sky2"></head><body>
 <div id="addrModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="addrTitle"><div class="box"><h2 id="addrTitle">Hare Krishna 🙏</h2><div id="addrAsk" class="kartik-inline-01">How would you like to be greeted?</div>
  <button class="opt" type="button" data-addr="prabhu" id="addrPrabhu">Prabhu</button><button class="opt" type="button" data-addr="mataji" id="addrMataji">Mataji</button><button class="opt g" type="button" data-addr="none" id="addrNone">Just my name</button>
  <p id="addrNote">Optional. Used only for your greeting and reminders. You can change it anytime with the ✎ button.</p></div></div>
@@ -46,8 +49,9 @@
 <div id="appV" class="hide">
  <div class="card row sp"><div class="kartik-inline-08"><b id="hello"></b><button class="g sm kartik-inline-09" id="addrEdit" type="button" aria-label="Change how you are greeted">✎</button><div id="when" class="kartik-inline-10"></div><div id="sync" class="kartik-inline-11"></div></div>
   <div class="row"><button class="g sm" id="langBtn" type="button">हिन्दी</button><button class="g sm" id="shareBtn" type="button">Share</button><button class="g sm" id="installBtn" type="button">Install</button><button class="g sm" id="out">Logout</button></div></div>
- <div id="alertCard" class="card"><div class="row sp"><div class="kartik-inline-12"><b id="alertTitle">🔔 Vow reminder</b><div id="alertStatus" class="kartik-inline-13"></div></div>
+ <div id="alertCard" class="card"><div class="row sp"><div class="kartik-inline-12"><b id="alertTitle">🔔 Vow reminder</b><div id="alertStatus" class="kartik-inline-13" role="status" aria-live="polite"></div></div>
   <div class="row kartik-inline-14"><input type="time" id="alertTime" value="18:00" aria-label="Reminder time" class="kartik-inline-15"><label class="switch" title="Reminder on/off"><input type="checkbox" id="alertToggle" aria-label="Turn vow reminder on or off"><span class="slider"></span></label></div></div>
+  <p id="alertHelp" class="alert-help">Daily reminders run only during the Kartik journey when at least one active vow is incomplete. Sound and vibration depend on your phone and browser settings.</p>
   <div class="row kartik-inline-16"><button class="g sm hide" id="alertTest" type="button">Send test reminder</button></div></div>
  <div id="conflictPane" class="card hide" role="alert"><b id="conflictTitle">Progress conflict detected</b><p id="conflictText" class="kartik-inline-17">Your unsaved changes are still on this device. Export a backup before reloading the latest saved data.</p><div class="row"><button class="g sm" id="exportLocal">Export local backup</button><button id="reloadLatest">Reload latest progress</button></div></div>
  <nav class="tabs nav"><button class="on" data-t="today" id="tabToday">🪔 Daily</button><button data-t="vows" id="tabVows">⭐ My Vows</button><button data-t="stats" id="tabStats">📊 Analysis</button></nav>
@@ -85,4 +89,4 @@
  <p id="footerMantra" class="kartik-inline-39">Hare Krishna Hare Krishna Krishna Krishna Hare Hare · Hare Rama Hare Rama Rama Rama Hare Hare</p>
 </div></div>
 
-<script src="/kartik.js?v=20261022-final"></script></body></html>
+<script src="/kartik.js?v=20261022-sky2"></script></body></html>

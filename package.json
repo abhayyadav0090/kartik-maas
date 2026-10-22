@@ -1,13 +1,14 @@
 {
   "name": "kartik-maas-tracker",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "description": "Standalone Kartik Maas / Damodar Vows tracker with Google sign-in and push reminders",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "generate:vapid": "web-push generate-vapid-keys"
+    "generate:vapid": "web-push generate-vapid-keys",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18.0.0",

@@ -15,6 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const SITE_DIR = path.join(__dirname, 'site');
 const isProd = process.env.NODE_ENV === 'production';
+const LOGIN_DAYS = 35; // stay signed in for the whole 30-day Kartik journey (plus a few spare days)
 app.set('trust proxy', 1);
 app.use(helmet({
   crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
@@ -27,7 +28,10 @@ app.use(helmet({
   } },
 }));
 app.use(compression());
-app.use(morgan('tiny'));
+app.use(morgan((tokens, req, res) => [
+  tokens.method(req, res), String(req.originalUrl || req.url).split('?')[0], tokens.status(req, res),
+  tokens.res(req, res, 'content-length') || '-', '-', `${tokens['response-time'](req, res)} ms`,
+].join(' ')));
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use('/api', (req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
@@ -95,8 +99,8 @@ app.post('/api/auth/google', wrap(async (req, res) => {
     user.email = payload.email; user.picture = payload.picture;
     if (!user.nameCustom) user.name = payload.name;
     await user.save();
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.cookie('token', token, { httpOnly: true, secure: isProd, sameSite: 'lax', path: '/', maxAge: 7 * 86400000 });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: `${LOGIN_DAYS}d` });
+    res.cookie('token', token, { httpOnly: true, secure: isProd, sameSite: 'lax', path: '/', maxAge: LOGIN_DAYS * 86400000 });
     res.json({ name: user.name, email: user.email, picture: user.picture });
   } catch (err) { console.warn('Google sign-in failed:', err.message); res.status(401).json({ error: 'Google login failed' }); }
 }));
@@ -274,7 +278,7 @@ function startAlertScheduler() {
 }
 
 app.all('/api/kartik/alerts/tick', wrap(async (req, res) => {
-  const secret = String(process.env.KARTIK_CRON_KEY || ''); const given = String(req.query.key || req.get('x-cron-key') || '');
+  const secret = String(process.env.KARTIK_CRON_KEY || ''); const given = String(req.get('x-cron-key') || ''); // header only: never put the secret in the URL
   const a = Buffer.from(secret); const b = Buffer.from(given);
   if (!secret || a.length !== b.length || !crypto.timingSafeEqual(a, b)) return res.status(403).json({ error: 'Forbidden' });
   res.json({ ok: true, at: new Date().toISOString(), ...(await sweepAlerts()) });

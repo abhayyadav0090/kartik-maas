@@ -539,3 +539,17 @@ input:focus, select:focus {
 
 /* Moved from a static HTML style attribute */
 .kartik-inline-39.kartik-inline-39 {text-align:center;color:var(--mut);font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:18px}
+
+
+/* Accessibility: respect device-level reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  #float { display: none !important; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.alert-help { margin: 8px 0 2px; color: var(--mut); font-size: 12px; line-height: 1.55; }

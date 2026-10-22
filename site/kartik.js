@@ -11,12 +11,12 @@ const COPY={
  hi:{heroTitle:'दामोदर व्रत',heroSubtitle:'कार्तिक साधना ट्रैकर · 26 अक्टूबर – 24 नवम्बर 2026 · 30 दिन',heroTagline:'शुद्धता का समय · भक्ति का समय · कृष्ण का समय',authTitle:'हरे कृष्ण 🙏',authDesc:'Google से साइन इन करें। आपके व्रत और प्रगति आपके खाते में सुरक्षित रहते हैं और हर डिवाइस पर उपलब्ध रहते हैं।',daily:'🪔 दैनिक',myVows:'⭐ मेरे व्रत',analysis:'📊 विश्लेषण',share:'शेयर करें',install:'ऐप इंस्टॉल',logout:'लॉग आउट',beforeStart:'कार्तिक शुरू होने में',setVows:'दिन शेष — अभी अपने व्रत तय करें',today:'आज कार्तिक का दिन',of:'में से',ended:'कार्तिक साधना पूरी हुई — अपनी यात्रा देखें',testing:'परीक्षण मोड: व्रत चुनने और हटाने का अभ्यास करने के लिए केवल दिन 1 खुला है। दिन 2–30 अपनी तारीख आने तक बंद रहेंगे। कार्तिक शुरू होने से पहले दिन 1 का परीक्षण डेटा साफ़ कर दें।',locked:'भविष्य के दिन बंद हैं। आज और पिछले दिनों में बदलाव कर सकते हैं; अगला दिन अपनी तारीख पर खुलेगा।',finished:'30 दिनों की यात्रा पूरी हो चुकी है। आप किसी भी दिन को देख और संपादित कर सकते हैं।',clearTest:'दिन 1 का परीक्षण डेटा साफ़ करें',day:'दिन',purnima:'कार्तिक पूर्णिमा 🌕',bonus:'अतिरिक्त / समापन दिवस ✨',core:'⭐ मुख्य व्रत',japaLabel:'आज जप की मालाएँ',reflectionLabel:'चिंतन / अनुभूति',notePlaceholder:'कृतज्ञता की एक पंक्ति…',vowsTitle:'अपने व्रत चुनें और व्यवस्थित करें',vowsDesc:'⭐ मुख्य व्रत रोज़ सबसे ऊपर दिखते हैं। व्रत चालू/बंद करें, नाम बदलें या अपना व्रत जोड़ें। सोच-समझकर व्रत चुनें।',addVowPlaceholder:'अपना व्रत जोड़ें (जैसे सूर्योदय के बाद न सोना)',add:'जोड़ें',goalLabel:'दैनिक जप लक्ष्य (मालाएँ)',reset:'12 व्रत पुनः रखें',journey:'30-दिन की यात्रा',legend:'हरा = सभी सक्रिय व्रत पूरे · सुनहरा = कुछ व्रत पूरे · सुनहरी सीमा = सभी ⭐ मुख्य व्रत पूरे',consistency:'व्रत के अनुसार निरंतरता',japaChart:'प्रतिदिन जप की मालाएँ',export:'बैकअप डाउनलोड',import:'आयात करें',saving:'सहेजा जा रहा है…',saved:'आपके खाते में सुरक्षित ✓',offline:'कनेक्शन नहीं है — स्थानीय कॉपी सुरक्षित है; फिर प्रयास होगा…',conflictTitle:'प्रगति में टकराव मिला',conflictText:'दूसरे डिवाइस पर नई प्रगति सेव हुई है। आपके स्थानीय बदलाव इसी डिवाइस पर सुरक्षित हैं। नवीनतम डेटा लोड करने से पहले बैकअप डाउनलोड करें।',exportLocal:'स्थानीय बैकअप डाउनलोड',reloadLatest:'नवीनतम प्रगति लोड करें',coreAvg:'⭐ मुख्य व्रत औसत',coreStreak:'⭐ मुख्य व्रत निरंतरता',corePerfect:'⭐ मुख्य व्रत-पूर्ण दिन',allAvg:'सभी व्रत औसत',currentStreak:'वर्तमान निरंतरता',bestStreak:'सर्वश्रेष्ठ निरंतरता',perfectDays:'सभी व्रत-पूर्ण दिन',totalRounds:'कुल मालाएँ',avgRounds:'प्रतिदिन औसत मालाएँ',dayLocked:'यह दिन अभी संपादित नहीं किया जा सकता।',langButton:'English'}
 };
 Object.assign(COPY.en,{prabhu:'PrabhuJi',mataji:'Mataji',addrAsk:'How would you like to be greeted?',addrNone:'Just my name',addrNote:'Optional. Used only for your greeting and reminders. You can change it anytime with the ✎ button.',
- alertTitle:'🔔 Vow reminder',alertOff:'Off. Turn it on to get a reminder when any of today’s vows are incomplete.',alertOn:'On. If any vow is incomplete, you’ll get a reminder at {t}.',
+ alertTitle:'🔔 Vow reminder',alertHelp:'Daily reminders run only from 26 Oct to 24 Nov 2026, and only when at least one active vow is incomplete. Sound and vibration depend on your phone/browser settings.',alertOff:'Off. Turn it on to get a reminder when any of today’s vows are incomplete.',alertOn:'On. If any vow is incomplete, you’ll get a reminder at {t}.',
  alertBlocked:'Notifications are blocked for this site. Allow them in your browser settings, then try again.',alertUnsupported:'This browser cannot receive reminders. Please use Chrome or Edge, or install the app.',
  alertIos:'On iPhone: tap Share, then Add to Home Screen, open Damodar Vows from your home screen, then turn this on.',alertNotConfigured:'Reminders are not set up on the server yet.',
  alertWorking:'Setting up reminders…',alertTestSent:'Test reminder sent. Please check your notifications ✓',alertTestFail:'Could not send the test reminder. Please try again.',alertTimeSaved:'Reminder time saved ✓',alertSaveFail:'Could not save. Please try again.',alertTestBtn:'Send test reminder',alertOffDone:'Reminders turned off.'});
 Object.assign(COPY.hi,{prabhu:'प्रभु जी',mataji:'माता जी',addrAsk:'आप किस प्रकार संबोधित होना चाहेंगे?',addrNone:'केवल मेरा नाम',addrNote:'वैकल्पिक। इसका उपयोग केवल आपके अभिवादन और रिमाइंडर में होगा। आप कभी भी ✎ बटन से बदल सकते हैं।',
- alertTitle:'🔔 व्रत रिमाइंडर',alertOff:'बंद है। आज का कोई भी व्रत अधूरा रहने पर रिमाइंडर पाने के लिए इसे चालू करें।',alertOn:'चालू है। यदि कोई व्रत अधूरा होगा, तो {t} पर रिमाइंडर मिलेगा।',
+ alertTitle:'🔔 व्रत रिमाइंडर',alertHelp:'दैनिक रिमाइंडर केवल 26 अक्टूबर से 24 नवम्बर 2026 तक और तभी भेजा जाएगा जब कम-से-कम एक सक्रिय व्रत अधूरा हो। आवाज़ और कंपन आपके फोन/ब्राउज़र की सेटिंग पर निर्भर करते हैं।',alertOff:'बंद है। आज का कोई भी व्रत अधूरा रहने पर रिमाइंडर पाने के लिए इसे चालू करें।',alertOn:'चालू है। यदि कोई व्रत अधूरा होगा, तो {t} पर रिमाइंडर मिलेगा।',
  alertBlocked:'इस साइट के लिए नोटिफिकेशन बंद हैं। ब्राउज़र सेटिंग में अनुमति दें, फिर दोबारा प्रयास करें।',alertUnsupported:'यह ब्राउज़र रिमाइंडर प्राप्त नहीं कर सकता। कृपया Chrome या Edge उपयोग करें, या ऐप इंस्टॉल करें।',
  alertIos:'iPhone पर: Share दबाकर “Add to Home Screen” चुनें, होम स्क्रीन से Damodar Vows खोलें, फिर इसे चालू करें।',alertNotConfigured:'सर्वर पर रिमाइंडर अभी सेट नहीं हैं।',
  alertWorking:'रिमाइंडर सेट हो रहे हैं…',alertTestSent:'टेस्ट रिमाइंडर भेज दिया गया। कृपया अपने नोटिफिकेशन देखें ✓',alertTestFail:'टेस्ट रिमाइंडर नहीं भेजा जा सका। कृपया दोबारा प्रयास करें।',alertTimeSaved:'रिमाइंडर का समय सेव हो गया ✓',alertSaveFail:'सेव नहीं हो सका। कृपया दोबारा प्रयास करें।',alertTestBtn:'टेस्ट रिमाइंडर भेजें',alertOffDone:'रिमाइंडर बंद कर दिए गए।'});
@@ -219,6 +219,7 @@ function burst(){const vw=document.documentElement.clientWidth;for(let i=0;i<6;i
 const FL=['नमामीश्वरं सच्-चिद्-आनन्द-रूपं\nलसत्-कुण्डलं गोकुले भ्राजमानम्','यशोदा-भियोलूखलाद् धावमानं\nपरामृष्टम् अत्यन्ततो द्रुत्य गोप्या','रुदन्तं मुहुर् नेत्र-युग्मं मृजन्तम्\nकराम्भोज-युग्मेन सातङ्क-नेत्रम्','मुहुः श्वास-कम्प-त्रिरेखाङ्क-कण्ठ\nस्थित-ग्रैवं दामोदरं भक्ति-बद्धम्','इतीदृक् स्वलीलाभिर् आनन्दकुण्डे\nस्वघोषं निमज्जन्तम् आख्यापयन्तम्','तदीयेषितज्ञेषु भक्तैर् जितत्वं\nपुनः प्रेमतस्तं शतावृत्ति वन्दे','वरं देव मोक्षं न मोक्षावधिं वा\nन चान्यं वृणे ऽहं वरेषाद् अपीह','इदं ते वपुर् नाथ गोपालबालं\nसदा मे मनस्य् आविरास्तां किमन्यैः','इदं ते मुखाम्भोजम् अत्यन्त-नीलैर्\nवृतं कुन्तलैः स्निग्ध-रक्तैश् च गोप्या','मुहुश् चुम्बितं बिम्ब-रक्ताधरं मे\nमनस्य् आविरास्ताम् अलं लक्ष-लाभैः','नमो देव दामोदरानन्त विष्णो\nप्रसीद प्रभो दुःख जालाब्धिमग्नम्','कृपादृष्टिवृष्ट्यातिदीनं बतानु\nगृहाणेष माम् अज्ञम् एध्य् अक्षिदृश्यः','कुवेरात्मजौ bद्धमूर्त्यैव यद्वत्\nत्वया मोचितौ भक्तिभाजौ कृतौ च','तथा प्रेम-भक्तिं स्वकां मे प्रयच्छ\nन मोक्षे ग्रहो मे ऽस्ति दामोदरेह','नमस् ते ‘स्तु दाम्ने स्फुरद्-दीप्ति-धाम्ने\nत्वदीयोदरायाथ विश्वस्य धाम्ने','नमो राधिकायै त्वदीयप्रियायै\nनमो ऽनन्तलीलाय देवाय तुभ्यम्','हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे\nहरे राम हरे राम राम राम हरे हरे'];
 const SPEED=38;let lastT=0;
 function floatOne(txt,x){
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const vw=document.documentElement.clientWidth,vh=innerHeight,e=document.createElement('div');
  e.className='fl';e.textContent=txt||FL[Math.floor(Math.random()*FL.length)];
  e.style.fontSize=(vw<700?17:24)+'px';e.style.visibility='hidden';$('#float').appendChild(e);
@@ -227,7 +228,7 @@ function floatOne(txt,x){
  e.style.left=(x!==undefined?x:12+Math.random()*Math.max(0,vw-24-w))+'px';
  const d=1.15*vh/SPEED;e.style.animationDuration=d+'s';e.style.visibility='';
  if(x===undefined)lastT=now;setTimeout(()=>e.remove(),d*1000)}
-const tick=()=>{if(!document.hidden)floatOne()};setInterval(tick,400);
+const tick=()=>{if(!document.hidden)floatOne()};setInterval(tick,1000);
 (function tryBg(list){if(!list.length)return;const u=list.splice(Math.floor(Math.random()*list.length),1)[0],im=new Image();im.onload=()=>{$('#bg').style.backgroundImage=`url(${u})`};im.onerror=()=>tryBg(list);im.src=u})([...BG]);
 $('#out').onclick=async()=>{if(!confirm(lang()==='hi'?'क्या आप लॉग आउट करना चाहते हैं?':'Log out of your account?'))return;try{await api('/api/auth/logout',{method:'POST'});if(window.google)google.accounts.id.disableAutoSelect()}catch(e){}location.reload()};
 $$('.tabs [data-t]').forEach(b=>b.onclick=()=>{$$('.tabs [data-t]').forEach(x=>x.classList.remove('on'));b.classList.add('on');['today','vows','stats'].forEach(s=>$('#'+s).classList.toggle('hide',s!==b.dataset.t));render()});
@@ -257,7 +258,7 @@ const pad2=n=>String(n).padStart(2,'0');
 function timeLabel(h,m){return new Date(2000,0,1,h,m).toLocaleTimeString(lang()==='hi'?'hi-IN':'en-IN',{hour:'numeric',minute:'2-digit',hour12:true})}
 function alertTimeValue(){const v=($('#alertTime').value||'18:00').split(':').map(Number);return {hour:v[0]||0,minute:v[1]||0}}
 function renderAlerts(msg,bad){
- $('#alertTitle').textContent=tr('alertTitle');$('#alertTest').textContent=tr('alertTestBtn');
+ $('#alertTitle').textContent=tr('alertTitle');$('#alertTest').textContent=tr('alertTestBtn');$('#alertHelp').textContent=tr('alertHelp');
  const supported=PUSH_OK,granted=supported&&Notification.permission==='granted',on=alertState.enabled&&granted;
  $('#alertToggle').checked=on;$('#alertToggle').disabled=alertState.busy;$('#alertTime').value=pad2(alertState.hour)+':'+pad2(alertState.minute);
  $('#alertTest').classList.toggle('hide',!on);
@@ -299,9 +300,19 @@ $('#alertToggle').onchange=async ev=>{const want=ev.target.checked;if(alertState
   if(want){alertState.enabled=false;try{await saveAlertSettings(false)}catch(e){}}
   msg=err.code==='blocked'?tr('alertBlocked'):err.code==='unsupported'?(IS_IOS?tr('alertIos'):tr('alertUnsupported')):err.code==='notconfigured'||err.code==='PUSH_NOT_CONFIGURED'?tr('alertNotConfigured'):(String(err.message||'').slice(0,160)||tr('alertTestFail'))}
  finally{alertState.busy=false;renderAlerts(msg,bad)}};
-$('#alertTime').onchange=async()=>{const t=alertTimeValue();alertState.hour=t.hour;alertState.minute=t.minute;
- if(!alertState.enabled){renderAlerts();return}
- try{await saveAlertSettings(true);renderAlerts(tr('alertTimeSaved'))}catch(e){renderAlerts(tr('alertSaveFail'),true)}};
+$('#alertTime').onchange=async()=>{
+ const previous={hour:alertState.hour,minute:alertState.minute};
+ const t=alertTimeValue();alertState.hour=t.hour;alertState.minute=t.minute;
+ try{
+  // Persist the selected time even when reminders are currently OFF.
+  await saveAlertSettings(alertState.enabled);
+  renderAlerts(tr('alertTimeSaved'));
+ }catch(e){
+  alertState.hour=previous.hour;alertState.minute=previous.minute;
+  $('#alertTime').value=pad2(previous.hour)+':'+pad2(previous.minute);
+  renderAlerts(tr('alertSaveFail'),true);
+ }
+};
 $('#alertTest').onclick=async()=>{if(alertState.busy)return;alertState.busy=true;renderAlerts(tr('alertWorking'));
  try{await ensureSubscribed();await sendTest();alertState.busy=false;renderAlerts(tr('alertTestSent'))}
  catch(e){alertState.busy=false;renderAlerts(String(e&&e.message||'').slice(0,160)||tr('alertTestFail'),true)}};

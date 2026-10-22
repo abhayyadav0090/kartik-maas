@@ -16,3 +16,12 @@ Set the environment variables listed in `.env.example` in Render. Follow [`SETUP
 
 
 **Calendar version:** 26 October–24 November 2026. Reminder checks run in-process once per minute while the Render web service is running; use UptimeRobot on `/api/health` to provide periodic inbound traffic, but note Render Free uptime and shared-instance-hour limitations. See `SETUP-REMINDERS.md`.
+
+## Reliability and accessibility improvements
+
+- Reminder time preferences are saved even when reminders are temporarily turned off.
+- The reminder card explains the 26 Oct–24 Nov 2026 date window and device-controlled notification sound.
+- Status updates are announced to assistive technology.
+- Floating shloka animations respect the operating system's reduced-motion preference, and the timer runs less often to reduce unnecessary layout work on phones.
+- Social-preview metadata includes image alternative text; CSS and JavaScript URLs are versioned to help browsers fetch the latest deployed files.
+- Run `npm test` to perform offline smoke checks of the release files.
