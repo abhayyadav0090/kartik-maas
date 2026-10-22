@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Damodar Vows – Kartik Sadhana Tracker</title>
+<meta name="description" content="A peaceful 30-day Kartik Sadhana tracker for daily vows, japa, reflection and devotional consistency.">
+<meta name="theme-color" content="#1a0618">
+<meta name="color-scheme" content="dark">
+<meta name="application-name" content="Damodar Vows">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Damodar Vows">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/kartik-manifest.json">
+<link rel="icon" href="/kartik-icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/kartik-icon-192.png">
+<!-- [UI-PATCH START: Updated social-sharing metadata to kartik-maas.onrender.com] -->
+<link rel="canonical" href="https://kartik-maas.onrender.com/kartik">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Damodar Vows – Kartik Sadhana Tracker">
+<meta property="og:description" content="Follow a 30-day journey of devotion, daily vows, japa and reflection. Hare Krishna!">
+<meta property="og:url" content="https://kartik-maas.onrender.com/kartik">
+<meta property="og:image" content="https://kartik-maas.onrender.com/kartik-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Damodar Vows – Kartik Sadhana Tracker">
+<meta name="twitter:description" content="A 30-day devotional tracker for Kartik Maas.">
+<meta name="twitter:image" content="https://kartik-maas.onrender.com/kartik-share.png">
+<!-- [UI-PATCH END] -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;600&family=Noto+Serif+Devanagari:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1a0618;--card:rgba(40,12,38,.78);--line:rgba(240,200,120,.28);--gold:#f3c969;--rose:#f08fb0;--txt:#fbeedd;--mut:#cdb4b8;--ok:#8fd694;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--txt);font-family:Inter,system-ui,sans-serif;background:var(--bg)}
+#bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 50% 0%,#7a1f5c 0,#3a0f36 40%,#12040f 100%);background-size:cover;background-position:center}
+#bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(255,170,60,.18),transparent 40%),radial-gradient(circle at 80% 20%,rgba(240,143,176,.15),transparent 40%),rgba(10,2,10,.35)}
+#float{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.fl{position:absolute;bottom:-60px;font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-style:italic;color:var(--gold);opacity:0;white-space:nowrap;text-shadow:0 0 12px rgba(243,201,105,.6);animation:up linear forwards}
+@keyframes up{0%{transform:translateY(0);opacity:0}15%{opacity:.7}85%{opacity:.5}100%{transform:translateY(-115vh);opacity:0}}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+h1,h2{font-family:'Cinzel Decorative',serif;color:var(--gold);margin:0}
+.hero{text-align:center;padding:26px 8px 8px}
+.hero h1{font-size:clamp(28px,6vw,52px);text-shadow:0 0 24px rgba(243,201,105,.4)}
+.hero p{font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:20px;color:var(--mut);margin:6px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;backdrop-filter:blur(8px)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sp{justify-content:space-between}
+button,input,select{font:inherit}
+button{background:linear-gradient(135deg,#c9892b,#f3c969);color:#2a0a22;border:0;border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer}
+button.g{background:transparent;color:var(--gold);border:1px solid var(--line)}
+button.sm{padding:5px 12px;font-size:13px}
+input,select{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--txt);border-radius:12px;padding:10px 12px;width:100%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{text-align:center;padding:12px;border:1px solid var(--line);border-radius:14px}
+.stat b{display:block;font-size:26px;color:var(--gold);font-family:'Cinzel Decorative',serif}
+.stat span{font-size:12px;color:var(--mut)}
+.days{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px}
+.d{flex:0 0 auto;width:44px;height:52px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--txt);font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.d b{font-size:15px}.d.sel{outline:2px solid var(--gold)}.d.today{border-color:var(--rose)}
+.d:disabled{opacity:.32;cursor:not-allowed;filter:grayscale(.65);outline:0}
+#lockHint{font-size:12px;line-height:1.5;color:var(--mut);margin:4px 0 10px}
+#clearTest{margin:0 0 10px}
+.d.full{background:rgba(143,214,148,.25)}.d.part{background:rgba(243,201,105,.2)}
+.vow{display:flex;gap:12px;align-items:center;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.07)}
+.vow:last-child{border:0}
+.vow.core{background:rgba(243,201,105,.09);border-radius:12px;border-left:3px solid var(--gold)}
+.vow input[type=checkbox]{width:24px;height:24px;accent-color:#f3c969;flex:0 0 auto}
+.vow .t{flex:1}.vow .t small{display:block;color:var(--mut)}
+.vow.done .t b{text-decoration:line-through;opacity:.6}
+.bar{height:10px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:9px}
+.heat{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.heat div{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;border:1px solid var(--line)}
+.shloka{text-align:center;font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:22px;color:#ffe9b8;line-height:1.4}
+.shloka small{display:block;font-size:15px;color:var(--mut);margin-top:4px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button.on{box-shadow:0 0 0 2px var(--gold)}
+.hide{display:none!important}
+.auth{max-width:380px;margin:24px auto}.auth input{margin:6px 0}
+.err{color:#ff9a9a;font-size:14px;min-height:18px}
+.fl{white-space:pre-line;width:max-content;max-width:calc(100vw - 24px);text-align:center;line-height:1.35}
+.nav{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+.nav button{background:transparent;color:var(--gold);border:1px solid var(--line);box-shadow:none}
+.nav button.on{background:linear-gradient(135deg,#c9892b,#f3c969);color:#2a0a22}
+#out{flex:0 0 auto}
+@media(max-width:700px){
+ .wrap{padding:10px 10px 96px}
+ .hero{padding:14px 4px 0}.hero p{font-size:17px}
+ .card{padding:12px;border-radius:16px;margin:10px 0;background:rgba(40,12,38,.88)}
+ .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;gap:4px;flex-wrap:nowrap;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(22,5,20,.97);border-top:1px solid var(--line)}
+ .nav button{flex:1;border:0;border-radius:12px;padding:10px 2px;font-size:13px;min-height:46px}
+ input,select{font-size:16px}
+ .vow{flex-wrap:wrap;gap:8px}.vow .t{min-width:62%}
+ .vow input[type=checkbox]{width:28px;height:28px}
+ #list .vow{padding:14px 8px}
+ .row label{flex:1 1 100%!important}
+ .heat{grid-template-columns:repeat(6,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .shloka{font-size:19px}
+ .d{width:46px}
+}
+
+/* ---- Darshan: real painting of Damodara lila (Mata Yashoda & Sri Krishna), device-aware ---- */
+#bg{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Cg fill=%22none%22 stroke=%22%23f3c969%22 stroke-width=%221%22 opacity=%22.5%22%3E%3Cpath d=%22M70 96C58 88 56 76 70 62C84 76 82 88 70 96Z%22/%3E%3Cpath d=%22M70 96C54 94 42 84 42 72C58 74 66 82 70 96Z%22/%3E%3Cpath d=%22M70 96C86 94 98 84 98 72C82 74 74 82 70 96Z%22/%3E%3Ccircle cx=%220%22 cy=%220%22 r=%226%22/%3E%3Ccircle cx=%22140%22 cy=%220%22 r=%226%22/%3E%3Ccircle cx=%220%22 cy=%22140%22 r=%226%22/%3E%3Ccircle cx=%22140%22 cy=%22140%22 r=%226%22/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(ellipse at 50% 0%,#7a1f5c 0,#3a0f36 40%,#12040f 100%);background-size:140px 140px,cover;background-repeat:repeat,no-repeat;background-position:0 0,center}
+#bg::after{background:radial-gradient(circle at 80% 85%,rgba(255,170,60,.16),transparent 45%),radial-gradient(circle at 85% 15%,rgba(240,143,176,.12),transparent 45%),rgba(10,2,10,.55)}
+#art{position:fixed;z-index:-1;pointer-events:none;background-repeat:no-repeat;background-color:#12040f}
+#art::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px rgba(10,2,10,.55)}
+#frame{position:fixed;inset:8px;z-index:0;pointer-events:none;border:1px solid rgba(243,201,105,.22);border-radius:6px}
+#frame .c{position:absolute;width:44px;height:44px;opacity:.55}#frame .c svg{width:100%;height:100%;display:block}
+#frame .tl{top:-1px;left:-1px}#frame .tr{top:-1px;right:-1px;transform:scaleX(-1)}
+#frame .bl{bottom:-1px;left:-1px;transform:scaleY(-1)}#frame .br{bottom:-1px;right:-1px;transform:scale(-1,-1)}
+.orn{display:block;width:min(460px,86%);height:auto;margin:2px auto 8px;opacity:.75}
+/* Laptop / desktop: the full painting stands on the left, content on the right */
+@media (min-aspect-ratio:11/10) and (min-width:900px){
+ #art{left:0;top:0;height:100vh;width:67.1vh;background-image:url(/kartik-assets/darshan-side.webp);background-size:cover;background-position:center;
+  -webkit-mask-image:linear-gradient(90deg,#000 82%,transparent 100%);mask-image:linear-gradient(90deg,#000 82%,transparent 100%)}
+ .wrap{margin:0 auto 0 calc(67.1vh + 2.5vw)!important;max-width:1000px;width:auto}
+}
+/* Tablet / phone (portrait): painting banner at the top, content slides over it */
+@media (max-aspect-ratio:11/10),(max-width:899px){
+ #art{left:0;right:0;top:0;height:36vh;background-image:url(/kartik-assets/darshan-banner.webp);background-size:cover;background-position:50% 35%;
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
+ .wrap{padding-top:calc(36vh - 34px)!important}
+}
+@media (max-height:520px) and (max-aspect-ratio:11/10){#art{height:30vh}.wrap{padding-top:calc(30vh - 20px)!important}}
+
+/* ============================================================================
+   [UI-PATCH START: Restrained Luxury Devotional Theme & Darshan Positioning]
+   ============================================================================ */
+:root {
+  --bg: #140513;
+  --card: rgba(29, 9, 28, 0.86);
+  --line: rgba(232, 190, 98, 0.28);
+  --gold: #e8be62;
+  --rose: #d9829f;
+  --txt: #fdf3e4;
+  --mut: #cbb5ba;
+  --ok: #84cf8a;
+}
+
+body {
+  background-color: var(--bg);
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Velvet-smooth custom scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(20, 5, 19, 0.9); }
+::-webkit-scrollbar-thumb { background: rgba(232, 190, 98, 0.35); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(232, 190, 98, 0.6); }
+
+/* Eliminate distracting floating-text clutter while keeping DOM intact */
+#float {
+  display: none !important;
+}
+
+/* Deep plum ambient foundation */
+#bg {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(92, 23, 69, 0.55) 0%, rgba(36, 9, 34, 0.85) 50%, #11030f 100%) !important;
+  background-size: cover !important;
+}
+#bg::after {
+  background:
+    radial-gradient(circle at 25% 25%, rgba(232, 190, 98, 0.08), transparent 50%),
+    rgba(12, 3, 12, 0.45) !important;
+}
+
+/* Authentic Damodar Lila painting positioning across Desktop, Tablet, and Mobile */
+@media (min-aspect-ratio: 11/10) and (min-width: 900px) {
+  #art {
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: clamp(380px, 44vw, 65vh);
+    background-image: url(/kartik-assets/darshan-side.webp);
+    background-size: cover;
+    background-position: 50% 58%;
+    -webkit-mask-image: linear-gradient(90deg, #000 76%, rgba(0,0,0,0.55) 90%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 76%, rgba(0,0,0,0.55) 90%, transparent 100%);
+  }
+  #art::after {
+    background: linear-gradient(180deg, rgba(18, 4, 15, 0.22) 0%, rgba(18, 4, 15, 0.05) 45%, rgba(18, 4, 15, 0.48) 100%);
+    box-shadow: inset 0 0 72px rgba(14, 3, 12, 0.65);
+  }
+  .wrap {
+    margin: 0 auto 0 clamp(370px, 42vw, 63vh) !important;
+    max-width: 920px;
+    padding: 22px 28px 48px;
+  }
+}
+
+@media (max-aspect-ratio: 11/10), (max-width: 899px) {
+  #art {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: clamp(240px, 38vh, 380px);
+    background-image: url(/kartik-assets/darshan-banner.webp);
+    background-size: cover;
+    background-position: 50% 28%;
+    -webkit-mask-image: linear-gradient(180deg, #000 64%, rgba(0,0,0,0.5) 86%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 64%, rgba(0,0,0,0.5) 86%, transparent 100%);
+  }
+  #art::after {
+    background: linear-gradient(180deg, rgba(16, 4, 14, 0.18) 0%, rgba(16, 4, 14, 0.35) 70%, rgba(20, 5, 19, 0.92) 100%);
+    box-shadow: inset 0 0 44px rgba(12, 3, 11, 0.5);
+  }
+  .wrap {
+    padding-top: calc(clamp(240px, 38vh, 380px) - 48px) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #art {
+    height: clamp(215px, 34vh, 300px);
+    background-position: 48% 24%;
+  }
+  .wrap {
+    padding-top: calc(clamp(215px, 34vh, 300px) - 42px) !important;
+  }
+}
+
+#frame {
+  inset: 10px;
+  border-color: rgba(232, 190, 98, 0.18);
+}
+#frame .c { opacity: 0.45; }
+
+/* Hero Typography & Header Polish */
+.hero h1 {
+  letter-spacing: 0.03em;
+  color: #f7d784;
+  text-shadow: 0 2px 18px rgba(12, 3, 11, 0.85), 0 0 28px rgba(232, 190, 98, 0.28);
+}
+.hero p {
+  color: #ead8dc;
+  text-shadow: 0 1px 10px rgba(10, 2, 10, 0.9);
+}
+#heroTagline {
+  color: rgba(232, 190, 98, 0.88);
+  font-style: italic;
+}
+
+/* Cards: Deep Plum Glass, Antique Gold Hairline Border & Sacred Watermark */
+.card {
+  background: linear-gradient(165deg, rgba(42, 13, 39, 0.88) 0%, rgba(24, 7, 23, 0.92) 100%);
+  border: 1px solid rgba(232, 190, 98, 0.26);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  box-shadow: 0 12px 40px rgba(10, 2, 10, 0.65), inset 0 1px 0 rgba(255, 220, 150, 0.15), 0 0 20px rgba(232, 190, 98, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 90px;
+  height: 90px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23e8be62' stroke-width='0.8' opacity='0.04'%3E%3Cpath d='M50 0 C60 30 70 40 100 50 C70 60 60 70 50 100 C40 70 30 60 0 50 C30 40 40 30 50 0 Z'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* Shloka Card Highlight */
+.shloka {
+  background: linear-gradient(165deg, rgba(50, 15, 46, 0.9) 0%, rgba(28, 8, 27, 0.94) 100%);
+  border-color: rgba(232, 190, 98, 0.36);
+  color: #fcebc2;
+  padding: 20px 22px;
+  line-height: 1.55;
+}
+.shloka small {
+  color: #d6c3c7;
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+/* Buttons & Shimmer Effect */
+button {
+  background: linear-gradient(135deg, #c78c2e 0%, #e8be62 50%, #f7dc88 100%);
+  color: #23071d;
+  border: 1px solid rgba(255, 238, 190, 0.35);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+button:not(.g)::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(0deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: rotate(45deg) translateY(-100%);
+  transition: transform 0.6s ease;
+}
+button:not(.g):hover::after {
+  transform: rotate(45deg) translateY(100%);
+}
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(232, 190, 98, 0.25);
+}
+button.g {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--gold);
+  border: 1px solid rgba(232, 190, 98, 0.32);
+  box-shadow: none;
+}
+button.g:hover:not(:disabled) {
+  background: rgba(232, 190, 98, 0.11);
+  border-color: rgba(232, 190, 98, 0.55);
+}
+
+/* Navigation Tabs */
+.nav button {
+  background: rgba(29, 9, 28, 0.72);
+  border: 1px solid rgba(232, 190, 98, 0.28);
+  padding: 9px 20px;
+}
+.nav button.on {
+  background: linear-gradient(135deg, #c28326 0%, #e8be62 100%);
+  color: #23071d;
+  border-color: #f5d782;
+  box-shadow: 0 0 16px rgba(232, 190, 98, 0.28);
+}
+
+/* Inputs & Selects */
+input, select {
+  background: rgba(14, 3, 13, 0.55);
+  border: 1px solid rgba(232, 190, 98, 0.28);
+  color: var(--txt);
+  border-radius: 10px;
+  padding: 10px 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(232, 190, 98, 0.2);
+}
+
+/* 30-Day Selector Strip */
+.days {
+  gap: 7px;
+  padding: 6px 2px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 190, 98, 0.35) transparent;
+}
+.d {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(232, 190, 98, 0.24);
+  border-radius: 11px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.d:hover:not(:disabled) {
+  border-color: rgba(232, 190, 98, 0.55);
+  background: rgba(232, 190, 98, 0.09);
+}
+.d.sel {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+  background: rgba(232, 190, 98, 0.15);
+}
+.d.today { border-color: var(--rose); }
+.d.full {
+  background: rgba(132, 207, 138, 0.22);
+  border-color: rgba(132, 207, 138, 0.5);
+}
+.d.part { background: rgba(232, 190, 98, 0.18); }
+
+/* Progress Bars */
+.bar {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(12, 3, 12, 0.65);
+  border: 1px solid rgba(232, 190, 98, 0.18);
+}
+.bar i {
+  background: linear-gradient(90deg, #c97392 0%, #e8be62 65%, #f7d988 100%);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+/* Vow Rows */
+.vow {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(232, 190, 98, 0.1);
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+.vow:hover { background: rgba(255, 255, 255, 0.025); }
+.vow.core {
+  background: linear-gradient(90deg, rgba(232, 190, 98, 0.11) 0%, rgba(232, 190, 98, 0.03) 100%);
+  border-left: 3px solid var(--gold);
+  margin: 4px 0;
+}
+.vow input[type=checkbox] {
+  width: 22px; height: 22px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+/* KPI Stats & Journey Heatmap */
+.stat {
+  background: rgba(18, 4, 17, 0.45);
+  border: 1px solid rgba(232, 190, 98, 0.22);
+  border-radius: 12px;
+  padding: 14px 10px;
+}
+.stat b {
+  font-size: 24px;
+  color: #f5d57e;
+  margin-bottom: 2px;
+}
+.heat div {
+  border-color: rgba(232, 190, 98, 0.22);
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .card {
+    padding: 14px;
+    border-radius: 15px;
+    background: linear-gradient(165deg, rgba(38, 11, 36, 0.92) 0%, rgba(22, 6, 21, 0.95) 100%);
+  }
+  .nav {
+    background: rgba(18, 4, 17, 0.97);
+    border-top: 1px solid rgba(232, 190, 98, 0.28);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+/* ============================================================================
+   [UI-PATCH END]
+   ============================================================================ */
+.switch{position:relative;display:inline-block;width:54px;height:30px;flex:0 0 auto}
+.switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:pointer;z-index:2}
+.slider{position:absolute;inset:0;background:rgba(255,255,255,.16);border:1px solid var(--line);border-radius:999px;transition:.2s}
+.slider:before{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked+.slider{background:linear-gradient(135deg,#c9892b,#f3c969)}
+.switch input:checked+.slider:before{transform:translateX(24px);background:#2a0a22}
+.switch input:focus-visible+.slider{outline:2px solid var(--gold);outline-offset:2px}
+#addrModal{position:fixed;inset:0;z-index:100;background:rgba(10,3,16,.8);display:flex;align-items:center;justify-content:center;padding:16px}
+#addrModal .box{max-width:420px;width:100%;background:#2a0c28;border:1px solid var(--line);border-radius:20px;padding:22px;text-align:center}
+#addrModal .box h2{margin:0 0 6px;font-size:20px}
+#addrModal button.opt{display:block;width:100%;margin:9px 0;min-height:48px;font-size:16px}
+#addrModal p{color:var(--mut);font-size:13px;margin:8px 0 0}
+</style></head><body>
+<div id="addrModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="addrTitle"><div class="box"><h2 id="addrTitle">Hare Krishna 🙏</h2><div id="addrAsk" style="color:var(--txt)">How would you like to be greeted?</div>
+ <button class="opt" type="button" data-addr="prabhu" id="addrPrabhu">Prabhu</button><button class="opt" type="button" data-addr="mataji" id="addrMataji">Mataji</button><button class="opt g" type="button" data-addr="none" id="addrNone">Just my name</button>
+ <p id="addrNote">Optional. Used only for your greeting and reminders. You can change it anytime with the ✎ button.</p></div></div>
+<div id="bg"></div><div id="art" role="img" aria-label="Mata Yashoda lovingly binding baby Krishna - Damodara lila"></div><div id="float"></div><div id="frame" aria-hidden="true"><i class="c tl"><svg viewBox="0 0 60 60" aria-hidden="true" focusable="false"><g fill="none" stroke="#f3c969" stroke-width="1.6" stroke-linecap="round"><path d="M2 58V20C2 9 9 2 20 2H58"/><path d="M10 58V24C10 16 16 10 24 10H58" opacity=".5"/><path d="M2 20C12 20 20 12 20 2"/></g><circle cx="20" cy="20" r="3" fill="#f3c969"/></svg></i><i class="c tr"><svg viewBox="0 0 60 60" aria-hidden="true" focusable="false"><g fill="none" stroke="#f3c969" stroke-width="1.6" stroke-linecap="round"><path d="M2 58V20C2 9 9 2 20 2H58"/><path d="M10 58V24C10 16 16 10 24 10H58" opacity=".5"/><path d="M2 20C12 20 20 12 20 2"/></g><circle cx="20" cy="20" r="3" fill="#f3c969"/></svg></i><i class="c bl"><svg viewBox="0 0 60 60" aria-hidden="true" focusable="false"><g fill="none" stroke="#f3c969" stroke-width="1.6" stroke-linecap="round"><path d="M2 58V20C2 9 9 2 20 2H58"/><path d="M10 58V24C10 16 16 10 24 10H58" opacity=".5"/><path d="M2 20C12 20 20 12 20 2"/></g><circle cx="20" cy="20" r="3" fill="#f3c969"/></svg></i><i class="c br"><svg viewBox="0 0 60 60" aria-hidden="true" focusable="false"><g fill="none" stroke="#f3c969" stroke-width="1.6" stroke-linecap="round"><path d="M2 58V20C2 9 9 2 20 2H58"/><path d="M10 58V24C10 16 16 10 24 10H58" opacity=".5"/><path d="M2 20C12 20 20 12 20 2"/></g><circle cx="20" cy="20" r="3" fill="#f3c969"/></svg></i></div>
+<div class="wrap">
+<div class="hero"><h1 id="heroTitle">Damodar Vows</h1><p id="heroSubtitle">Kartik Sadhana Tracker · 27 Oct – 25 Nov 2026 · 30 days</p><p id="heroTagline" style="font-size:16px">A time for purity · A time for devotion · A time for Krishna</p><svg class="orn" viewBox="0 -4 600 34" aria-hidden="true" focusable="false"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#c9892b"/></linearGradient></defs><g fill="none" stroke="#f3c969" stroke-width="1.4" stroke-linecap="round"><path d="M10.0 20.0 L12.0 23.3 L14.0 24.1 L16.0 21.8 L18.0 18.2 L20.0 15.9 L22.0 16.7 L24.0 20.0 L26.0 23.3 L28.0 24.1 L30.0 21.8 L32.0 18.2 L34.0 15.9 L36.0 16.7 L38.0 20.0 L40.0 23.3 L42.0 24.1 L44.0 21.8 L46.0 18.2 L48.0 15.9 L50.0 16.7 L52.0 20.0 L54.0 23.3 L56.0 24.1 L58.0 21.8 L60.0 18.2 L62.0 15.9 L64.0 16.7 L66.0 20.0 L68.0 23.3 L70.0 24.1 L72.0 21.8 L74.0 18.2 L76.0 15.9 L78.0 16.7 L80.0 20.0 L82.0 23.3 L84.0 24.1 L86.0 21.8 L88.0 18.2 L90.0 15.9 L92.0 16.7 L94.0 20.0 L96.0 23.3 L98.0 24.1 L100.0 21.8 L102.0 18.2 L104.0 15.9 L106.0 16.7 L108.0 20.0 L110.0 23.3 L112.0 24.1 L114.0 21.8 L116.0 18.2 L118.0 15.9 L120.0 16.7 L122.0 20.0 L124.0 23.3 L126.0 24.1 L128.0 21.8 L130.0 18.2 L132.0 15.9 L134.0 16.7 L136.0 20.0 L138.0 23.3 L140.0 24.1 L142.0 21.8 L144.0 18.2 L146.0 15.9 L148.0 16.7 L150.0 20.0 L152.0 23.3 L154.0 24.1 L156.0 21.8 L158.0 18.2 L160.0 15.9 L162.0 16.7 L164.0 20.0 L166.0 23.3 L168.0 24.1 L170.0 21.8 L172.0 18.2 L174.0 15.9 L176.0 16.7 L178.0 20.0 L180.0 23.3 L182.0 24.1 L184.0 21.8 L186.0 18.2 L188.0 15.9 L190.0 16.7 L192.0 20.0 L194.0 23.3 L196.0 24.1 L198.0 21.8 L200.0 18.2 L202.0 15.9 L204.0 16.7 L206.0 20.0 L208.0 23.3 L210.0 24.1 L212.0 21.8 L214.0 18.2 L216.0 15.9 L218.0 16.7 L220.0 20.0 L222.0 23.3 L224.0 24.1 L226.0 21.8 L228.0 18.2 L230.0 15.9 L232.0 16.7 L234.0 20.0 L236.0 23.3 "/><path d="M10.0 20.0 L12.0 16.7 L14.0 15.9 L16.0 18.2 L18.0 21.8 L20.0 24.1 L22.0 23.3 L24.0 20.0 L26.0 16.7 L28.0 15.9 L30.0 18.2 L32.0 21.8 L34.0 24.1 L36.0 23.3 L38.0 20.0 L40.0 16.7 L42.0 15.9 L44.0 18.2 L46.0 21.8 L48.0 24.1 L50.0 23.3 L52.0 20.0 L54.0 16.7 L56.0 15.9 L58.0 18.2 L60.0 21.8 L62.0 24.1 L64.0 23.3 L66.0 20.0 L68.0 16.7 L70.0 15.9 L72.0 18.2 L74.0 21.8 L76.0 24.1 L78.0 23.3 L80.0 20.0 L82.0 16.7 L84.0 15.9 L86.0 18.2 L88.0 21.8 L90.0 24.1 L92.0 23.3 L94.0 20.0 L96.0 16.7 L98.0 15.9 L100.0 18.2 L102.0 21.8 L104.0 24.1 L106.0 23.3 L108.0 20.0 L110.0 16.7 L112.0 15.9 L114.0 18.2 L116.0 21.8 L118.0 24.1 L120.0 23.3 L122.0 20.0 L124.0 16.7 L126.0 15.9 L128.0 18.2 L130.0 21.8 L132.0 24.1 L134.0 23.3 L136.0 20.0 L138.0 16.7 L140.0 15.9 L142.0 18.2 L144.0 21.8 L146.0 24.1 L148.0 23.3 L150.0 20.0 L152.0 16.7 L154.0 15.9 L156.0 18.2 L158.0 21.8 L160.0 24.1 L162.0 23.3 L164.0 20.0 L166.0 16.7 L168.0 15.9 L170.0 18.2 L172.0 21.8 L174.0 24.1 L176.0 23.3 L178.0 20.0 L180.0 16.7 L182.0 15.9 L184.0 18.2 L186.0 21.8 L188.0 24.1 L190.0 23.3 L192.0 20.0 L194.0 16.7 L196.0 15.9 L198.0 18.2 L200.0 21.8 L202.0 24.1 L204.0 23.3 L206.0 20.0 L208.0 16.7 L210.0 15.9 L212.0 18.2 L214.0 21.8 L216.0 24.1 L218.0 23.3 L220.0 20.0 L222.0 16.7 L224.0 15.9 L226.0 18.2 L228.0 21.8 L230.0 24.1 L232.0 23.3 L234.0 20.0 L236.0 16.7 "/><path d="M364.0 20.0 L366.0 23.3 L368.0 24.1 L370.0 21.8 L372.0 18.2 L374.0 15.9 L376.0 16.7 L378.0 20.0 L380.0 23.3 L382.0 24.1 L384.0 21.8 L386.0 18.2 L388.0 15.9 L390.0 16.7 L392.0 20.0 L394.0 23.3 L396.0 24.1 L398.0 21.8 L400.0 18.2 L402.0 15.9 L404.0 16.7 L406.0 20.0 L408.0 23.3 L410.0 24.1 L412.0 21.8 L414.0 18.2 L416.0 15.9 L418.0 16.7 L420.0 20.0 L422.0 23.3 L424.0 24.1 L426.0 21.8 L428.0 18.2 L430.0 15.9 L432.0 16.7 L434.0 20.0 L436.0 23.3 L438.0 24.1 L440.0 21.8 L442.0 18.2 L444.0 15.9 L446.0 16.7 L448.0 20.0 L450.0 23.3 L452.0 24.1 L454.0 21.8 L456.0 18.2 L458.0 15.9 L460.0 16.7 L462.0 20.0 L464.0 23.3 L466.0 24.1 L468.0 21.8 L470.0 18.2 L472.0 15.9 L474.0 16.7 L476.0 20.0 L478.0 23.3 L480.0 24.1 L482.0 21.8 L484.0 18.2 L486.0 15.9 L488.0 16.7 L490.0 20.0 L492.0 23.3 L494.0 24.1 L496.0 21.8 L498.0 18.2 L500.0 15.9 L502.0 16.7 L504.0 20.0 L506.0 23.3 L508.0 24.1 L510.0 21.8 L512.0 18.2 L514.0 15.9 L516.0 16.7 L518.0 20.0 L520.0 23.3 L522.0 24.1 L524.0 21.8 L526.0 18.2 L528.0 15.9 L530.0 16.7 L532.0 20.0 L534.0 23.3 L536.0 24.1 L538.0 21.8 L540.0 18.2 L542.0 15.9 L544.0 16.7 L546.0 20.0 L548.0 23.3 L550.0 24.1 L552.0 21.8 L554.0 18.2 L556.0 15.9 L558.0 16.7 L560.0 20.0 L562.0 23.3 L564.0 24.1 L566.0 21.8 L568.0 18.2 L570.0 15.9 L572.0 16.7 L574.0 20.0 L576.0 23.3 L578.0 24.1 L580.0 21.8 L582.0 18.2 L584.0 15.9 L586.0 16.7 L588.0 20.0 L590.0 23.3 "/><path d="M364.0 20.0 L366.0 16.7 L368.0 15.9 L370.0 18.2 L372.0 21.8 L374.0 24.1 L376.0 23.3 L378.0 20.0 L380.0 16.7 L382.0 15.9 L384.0 18.2 L386.0 21.8 L388.0 24.1 L390.0 23.3 L392.0 20.0 L394.0 16.7 L396.0 15.9 L398.0 18.2 L400.0 21.8 L402.0 24.1 L404.0 23.3 L406.0 20.0 L408.0 16.7 L410.0 15.9 L412.0 18.2 L414.0 21.8 L416.0 24.1 L418.0 23.3 L420.0 20.0 L422.0 16.7 L424.0 15.9 L426.0 18.2 L428.0 21.8 L430.0 24.1 L432.0 23.3 L434.0 20.0 L436.0 16.7 L438.0 15.9 L440.0 18.2 L442.0 21.8 L444.0 24.1 L446.0 23.3 L448.0 20.0 L450.0 16.7 L452.0 15.9 L454.0 18.2 L456.0 21.8 L458.0 24.1 L460.0 23.3 L462.0 20.0 L464.0 16.7 L466.0 15.9 L468.0 18.2 L470.0 21.8 L472.0 24.1 L474.0 23.3 L476.0 20.0 L478.0 16.7 L480.0 15.9 L482.0 18.2 L484.0 21.8 L486.0 24.1 L488.0 23.3 L490.0 20.0 L492.0 16.7 L494.0 15.9 L496.0 18.2 L498.0 21.8 L500.0 24.1 L502.0 23.3 L504.0 20.0 L506.0 16.7 L508.0 15.9 L510.0 18.2 L512.0 21.8 L514.0 24.1 L516.0 23.3 L518.0 20.0 L520.0 16.7 L522.0 15.9 L524.0 18.2 L526.0 21.8 L528.0 24.1 L530.0 23.3 L532.0 20.0 L534.0 16.7 L536.0 15.9 L538.0 18.2 L540.0 21.8 L542.0 24.1 L544.0 23.3 L546.0 20.0 L548.0 16.7 L550.0 15.9 L552.0 18.2 L554.0 21.8 L556.0 24.1 L558.0 23.3 L560.0 20.0 L562.0 16.7 L564.0 15.9 L566.0 18.2 L568.0 21.8 L570.0 24.1 L572.0 23.3 L574.0 20.0 L576.0 16.7 L578.0 15.9 L580.0 18.2 L582.0 21.8 L584.0 24.1 L586.0 23.3 L588.0 20.0 L590.0 16.7 "/></g><g transform="translate(300 2)"><g fill="url(#lg)" stroke="#f3c969" stroke-width="1.1" stroke-linejoin="round"><path d="M0 26C-12 18-14 8 0 -2C14 8 12 18 0 26Z"/><path d="M0 26C-16 24-30 14-30 2C-14 4-4 12 0 26Z"/><path d="M0 26C16 24 30 14 30 2C14 4 4 12 0 26Z"/><path d="M0 26C-22 28-44 22-52 12C-34 8-12 14 0 26Z"/><path d="M0 26C22 28 44 22 52 12C34 8 12 14 0 26Z"/></g></g></svg></div>
+
+<div id="authV" class="card auth">
+ <h2 id="authTitle" style="font-size:20px;text-align:center">Hare Krishna 🙏</h2>
+ <p id="authDesc" style="text-align:center;color:var(--mut);margin:6px 0 14px">Sign in with Google. Your vows and progress are saved to your account and follow you on every device.</p>
+ <div class="row" style="justify-content:center;margin:0 0 8px"><button class="g sm" id="authLangBtn" type="button">हिन्दी</button></div>
+ <div id="gbtn" style="display:flex;justify-content:center;min-height:44px"></div>
+ <div class="err" id="err" style="text-align:center"></div>
+</div>
+
+<div id="appV" class="hide">
+ <div class="card row sp"><div style="flex:1;min-width:180px"><b id="hello"></b><button class="g sm" id="addrEdit" type="button" style="padding:2px 9px;margin-left:8px" aria-label="Change how you are greeted">✎</button><div id="when" style="color:var(--mut);font-size:14px"></div><div id="sync" style="font-size:12px;color:var(--mut)"></div></div>
+  <div class="row"><button class="g sm" id="langBtn" type="button">हिन्दी</button><button class="g sm" id="shareBtn" type="button">Share</button><button class="g sm" id="installBtn" type="button">Install</button><button class="g sm" id="out">Logout</button></div></div>
+ <div id="alertCard" class="card"><div class="row sp"><div style="flex:1;min-width:200px"><b id="alertTitle">🔔 Evening vow reminder</b><div id="alertStatus" style="color:var(--mut);font-size:13px;margin-top:2px"></div></div>
+  <div class="row" style="gap:10px;flex-wrap:nowrap"><input type="time" id="alertTime" value="18:00" aria-label="Reminder time" style="width:auto"><label class="switch" title="Reminder on/off"><input type="checkbox" id="alertToggle" aria-label="Turn vow reminder on or off"><span class="slider"></span></label></div></div>
+  <div class="row" style="margin-top:8px"><button class="g sm hide" id="alertTest" type="button">Send test reminder</button></div></div>
+ <div id="conflictPane" class="card hide" role="alert"><b id="conflictTitle">Progress conflict detected</b><p id="conflictText" style="color:var(--mut)">Your unsaved changes are still on this device. Export a backup before reloading the latest saved data.</p><div class="row"><button class="g sm" id="exportLocal">Export local backup</button><button id="reloadLatest">Reload latest progress</button></div></div>
+ <nav class="tabs nav"><button class="on" data-t="today" id="tabToday">🪔 Daily</button><button data-t="vows" id="tabVows">⭐ My Vows</button><button data-t="stats" id="tabStats">📊 Analysis</button></nav>
+ <div class="card shloka" id="shl"></div>
+
+ <section id="today">
+  <div class="card"><div class="days" id="days"></div>
+   <p id="lockHint">Before Kartik begins, Day 1 remains open for testing; future days are locked until their date.</p><button class="g sm hide" id="clearTest" type="button">Clear Day 1 test data</button>
+   <div class="row sp"><h2 style="font-size:19px" id="dayT"></h2><span id="dayPct" style="color:var(--gold)"></span></div>
+   <div class="bar" style="margin:8px 0"><i id="dayBar"></i></div>
+   <div class="row sp" style="font-size:13px;color:var(--mut)"><span id="coreLabel">⭐ Core vows</span><span id="corePct"></span></div><div class="bar" style="margin:4px 0 8px"><i id="coreBar" style="background:var(--gold)"></i></div>
+   <div id="list"></div>
+   <div class="row" style="margin-top:12px"><label id="japaLabel" style="flex:1;min-width:150px">Rounds of japa today <input id="rounds" type="number" min="0" max="64"></label>
+   <label id="reflectionLabel" style="flex:2;min-width:200px">Reflection / realization <input id="note" placeholder="One line of gratitude..."></label></div>
+  </div>
+ </section>
+
+ <section id="vows" class="hide">
+  <div class="card"><h2 id="vowsTitle" style="font-size:19px">Choose &amp; shape your vows</h2>
+   <p id="vowsDesc" style="color:var(--mut)">⭐ Priority vows appear first every day. Switch vows on or off, rename them, or add your own. Recorded checkmarks remain stored, but changing the active vow list can affect historical percentages.</p>
+   <div id="vlist"></div>
+   <div class="row" style="margin-top:12px"><input id="nv" placeholder="Add your own vow (e.g. No sleeping after sunrise)" style="flex:1"><button id="addV">Add</button></div>
+   <div class="row" style="margin-top:12px"><label id="goalLabel">Daily japa goal (rounds) <input id="goal" type="number" min="1" max="64" style="width:110px"></label><button class="g sm" id="reset">Restore the 12 vows</button></div>
+  </div>
+ </section>
+
+ <section id="stats" class="hide">
+  <div class="card"><div class="stats" id="kpi"></div></div>
+  <div class="card"><h2 id="journeyTitle" style="font-size:19px;margin-bottom:10px">30-day journey</h2><div class="heat" id="heat"></div>
+   <p id="legend" style="font-size:12px;color:var(--mut)">Green = all vows done · Gold fill = partial · Gold ring = all ⭐ core vows done</p></div>
+  <div class="card"><h2 id="consistencyTitle" style="font-size:19px;margin-bottom:10px">Vow-wise consistency</h2><div id="vbars"></div></div>
+  <div class="card"><h2 id="japaChartTitle" style="font-size:19px;margin-bottom:10px">Japa rounds per day</h2><svg id="chart" viewBox="0 0 600 140" style="width:100%"></svg></div>
+  <div class="card row"><button class="g sm" id="exp">Export backup</button><label id="importLabel" class="g sm" style="cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--gold)">Import<input id="imp" type="file" accept=".json" class="hide"></label></div>
+ </section>
+ <p id="footerMantra" style="text-align:center;color:var(--mut);font-family:'Cormorant Garamond','Noto Serif Devanagari',serif;font-size:18px">Hare Krishna Hare Krishna Krishna Krishna Hare Hare · Hare Rama Hare Rama Rama Rama Hare Hare</p>
+</div></div>
+
+<script>
+const START=new Date(2026,9,27),N=30;
+// Background photos: keep your original bundled images and visual treatment.
+const BG=[];
+const SH=[["नमामीश्वरं सच्-चिद्-आनन्द-रूपं\nलसत्-कुण्डलं गोकुले भ्राजमानम्\nयशोदा-भियोलूखलाद् धावमानं\nपरामृष्टम् अत्यन्ततो द्रुत्य गोप्या","I bow to Lord Damodara, whose form is eternal, full of knowledge and bliss, whose earrings swing in Gokula, who runs in fear of Mother Yashoda yet is caught by her."],["रुदन्तं मुहुर् नेत्र-युग्मं मृजन्तम्\nकराम्भोज-युग्मेन सातङ्क-नेत्रम्\nमुहुः श्वास-कम्प-त्रिरेखाङ्क-कण्ठ\nस्थित-ग्रैवं दामोदरं भक्ति-बद्धम्","Crying, rubbing His eyes with lotus hands, trembling with fear, His neck marked with three lines, Damodara is bound by love."],["इतीदृक् स्वलीलाभिर् आनन्दकुण्डे\nस्वघोषं निमज्जन्तम् आख्यापयन्तम्\nतदीयेषितज्ञेषु भक्तैर् जितत्वं\nपुनः प्रेमतस्तं शतावृत्ति वन्दे","By such pastimes He shows He is conquered by His devotees’ love. With love I bow to Him hundreds of times."],["वरं देव मोक्षं न मोक्षावधिं वा\nन चान्यं वृणे ऽहं वरेषाद् अपीह\nइदं ते वपुर् नाथ गोपालबालं\nसदा मे मनस्य् आविरास्तां किमन्यैः","O Lord, I ask not for liberation, only that Your child form of Gopala always appear in my mind. What use is anything else?"],["इदं ते मुखाम्भोजम् अत्यन्त-नीलैर्\nवृतं कुन्तलैः स्निग्ध-रक्तैश् च गोप्या\nमुहुश् चुम्बितं बिम्ब-रक्ताधरं मे\nमनस्य् आविरास्ताम् अलं लक्ष-लाभैः","May Your lotus face, framed by dark curls and kissed again and again by Yashoda, always appear in my mind. Millions of other gains are enough to leave."],["नमो देव दामोदरानन्त विष्णो\nप्रसीद प्रभो दुःख जालाब्धिमग्नम्\nकृपादृष्टिवृष्ट्यातिदीनं बतानु\nगृहाणेष माम् अज्ञम् एध्य् अक्षिदृश्यः","O Damodara, be pleased with me, sunk in an ocean of sorrow. Shower Your merciful glance on this fool and let me see You."],["कुवेरात्मजौ बद्धमूर्त्यैव यद्वत्\nत्वया मोचितौ भक्तिभाजौ कृतौ च\nतथा प्रेम-भक्तिं स्वकां मे प्रयच्छ\nन मोक्षे ग्रहो मे ऽस्ति दामोदरेह","As You freed Kuvera’s sons and made them devotees, give me Your loving devotion. I have no desire for liberation."],["नमस् ते ‘स्तु दाम्ने स्फुरद्-दीप्ति-धाम्ने\nत्वदीयोदरायाथ विश्वस्य धाम्ने\nनमो राधिकायै त्वदीयप्रियायै\nनमो ऽनन्तलीलाय देवाय तुभ्यम्","I bow to the rope that bound You, to Your radiant form, to Radha, Your beloved, and to You of endless pastimes."]];
+const CORE=['v0','v11','v7','v1','v2','v3']; // wake up, chanting, hearing, reading, lamp, Damodarastakam
+const byCore=a=>[...a].sort((x,y)=>(!!y.core)-(!!x.core));
+const DEF=["Wake up during Brahma Muhurta","Read Srila Prabhupada’s books","Offer a ghee lamp to Lord Damodara","Recite Damodarastakam","Offer water to Tulasi Maharani","Read prayers of Kunti Maharani & Gajendra Moksha","Read Bhagavad-gita","Hear Krishna-katha","Offer Tulasi leaves to the Lord","Organize or serve in a Damodara program","Vrajvas (visit or remember the holy land of Vraj)","Increase chanting"];
+const HDEF=["ब्रह्म मुहूर्त में उठें","श्रील प्रभुपाद की पुस्तकें पढ़ें","भगवान दामोदर को घी का दीप अर्पित करें","दामोदराष्टकम का पाठ करें","तुलसी महारानी को जल अर्पित करें","कुन्ती महारानी की प्रार्थनाएँ और गजेन्द्र मोक्ष पढ़ें","भगवद्-गीता पढ़ें","कृष्ण-कथा सुनें","भगवान को तुलसी दल अर्पित करें","दामोदर कार्यक्रम में सेवा करें","व्रजवास करें या व्रजधाम का स्मरण करें","हरिनाम-जप बढ़ाएँ"];
+const COPY={
+ en:{heroTitle:'Damodar Vows',heroSubtitle:'Kartik Sadhana Tracker · 27 Oct – 25 Nov 2026 · 30 days',heroTagline:'A time for purity · A time for devotion · A time for Krishna',authTitle:'Hare Krishna 🙏',authDesc:'Sign in with Google. Your vows and progress are saved to your account and follow you on every device.',daily:'🪔 Daily',myVows:'⭐ My Vows',analysis:'📊 Analysis',share:'Share',install:'Install',logout:'Logout',beforeStart:'Kartik begins in',setVows:'— set your vows now',today:'Today is Kartik day',of:'of',ended:'Kartik has concluded — see your journey',testing:'Testing mode: Day 1 is open so you can try selecting and unselecting vows. Days 2–30 stay locked until their dates. Clear the Day 1 test entries before the journey begins.',locked:'Future days are locked. Today and past days can be edited; each next day unlocks on its date.',finished:'The 30-day journey has ended. You can review and edit any day in the journey.',clearTest:'Clear Day 1 test data',day:'Day',purnima:'Kartik Purnima 🌕',bonus:'Bonus / closing day ✨',core:'⭐ Core vows',japaLabel:'Rounds of japa today',reflectionLabel:'Reflection / realization',notePlaceholder:'One line of gratitude...',vowsTitle:'Choose & shape your vows',vowsDesc:'⭐ Priority vows appear first every day. Switch vows on or off, rename them, or add your own. Daily checkmarks remain stored, but changing the active vow list can alter historical percentages.',addVowPlaceholder:'Add your own vow (e.g. No sleeping after sunrise)',add:'Add',goalLabel:'Daily japa goal (rounds)',reset:'Restore the 12 vows',journey:'30-day journey',legend:'Green = all active vows done · Gold fill = partial · Gold ring = all ⭐ core vows done',consistency:'Vow-wise consistency',japaChart:'Japa rounds per day',export:'Export backup',import:'Import',saving:'Saving…',saved:'Saved to your account ✓',offline:'Offline / connection issue — local copy retained; retrying…',conflictTitle:'Progress conflict detected',conflictText:'Another device has newer progress. Your local edits remain on this device. Export a backup before reloading the latest saved data.',exportLocal:'Export local backup',reloadLatest:'Reload latest progress',coreAvg:'⭐ Core avg',coreStreak:'⭐ Core streak',corePerfect:'⭐ Core-perfect days',allAvg:'All-vow avg',currentStreak:'Current streak',bestStreak:'Best streak',perfectDays:'Perfect days',totalRounds:'Total rounds',avgRounds:'Avg rounds/day',dayLocked:'That day is not editable yet.',langButton:'हिन्दी'},
+ hi:{heroTitle:'दामोदर व्रत',heroSubtitle:'कार्तिक साधना ट्रैकर · 27 अक्टूबर – 25 नवम्बर 2026 · 30 दिन',heroTagline:'शुद्धता का समय · भक्ति का समय · कृष्ण का समय',authTitle:'हरे कृष्ण 🙏',authDesc:'Google से साइन इन करें। आपके व्रत और प्रगति आपके खाते में सुरक्षित रहते हैं और हर डिवाइस पर उपलब्ध रहते हैं।',daily:'🪔 दैनिक',myVows:'⭐ मेरे व्रत',analysis:'📊 विश्लेषण',share:'शेयर करें',install:'ऐप इंस्टॉल',logout:'लॉग आउट',beforeStart:'कार्तिक शुरू होने में',setVows:'दिन शेष — अभी अपने व्रत तय करें',today:'आज कार्तिक का दिन',of:'में से',ended:'कार्तिक साधना पूरी हुई — अपनी यात्रा देखें',testing:'परीक्षण मोड: व्रत चुनने और हटाने का अभ्यास करने के लिए केवल दिन 1 खुला है। दिन 2–30 अपनी तारीख आने तक बंद रहेंगे। कार्तिक शुरू होने से पहले दिन 1 का परीक्षण डेटा साफ़ कर दें।',locked:'भविष्य के दिन बंद हैं। आज और पिछले दिनों में बदलाव कर सकते हैं; अगला दिन अपनी तारीख पर खुलेगा।',finished:'30 दिनों की यात्रा पूरी हो चुकी है। आप किसी भी दिन को देख और संपादित कर सकते हैं।',clearTest:'दिन 1 का परीक्षण डेटा साफ़ करें',day:'दिन',purnima:'कार्तिक पूर्णिमा 🌕',bonus:'अतिरिक्त / समापन दिवस ✨',core:'⭐ मुख्य व्रत',japaLabel:'आज जप की मालाएँ',reflectionLabel:'चिंतन / अनुभूति',notePlaceholder:'कृतज्ञता की एक पंक्ति…',vowsTitle:'अपने व्रत चुनें और व्यवस्थित करें',vowsDesc:'⭐ मुख्य व्रत रोज़ सबसे ऊपर दिखते हैं। व्रत चालू/बंद करें, नाम बदलें या अपना व्रत जोड़ें। सोच-समझकर व्रत चुनें।',addVowPlaceholder:'अपना व्रत जोड़ें (जैसे सूर्योदय के बाद न सोना)',add:'जोड़ें',goalLabel:'दैनिक जप लक्ष्य (मालाएँ)',reset:'12 व्रत पुनः रखें',journey:'30-दिन की यात्रा',legend:'हरा = सभी सक्रिय व्रत पूरे · सुनहरा = कुछ व्रत पूरे · सुनहरी सीमा = सभी ⭐ मुख्य व्रत पूरे',consistency:'व्रत के अनुसार निरंतरता',japaChart:'प्रतिदिन जप की मालाएँ',export:'बैकअप डाउनलोड',import:'आयात करें',saving:'सहेजा जा रहा है…',saved:'आपके खाते में सुरक्षित ✓',offline:'कनेक्शन नहीं है — स्थानीय कॉपी सुरक्षित है; फिर प्रयास होगा…',conflictTitle:'प्रगति में टकराव मिला',conflictText:'दूसरे डिवाइस पर नई प्रगति सेव हुई है। आपके स्थानीय बदलाव इसी डिवाइस पर सुरक्षित हैं। नवीनतम डेटा लोड करने से पहले बैकअप डाउनलोड करें।',exportLocal:'स्थानीय बैकअप डाउनलोड',reloadLatest:'नवीनतम प्रगति लोड करें',coreAvg:'⭐ मुख्य व्रत औसत',coreStreak:'⭐ मुख्य व्रत निरंतरता',corePerfect:'⭐ मुख्य व्रत-पूर्ण दिन',allAvg:'सभी व्रत औसत',currentStreak:'वर्तमान निरंतरता',bestStreak:'सर्वश्रेष्ठ निरंतरता',perfectDays:'सभी व्रत-पूर्ण दिन',totalRounds:'कुल मालाएँ',avgRounds:'प्रतिदिन औसत मालाएँ',dayLocked:'यह दिन अभी संपादित नहीं किया जा सकता।',langButton:'English'}
+};
+Object.assign(COPY.en,{prabhu:'Prabhu',mataji:'Mataji',addrAsk:'How would you like to be greeted?',addrNone:'Just my name',addrNote:'Optional. Used only for your greeting and reminders. You can change it anytime with the ✎ button.',
+ alertTitle:'🔔 Evening vow reminder',alertOff:'Off. Turn it on to get a reminder when any of today’s vows are incomplete.',alertOn:'On. Every evening at {t} if any vow is incomplete.',
+ alertBlocked:'Notifications are blocked for this site. Allow them in your browser settings, then try again.',alertUnsupported:'This browser cannot receive reminders. Please use Chrome or Edge, or install the app.',
+ alertIos:'On iPhone: tap Share, then Add to Home Screen, open Damodar Vows from your home screen, then turn this on.',alertNotConfigured:'Reminders are not set up on the server yet.',
+ alertWorking:'Setting up reminders…',alertTestSent:'Test reminder sent. Please check your notifications ✓',alertTestFail:'Could not send the test reminder. Please try again.',alertTimeSaved:'Reminder time saved ✓',alertSaveFail:'Could not save. Please try again.',alertTestBtn:'Send test reminder',alertOffDone:'Reminders turned off.'});
+Object.assign(COPY.hi,{prabhu:'प्रभु जी',mataji:'माता जी',addrAsk:'आप किस प्रकार संबोधित होना चाहेंगे?',addrNone:'केवल मेरा नाम',addrNote:'वैकल्पिक। इसका उपयोग केवल आपके अभिवादन और रिमाइंडर में होगा। आप कभी भी ✎ बटन से बदल सकते हैं।',
+ alertTitle:'🔔 शाम का व्रत रिमाइंडर',alertOff:'बंद है। आज का कोई भी व्रत अधूरा रहने पर रिमाइंडर पाने के लिए इसे चालू करें।',alertOn:'चालू है। यदि कोई व्रत अधूरा हो तो हर शाम {t} पर याद दिलाया जाएगा।',
+ alertBlocked:'इस साइट के लिए नोटिफिकेशन बंद हैं। ब्राउज़र सेटिंग में अनुमति दें, फिर दोबारा प्रयास करें।',alertUnsupported:'यह ब्राउज़र रिमाइंडर प्राप्त नहीं कर सकता। कृपया Chrome या Edge उपयोग करें, या ऐप इंस्टॉल करें।',
+ alertIos:'iPhone पर: Share दबाकर “Add to Home Screen” चुनें, होम स्क्रीन से Damodar Vows खोलें, फिर इसे चालू करें।',alertNotConfigured:'सर्वर पर रिमाइंडर अभी सेट नहीं हैं।',
+ alertWorking:'रिमाइंडर सेट हो रहे हैं…',alertTestSent:'टेस्ट रिमाइंडर भेज दिया गया। कृपया अपने नोटिफिकेशन देखें ✓',alertTestFail:'टेस्ट रिमाइंडर नहीं भेजा जा सका। कृपया दोबारा प्रयास करें।',alertTimeSaved:'रिमाइंडर का समय सेव हो गया ✓',alertSaveFail:'सेव नहीं हो सका। कृपया दोबारा प्रयास करें।',alertTestBtn:'टेस्ट रिमाइंडर भेजें',alertOffDone:'रिमाइंडर बंद कर दिए गए।'});
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const load=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let me=null,cacheIdentity=null,D=null,sel=0,timer=null,serverRevision=0,serverLoaded=false,dirty=false,saving=false,conflicted=false,syncingVisible=false;
+let preferredLanguage=load('kv_preferred_lang')==='hi'?'hi':'en';
+let languageSelected=false;
+const cacheName=()=>`kv_cache_${cacheIdentity||me}`;
+const pendingName=()=>`kv_pending_${cacheIdentity||me}`;
+function savePending(base=serverRevision){try{if(D)save(pendingName(),{state:JSON.parse(JSON.stringify(D)),baseRevision:base,updatedAt:Date.now()})}catch(e){}}
+function clearPending(){try{localStorage.removeItem(pendingName())}catch(e){}}
+function sameState(a,b){try{return JSON.stringify(a)===JSON.stringify(b)}catch(e){return false}}
+function trimFutureLogs(){if(!D||!D.log)return;const t=todayIdx(),last=t<0?0:Math.min(t,29);for(const key of Object.keys(D.log)){const i=Number(key);if(!Number.isInteger(i)||i<0||i>=30||i>last)delete D.log[key];}}
+const fresh=()=>({vows:byCore(DEF.map((t,i)=>({id:'v'+i,t,on:true,core:CORE.includes('v'+i)}))),goal:16,log:{},lang:preferredLanguage});
+function migrate(){
+ if(!D||typeof D!=='object')D=fresh();
+ if(!Array.isArray(D.vows))D.vows=fresh().vows;
+ if(!D.log||typeof D.log!=='object'||Array.isArray(D.log))D.log={};
+ if(!Number.isFinite(Number(D.goal)))D.goal=16;
+ if(D.lang!=='hi')D.lang='en';
+  if(!['prabhu','mataji','none'].includes(D.addr))delete D.addr;
+ D.vows=D.vows.filter(v=>v&&typeof v==='object').slice(0,60).map((v,i)=>({id:typeof v.id==='string'?v.id:'v'+i,t:typeof v.t==='string'&&v.t.trim()?v.t:('Vow '+(i+1)),on:v.on!==false,core:!!v.core}));
+ D.vows=byCore(D.vows);
+ for(const [k,v] of Object.entries(D.log)){if(!v||typeof v!=='object'||Array.isArray(v)){delete D.log[k];continue;}if(!Array.isArray(v.done))v.done=[];if(!Number.isFinite(Number(v.rounds)))v.rounds=0;if(typeof v.note!=='string')v.note='';}
+}
+const lang=()=>D?(D.lang==='hi'?'hi':'en'):preferredLanguage;
+const tr=k=>(COPY[lang()]&&COPY[lang()][k])||COPY.en[k]||k;
+const fmt=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d.toLocaleDateString(lang()==='hi'?'hi-IN':'en-IN',{day:'numeric',month:'short'})};
+const todayIdx=()=>{const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date()).reduce((o,x)=>{if(x.type!=='literal')o[x.type]=Number(x.value);return o},{});return Math.floor((Date.UTC(p.year,p.month-1,p.day)-Date.UTC(2026,9,27))/864e5)};
+function dayEditable(i){const t=todayIdx();if(t<0)return i===0;return i>=0&&i<N&&i<=Math.min(t,N-1)}
+const api=(u,o={})=>fetch(u,{credentials:'same-origin',headers:{'Content-Type':'application/json'},...o});
+function setSync(key){const e=$('#sync');if(e)e.textContent=tr(key)}
+function persist(){
+ if(!D||conflicted)return;
+ D.vows=byCore(D.vows);save(cacheName(),D);dirty=true;savePending(serverRevision);
+ setSync(serverLoaded?'saving':'offline');
+ clearTimeout(timer);
+ if(serverLoaded)timer=setTimeout(push,700);
+}
+function exportData(filename='kartik-vows-backup.json'){
+ if(!D)return;
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,2)],{type:'application/json'}));a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+function showConflict(message){
+ conflicted=true;clearTimeout(timer);$('#conflictPane').classList.remove('hide');
+ $('#conflictTitle').textContent=tr('conflictTitle');$('#conflictText').textContent=message||tr('conflictText');
+ $('#sync').textContent=tr('conflictTitle');render();
+}
+async function push(){
+ if(!serverLoaded||!dirty||saving||conflicted)return;
+ clearTimeout(timer);saving=true;let retryDelay=700;
+ try{
+  while(dirty&&!conflicted){
+   const snapshot=JSON.parse(JSON.stringify(D));const baseRevision=serverRevision;dirty=false;
+   const r=await api('/api/kartik',{method:'PUT',body:JSON.stringify({state:snapshot,revision:baseRevision})});
+   let payload={};try{payload=await r.json()}catch{}
+   if(r.status===409){serverRevision=Number.isSafeInteger(payload.revision)?payload.revision:serverRevision;dirty=false;showConflict(payload.error);return}
+   if(r.status===400&&payload.code==='FUTURE_DAY_LOCKED'){dirty=false;showConflict(payload.error);return}
+   if(r.status===428||r.status===401){dirty=true;serverLoaded=false;showConflict(payload.error||'Your session needs to be refreshed. Export a backup before reloading.');return}
+   if(!r.ok)throw new Error(payload.error||'save failed');
+   if(Number.isSafeInteger(payload.revision))serverRevision=payload.revision;
+   save(cacheName(),D);
+   if(dirty)savePending(serverRevision);else clearPending();
+   setSync('saved');
+  }
+ }catch(e){dirty=true;savePending(serverRevision);setSync('offline');retryDelay=5000}
+ finally{saving=false;if(dirty&&serverLoaded&&!conflicted){clearTimeout(timer);timer=setTimeout(push,retryDelay)}if(!document.hidden&&!conflicted)setTimeout(syncOnVisible,80)}
+}
+async function syncOnVisible(){
+ if(!me||document.hidden||syncingVisible||conflicted||saving)return;
+ syncingVisible=true;
+ try{
+  if(serverLoaded&&dirty){clearTimeout(timer);await push();if(conflicted||dirty)return;}
+  const r=await api('/api/kartik');if(!r.ok)return;
+  const j=await r.json();const rev=Number.isSafeInteger(j.revision)?j.revision:0;
+  if(!serverLoaded){
+   serverLoaded=true;serverRevision=rev;
+   if(dirty&&j.state){showConflict();return;}
+   if(dirty&&!j.state){await push();return;}
+   if(j.state&&Array.isArray(j.state.vows))D=j.state;
+   migrate();save(cacheName(),D);sel=Math.min(Math.max(todayIdx(),0),N-1);render();setSync('saved');return;
+  }
+  if(rev>serverRevision){
+   if(dirty||saving){showConflict();return;}
+   D=j.state&&Array.isArray(j.state.vows)?j.state:fresh();serverRevision=rev;migrate();
+   preferredLanguage=D.lang==='hi'?'hi':'en';save('kv_preferred_lang',preferredLanguage);languageSelected=false;
+   sel=Math.min(Math.max(todayIdx(),0),N-1);save(cacheName(),D);applyLanguage();setSync('saved');
+  }
+ }catch(e){}finally{syncingVisible=false}
+}
+async function startSession(u){
+ me=u.name||u.email||'Devotee';cacheIdentity=String(u.email||me).trim().toLowerCase();
+ let pendingConflict=false;
+ try{
+  const r=await api('/api/kartik');if(!r.ok)throw new Error('load failed');
+  const j=await r.json();serverLoaded=true;serverRevision=Number.isSafeInteger(j.revision)?j.revision:0;
+  const cached=load(cacheName())||load(`kv_cache_${me}`);const pending=load(pendingName());
+  const remote=j.state&&Array.isArray(j.state.vows)?j.state:null;
+  if(pending&&pending.state&&Array.isArray(pending.state.vows)){
+   if(remote&&sameState(pending.state,remote)){D=remote;clearPending();}
+   else if(Number(pending.baseRevision)===serverRevision){D=pending.state;dirty=true;}
+   else if(!remote&&Number(pending.baseRevision)===0){D=pending.state;dirty=true;}
+   else{D=pending.state;dirty=true;pendingConflict=true;}
+  }else if(remote){D=remote;}
+  else if(cached&&Array.isArray(cached.vows)){D=cached;trimFutureLogs();dirty=true;savePending(serverRevision);}
+  else D=fresh();
+ }catch(e){serverLoaded=false;const pending=load(pendingName());D=(pending&&pending.state)||load(cacheName())||load(`kv_cache_${me}`)||fresh();if(pending&&pending.state)dirty=true;}
+ migrate();
+ // Clean up any future-day entries from older versions after login. Keep pending
+ // conflict data untouched so a devotee can export it before choosing which copy wins.
+ if(!pendingConflict){const beforeTrim=JSON.stringify(D.log);trimFutureLogs();if(JSON.stringify(D.log)!==beforeTrim){dirty=true;save(cacheName(),D);savePending(serverRevision)}}
+ if(languageSelected&&D.lang!==preferredLanguage){D.lang=preferredLanguage;dirty=true;savePending(serverRevision)}else{preferredLanguage=D.lang;save('kv_preferred_lang',preferredLanguage)}
+ enter();
+ if(pendingConflict)showConflict();
+ if(dirty&&serverLoaded&&!conflicted)timer=setTimeout(push,300);
+ if(!serverLoaded)setSync('offline');else if(!dirty)setSync('saved');
+}
+async function boot(){
+ try{const r=await api('/api/me');if(r.ok)return startSession(await r.json())}catch(e){}
+ try{const c=await (await api('/api/config')).json();
+  if(!c.googleClientId){$('#err').textContent='Google client ID is not configured on the server.';return}
+  const sc=document.createElement('script');sc.src='https://accounts.google.com/gsi/client';
+  sc.onload=()=>{google.accounts.id.initialize({client_id:c.googleClientId,callback:async resp=>{
+    const r=await api('/api/auth/google',{method:'POST',body:JSON.stringify({credential:resp.credential})});
+    if(r.ok)startSession(await r.json());else $('#err').textContent='Google login failed. Please try again.'}});
+   google.accounts.id.renderButton($('#gbtn'),{theme:'filled_black',size:'large',shape:'pill',text:'continue_with'})};
+  document.head.appendChild(sc)}catch(e){$('#err').textContent='Cannot reach the server.'}}
+function updateWhen(){const t=todayIdx();if(t<0)$('#when').textContent=`${tr('beforeStart')} ${-t} ${lang()==='hi'?'दिन बाकी हैं':'day'+(-t>1?'s':'')+' — set your vows now'}`;
+ else if(t>=N)$('#when').textContent=tr('ended');else $('#when').textContent=`${tr('today')} ${t+1} ${tr('of')} ${N}`;}
+function helloText(){const raw=me.split('@')[0].split(' ')[0],first=raw.charAt(0).toUpperCase()+raw.slice(1).toLowerCase(),a=D&&D.addr;
+ const suffix=a==='prabhu'?' '+tr('prabhu'):a==='mataji'?' '+tr('mataji'):'';return (lang()==='hi'?'हरे कृष्ण, ':'Hare Krishna, ')+first+suffix+' 🙏'}
+function applyAddrCopy(){$('#addrAsk').textContent=tr('addrAsk');$('#addrPrabhu').textContent=tr('prabhu');$('#addrMataji').textContent=tr('mataji');$('#addrNone').textContent=tr('addrNone');$('#addrNote').textContent=tr('addrNote')}
+function askAddress(force){if(!D||conflicted)return;if(!force&&D.addr)return;applyAddrCopy();$('#addrModal').classList.remove('hide');const b=$('#addrPrabhu');if(b)b.focus()}
+function closeAddress(){$('#addrModal').classList.add('hide')}
+$$('#addrModal [data-addr]').forEach(b=>b.onclick=()=>{if(!D)return;D.addr=b.dataset.addr;persist();$('#hello').textContent=helloText();closeAddress()});
+$('#addrEdit').onclick=()=>askAddress(true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAddress()});
+function enter(){const t=todayIdx();sel=Math.min(Math.max(t,0),N-1);
+ $('#authV').classList.add('hide');$('#appV').classList.remove('hide');
+ $('#hello').textContent=helloText();
+ applyLanguage();shloka();loadAlerts();askAddress(false)}
+function applyLanguage(){
+ document.documentElement.lang=lang();document.title=lang()==='hi'?'दामोदर व्रत – कार्तिक साधना ट्रैकर':'Damodar Vows – Kartik Sadhana Tracker';
+ const ids=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journeyTitle','legend','consistencyTitle','japaChartTitle'];
+ const keys=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journey','legend','consistency','japaChart'];
+ ids.forEach((id,i)=>{const el=$('#'+id);if(el)el.textContent=tr(keys[i])});
+ $('#tabToday').textContent=tr('daily');$('#tabVows').textContent=tr('myVows');$('#tabStats').textContent=tr('analysis');
+ if(me&&D)$('#hello').textContent=helloText();
+ $('#coreLabel').textContent=tr('core');
+ $('#langBtn').textContent=tr('langButton');$('#authLangBtn').textContent=tr('langButton');$('#shareBtn').textContent=tr('share');$('#installBtn').textContent=tr('install');$('#out').textContent=tr('logout');
+ $('#japaLabel').childNodes[0].nodeValue=tr('japaLabel')+' ';
+ $('#reflectionLabel').childNodes[0].nodeValue=tr('reflectionLabel')+' ';
+ $('#note').placeholder=tr('notePlaceholder');$('#nv').placeholder=tr('addVowPlaceholder');$('#addV').textContent=tr('add');
+ $('#goalLabel').childNodes[0].nodeValue=tr('goalLabel')+' ';$('#reset').textContent=tr('reset');
+ $('#exp').textContent=tr('export');$('#importLabel').childNodes[0].nodeValue=tr('import')+' ';
+ $('#clearTest').textContent=tr('clearTest');$('#exportLocal').textContent=tr('exportLocal');$('#reloadLatest').textContent=tr('reloadLatest');
+ $('#conflictTitle').textContent=tr('conflictTitle');if(!conflicted)$('#conflictText').textContent=tr('conflictText');if(me&&D){renderAlerts();applyAddrCopy()}
+ updateWhen();render();
+}
+function shloka(){const s=SH[(todayIdx()+800)%SH.length];$('#shl').innerHTML=`${s[0].replace(/\n/g,'<br>')}<small>${s[1]}</small>`}
+const act=()=>D.vows.filter(v=>v.on);
+function displayVow(v){const m=/^v(\d+)$/.exec(v.id||'');if(lang()==='hi'&&m&&Number(m[1])<HDEF.length&&v.t===DEF[Number(m[1])])return HDEF[Number(m[1])];return v.t}
+function pctOf(i){const l=D.log[i];if(!l)return 0;const a=act();return a.length?a.filter(v=>l.done.includes(v.id)).length/a.length:0}
+function coreOf(i){const l=D.log[i],a=act().filter(v=>v.core);if(!l||!a.length)return 0;return a.filter(v=>l.done.includes(v.id)).length/a.length}
+function render(){if(!D)return;renderDays();renderList();renderVows();renderStats()}
+function renderDays(){const t=todayIdx();$('#days').innerHTML=Array.from({length:N},(_,i)=>{const p=pctOf(i),locked=!dayEditable(i)||conflicted;return `<button class="d ${i==sel?'sel':''} ${i==t?'today':''} ${p>=1?'full':p>0?'part':''}" data-i="${i}" ${locked?'disabled':''} aria-label="${tr('day')} ${i+1}, ${fmt(i)}${locked?' — '+tr('dayLocked'):''}"><b>${i+1}</b>${fmt(i).split(' ')[0]}</button>`}).join('');
+ $$('.d').forEach(b=>b.onclick=()=>{if(b.disabled)return;sel=+b.dataset.i;render()});
+ const clear=$('#clearTest');clear.classList.toggle('hide',todayIdx()>=0);clear.disabled=conflicted;
+ $('#lockHint').textContent=t<0?tr('testing'):t>=N?tr('finished'):tr('locked');}
+function renderList(){const editable=dayEditable(sel)&&!conflicted;const l=D.log[sel]||{done:[],rounds:0,note:''};const a=act();
+ let title=`${tr('day')} ${sel+1} · ${fmt(sel)}`;if(sel===28)title+=' · '+tr('purnima');if(sel===29)title+=' · '+tr('bonus');$('#dayT').textContent=title;
+ const p=Math.round(pctOf(sel)*100);$('#dayPct').textContent=p+'%';$('#dayBar').style.width=p+'%';const cp=Math.round(coreOf(sel)*100);$('#corePct').textContent=cp+'%';$('#coreBar').style.width=cp+'%';
+ $('#list').innerHTML=a.length?a.map(v=>`<label class="vow ${l.done.includes(v.id)?'done':''} ${v.core?'core':''}"><input type="checkbox" data-id="${esc(v.id)}" ${l.done.includes(v.id)?'checked':''} ${editable?'':'disabled'}><span class="t"><b>${v.core?'⭐ ':''}${esc(displayVow(v))}</b></span></label>`).join(''):`<p>${lang()==='hi'?'कोई सक्रिय व्रत नहीं है। मेरे व्रत में व्रत जोड़ें।':'No active vows. Add some in My Vows.'}</p>`;
+ $$('#list input').forEach(c=>c.onchange=()=>{if(!dayEditable(sel)||conflicted){render();return}const next=D.log[sel]||{done:[],rounds:0,note:''};next.done=c.checked?[...new Set([...next.done,c.dataset.id])]:next.done.filter(x=>x!==c.dataset.id);D.log[sel]=next;persist();render();if(pctOf(sel)>=1&&c.checked)burst()});
+ $('#rounds').value=l.rounds||'';$('#note').value=l.note||'';$('#rounds').disabled=!editable;$('#note').disabled=!editable;
+ $('#rounds').oninput=e=>{if(!dayEditable(sel)||conflicted)return;const next=D.log[sel]||{done:[],rounds:0,note:''};next.rounds=Math.max(0,Math.min(64,Number(e.target.value)||0));D.log[sel]=next;persist();renderStats()};
+ $('#note').onchange=e=>{if(!dayEditable(sel)||conflicted)return;const next=D.log[sel]||{done:[],rounds:0,note:''};next.note=String(e.target.value||'').slice(0,1000);D.log[sel]=next;persist()};}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function renderVows(){$('#vlist').innerHTML=D.vows.map((v,i)=>`<div class="vow"><input type="checkbox" ${v.on?'checked':''} data-on="${i}" ${conflicted?'disabled':''}><span class="t"><input value="${esc(displayVow(v))}" data-ed="${i}" ${conflicted?'disabled':''}></span><button class="g sm" data-core="${i}" ${conflicted?'disabled':''}>${v.core?'⭐ '+(lang()==='hi'?'मुख्य':'Priority'):'☆ '+(lang()==='hi'?'मुख्य बनाएँ':'Make priority')}</button><button class="g sm" data-del="${i}" ${conflicted?'disabled':''}>${lang()==='hi'?'हटाएँ':'Remove'}</button></div>`).join('');
+ $$('[data-on]').forEach(c=>c.onchange=()=>{D.vows[c.dataset.on].on=c.checked;persist();render()});
+ $$('[data-ed]').forEach(c=>c.onchange=()=>{D.vows[c.dataset.ed].t=c.value.trim()||D.vows[c.dataset.ed].t;persist();render()});
+ $$('[data-core]').forEach(c=>c.onclick=()=>{const v=D.vows[c.dataset.core];v.core=!v.core;persist();render()});
+ $$('[data-del]').forEach(c=>c.onclick=()=>{D.vows.splice(Number(c.dataset.del),1);persist();render()});
+ $('#nv').disabled=conflicted;$('#addV').disabled=conflicted;$('#reset').disabled=conflicted;$('#goal').disabled=conflicted;$('#imp').disabled=conflicted;
+ $('#goal').value=D.goal;$('#goal').onchange=e=>{D.goal=Math.max(1,Math.min(64,Number(e.target.value)||16));persist();renderStats()}}
+function renderStats(){const t=Math.min(todayIdx(),N-1);const upto=Math.max(t,-1);
+ let full=0,sum=0,rounds=0,streak=0,best=0,run=0,cfull=0,csum=0,cs=0;
+ for(let i=0;i<=upto;i++){const c=coreOf(i);csum+=c;if(c>=1)cfull++;const p=pctOf(i);sum+=p;if(p>=1){full++;run++;best=Math.max(best,run)}else run=0;rounds+=(D.log[i]?.rounds)||0}
+ for(let i=upto;i>=0;i--){if(pctOf(i)>=1)streak++;else if(i!=upto)break}
+ for(let i=upto;i>=0;i--){if(coreOf(i)>=1)cs++;else if(i!=upto)break}
+ const days=upto+1;
+ $('#kpi').innerHTML=[[days>0?Math.round(csum/days*100)+'%':'—',tr('coreAvg')],[cs,tr('coreStreak')],[cfull,tr('corePerfect')],[days>0?Math.round(sum/days*100)+'%':'—',tr('allAvg')],[streak,tr('currentStreak')],[best,tr('bestStreak')],[full,tr('perfectDays')],[rounds,tr('totalRounds')],[days>0?(rounds/days).toFixed(1):'—',tr('avgRounds')]].map(x=>`<div class="stat"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
+ $('#heat').innerHTML=Array.from({length:N},(_,i)=>{const p=pctOf(i);return `<div title="${tr('day')} ${i+1}: ${Math.round(p*100)}%" style="${coreOf(i)>=1?'box-shadow:inset 0 0 0 2px var(--gold);':''}background:${p>=1?'rgba(143,214,148,.45)':p>0?'rgba(243,201,105,.35)':'rgba(255,255,255,.05)'}">${i+1}</div>`}).join('');
+ $('#vbars').innerHTML=D.vows.map(v=>{let c=0;for(let i=0;i<=upto;i++)if(D.log[i]?.done.includes(v.id))c++;const p=days>0?Math.round(c/days*100):0;return `<div style="margin:8px 0"><div class="row sp" style="font-size:14px"><span>${v.core?'⭐ ':''}${esc(displayVow(v))}</span><span style="color:var(--gold)">${c}/${Math.max(days,0)}</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`}).join('');
+ const mx=Math.max(D.goal,...Array.from({length:N},(_,i)=>D.log[i]?.rounds||0),1);const gy=130-(D.goal/mx)*120;
+ $('#chart').innerHTML=`<line x1="0" x2="600" y1="${gy}" y2="${gy}" stroke="#f08fb0" stroke-dasharray="4 4"/>`+Array.from({length:N},(_,i)=>{const r=D.log[i]?.rounds||0,h=r/mx*120;return `<rect x="${i*20+3}" y="${130-h}" width="14" height="${h}" rx="3" fill="#f3c969"/>`}).join('')}
+function burst(){const vw=document.documentElement.clientWidth;for(let i=0;i<6;i++)floatOne('🪔',12+i*(vw-60)/5)}
+const FL=['नमामीश्वरं सच्-चिद्-आनन्द-रूपं\nलसत्-कुण्डलं गोकुले भ्राजमानम्','यशोदा-भियोलूखलाद् धावमानं\nपरामृष्टम् अत्यन्ततो द्रुत्य गोप्या','रुदन्तं मुहुर् नेत्र-युग्मं मृजन्तम्\nकराम्भोज-युग्मेन सातङ्क-नेत्रम्','मुहुः श्वास-कम्प-त्रिरेखाङ्क-कण्ठ\nस्थित-ग्रैवं दामोदरं भक्ति-बद्धम्','इतीदृक् स्वलीलाभिर् आनन्दकुण्डे\nस्वघोषं निमज्जन्तम् आख्यापयन्तम्','तदीयेषितज्ञेषु भक्तैर् जितत्वं\nपुनः प्रेमतस्तं शतावृत्ति वन्दे','वरं देव मोक्षं न मोक्षावधिं वा\nन चान्यं वृणे ऽहं वरेषाद् अपीह','इदं ते वपुर् नाथ गोपालबालं\nसदा मे मनस्य् आविरास्तां किमन्यैः','इदं ते मुखाम्भोजम् अत्यन्त-नीलैर्\nवृतं कुन्तलैः स्निग्ध-रक्तैश् च गोप्या','मुहुश् चुम्बितं बिम्ब-रक्ताधरं मे\nमनस्य् आविरास्ताम् अलं लक्ष-लाभैः','नमो देव दामोदरानन्त विष्णो\nप्रसीद प्रभो दुःख जालाब्धिमग्नम्','कृपादृष्टिवृष्ट्यातिदीनं बतानु\nगृहाणेष माम् अज्ञम् एध्य् अक्षिदृश्यः','कुवेरात्मजौ bद्धमूर्त्यैव यद्वत्\nत्वया मोचितौ भक्तिभाजौ कृतौ च','तथा प्रेम-भक्तिं स्वकां मे प्रयच्छ\nन मोक्षे ग्रहो मे ऽस्ति दामोदरेह','नमस् ते ‘स्तु दाम्ने स्फुरद्-दीप्ति-धाम्ने\nत्वदीयोदरायाथ विश्वस्य धाम्ने','नमो राधिकायै त्वदीयप्रियायै\nनमो ऽनन्तलीलाय देवाय तुभ्यम्','हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे\nहरे राम हरे राम राम राम हरे हरे'];
+const SPEED=38;let lastT=0;
+function floatOne(txt,x){
+ const vw=document.documentElement.clientWidth,vh=innerHeight,e=document.createElement('div');
+ e.className='fl';e.textContent=txt||FL[Math.floor(Math.random()*FL.length)];
+ e.style.fontSize=(vw<700?17:24)+'px';e.style.visibility='hidden';$('#float').appendChild(e);
+ const w=e.offsetWidth,h=e.offsetHeight,now=performance.now();
+ if(x===undefined&&lastT&&(now-lastT)/1000*SPEED<h+60){e.remove();return}
+ e.style.left=(x!==undefined?x:12+Math.random()*Math.max(0,vw-24-w))+'px';
+ const d=1.15*vh/SPEED;e.style.animationDuration=d+'s';e.style.visibility='';
+ if(x===undefined)lastT=now;setTimeout(()=>e.remove(),d*1000)}
+const tick=()=>{if(!document.hidden)floatOne()};setInterval(tick,400);
+(function tryBg(list){if(!list.length)return;const u=list.splice(Math.floor(Math.random()*list.length),1)[0],im=new Image();im.onload=()=>{$('#bg').style.backgroundImage=`url(${u})`};im.onerror=()=>tryBg(list);im.src=u})([...BG]);
+$('#out').onclick=async()=>{if(!confirm(lang()==='hi'?'क्या आप लॉग आउट करना चाहते हैं?':'Log out of your account?'))return;try{await api('/api/auth/logout',{method:'POST'});if(window.google)google.accounts.id.disableAutoSelect()}catch(e){}location.reload()};
+$$('.tabs [data-t]').forEach(b=>b.onclick=()=>{$$('.tabs [data-t]').forEach(x=>x.classList.remove('on'));b.classList.add('on');['today','vows','stats'].forEach(s=>$('#'+s).classList.toggle('hide',s!==b.dataset.t));render()});
+function toggleLanguage(){preferredLanguage=lang()==='hi'?'en':'hi';languageSelected=true;save('kv_preferred_lang',preferredLanguage);if(D){D.lang=preferredLanguage;persist()}applyLanguage()}
+$('#langBtn').onclick=()=>{if(conflicted)return;toggleLanguage()};$('#authLangBtn').onclick=()=>toggleLanguage();
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstallPrompt=event;});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;});
+$('#installBtn').onclick=async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();try{await deferredInstallPrompt.userChoice}catch(e){}deferredInstallPrompt=null;return}const ios=/iPad|iPhone|iPod/.test(navigator.userAgent);alert(ios?(lang()==='hi'?'Safari में Share बटन दबाएँ और “Add to Home Screen” चुनें।':'In Safari, tap Share, then choose “Add to Home Screen”.'):(lang()==='hi'?'ब्राउज़र मेन्यू खोलें और “Install app” या “Add to Home screen” चुनें।':'Open your browser menu and choose “Install app” or “Add to Home screen”.'))};
+$('#shareBtn').onclick=async()=>{const url=location.origin+'/kartik',data={title:'Damodar Vows – Kartik Sadhana Tracker',text:'Join a 30-day Kartik Sadhana journey of daily vows, japa and reflection. Hare Krishna!'};try{if(navigator.share)await navigator.share({...data,url});else if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);alert(lang()==='hi'?'ट्रैकर लिंक कॉपी हो गया।':'Tracker link copied. Share it on WhatsApp.')}else prompt('Copy the tracker link',url)}catch(e){if(e&&e.name!=='AbortError'){try{prompt('Copy the tracker link',url)}catch{}}}};
+$('#clearTest').onclick=()=>{if(todayIdx()>=0||conflicted)return;if(!confirm(lang()==='hi'?'दिन 1 का परीक्षण डेटा हटाएँ?':'Clear all Day 1 test entries?'))return;D.log[0]={done:[],rounds:0,note:''};persist();render()};
+$('#exportLocal').onclick=()=>exportData('kartik-vows-local-backup.json');$('#reloadLatest').onclick=()=>{clearPending();location.reload()};
+$('#addV').onclick=()=>{if(conflicted)return;const t=$('#nv').value.trim();if(!t)return;if(D.vows.length>=60){alert('Maximum 60 vows.');return}D.vows.push({id:'c'+Date.now(),t,on:true,core:false});$('#nv').value='';persist();render()};
+$('#reset').onclick=()=>{if(conflicted)return;const have=new Set(D.vows.map(v=>v.t));DEF.forEach((t,i)=>{if(!have.has(t))D.vows.push({id:'v'+i,t,on:true,core:CORE.includes('v'+i)})});persist();render()};
+$('#exp').onclick=()=>exportData();
+$('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.vows)||d.vows.length>60||!d.log||typeof d.log!=='object')throw new Error('Invalid backup');D=d;migrate();trimFutureLogs();persist();applyLanguage();alert(lang()==='hi'?'बैकअप आयात हो गया।':'Backup imported. Future-day entries were removed.')}catch(x){alert(lang()==='hi'?'यह बैकअप फ़ाइल मान्य नहीं है।':'This backup file is not valid.')}finally{e.target.value=''}};r.readAsText(f)};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncOnVisible()});window.addEventListener('focus',syncOnVisible);window.addEventListener('pageshow',syncOnVisible);
+
+/* ===== Evening vow reminders (web push) ===== */
+const PUSH_OK='serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+const alertState={configured:true,enabled:false,hour:18,minute:0,busy:false};
+const myTz=()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Kolkata'}catch(e){return 'Asia/Kolkata'}};
+const b64ToU8=s=>{const p='='.repeat((4-s.length%4)%4),r=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from([...r].map(c=>c.charCodeAt(0)))};
+const sameBuf=(a,b)=>{if(!a||!b||a.byteLength!==b.byteLength)return false;const x=new Uint8Array(a),y=new Uint8Array(b);for(let i=0;i<x.length;i++)if(x[i]!==y[i])return false;return true};
+const pad2=n=>String(n).padStart(2,'0');
+function timeLabel(h,m){return new Date(2000,0,1,h,m).toLocaleTimeString(lang()==='hi'?'hi-IN':'en-IN',{hour:'numeric',minute:'2-digit',hour12:true})}
+function alertTimeValue(){const v=($('#alertTime').value||'18:00').split(':').map(Number);return {hour:v[0]||0,minute:v[1]||0}}
+function renderAlerts(msg,bad){
+ $('#alertTitle').textContent=tr('alertTitle');$('#alertTest').textContent=tr('alertTestBtn');
+ const supported=PUSH_OK,granted=supported&&Notification.permission==='granted',on=alertState.enabled&&granted;
+ $('#alertToggle').checked=on;$('#alertToggle').disabled=alertState.busy;$('#alertTime').value=pad2(alertState.hour)+':'+pad2(alertState.minute);
+ $('#alertTest').classList.toggle('hide',!on);
+ let t;if(msg)t=msg;else if(!supported)t=IS_IOS?tr('alertIos'):tr('alertUnsupported');else if(!alertState.configured)t=tr('alertNotConfigured');
+ else if(Notification.permission==='denied')t=tr('alertBlocked');else if(on)t=tr('alertOn').replace('{t}',timeLabel(alertState.hour,alertState.minute));else t=tr('alertOff');
+ const e=$('#alertStatus');e.textContent=t;e.style.color=bad?'#ff9a9a':'var(--mut)'}
+async function swReady(){await navigator.serviceWorker.register('/sw.js');return navigator.serviceWorker.ready}
+async function ensureSubscribed(){
+ const cfg=await (await api('/api/push/config')).json();if(!cfg.enabled||!cfg.publicKey){const e=new Error('notconfigured');e.code='notconfigured';throw e}
+ const reg=await swReady(),key=b64ToU8(cfg.publicKey);let sub=await reg.pushManager.getSubscription();
+ if(sub&&!sameBuf(sub.options&&sub.options.applicationServerKey,key.buffer)){await sub.unsubscribe();sub=null}
+ if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
+ const r=await api('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),app:'kartik'})});
+ if(!r.ok)throw new Error('subscribe failed');return sub}
+async function saveAlertSettings(enabled){const t=alertTimeValue();
+ const r=await api('/api/kartik/alerts',{method:'PUT',body:JSON.stringify({enabled,hour:t.hour,minute:t.minute,tz:myTz()})});
+ if(!r.ok)throw new Error('settings failed');const j=await r.json();Object.assign(alertState,{configured:j.configured,enabled:j.enabled,hour:j.hour,minute:j.minute})}
+async function sendTest(){const r=await api('/api/kartik/alerts/test',{method:'POST'});if(!r.ok){let j={};try{j=await r.json()}catch(e){}const e=new Error(j.error||'test failed');e.code=j.code;throw e}}
+async function loadAlerts(){
+ try{const r=await api('/api/kartik/alerts');if(r.ok){const j=await r.json();Object.assign(alertState,{configured:j.configured,enabled:j.enabled,hour:j.hour,minute:j.minute});
+  if(j.enabled&&j.tz!==myTz())saveAlertSettings(true).catch(()=>{})}}catch(e){}
+ renderAlerts();
+ if(alertState.enabled&&PUSH_OK&&Notification.permission==='granted')ensureSubscribed().catch(()=>{})}   /* keeps this device's subscription fresh */
+$('#alertToggle').onchange=async ev=>{const want=ev.target.checked;if(alertState.busy){ev.target.checked=!want;return}
+ alertState.busy=true;let msg='',bad=false;
+ try{
+  if(want){
+   if(!PUSH_OK){const e=new Error('unsupported');e.code='unsupported';throw e}
+   if(!alertState.configured){const e=new Error('notconfigured');e.code='notconfigured';throw e}
+   let perm=Notification.permission;if(perm==='default')perm=await Notification.requestPermission();
+   if(perm!=='granted'){const e=new Error('blocked');e.code='blocked';throw e}
+   renderAlerts(tr('alertWorking'));await ensureSubscribed();await saveAlertSettings(true);await sendTest();msg=tr('alertTestSent')
+  }else{
+   await saveAlertSettings(false);
+   try{const reg=await navigator.serviceWorker.getRegistration('/sw.js'),sub=reg&&await reg.pushManager.getSubscription();
+    if(sub){await api('/api/push/subscribe',{method:'DELETE',body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe()}}catch(e){}
+   msg=tr('alertOffDone')}
+ }catch(err){ev.target.checked=!want;bad=true;
+  if(want){alertState.enabled=false;try{await saveAlertSettings(false)}catch(e){}}
+  msg=err.code==='blocked'?tr('alertBlocked'):err.code==='unsupported'?(IS_IOS?tr('alertIos'):tr('alertUnsupported')):err.code==='notconfigured'||err.code==='PUSH_NOT_CONFIGURED'?tr('alertNotConfigured'):(String(err.message||'').slice(0,160)||tr('alertTestFail'))}
+ finally{alertState.busy=false;renderAlerts(msg,bad)}};
+$('#alertTime').onchange=async()=>{const t=alertTimeValue();alertState.hour=t.hour;alertState.minute=t.minute;
+ if(!alertState.enabled){renderAlerts();return}
+ try{await saveAlertSettings(true);renderAlerts(tr('alertTimeSaved'))}catch(e){renderAlerts(tr('alertSaveFail'),true)}};
+$('#alertTest').onclick=async()=>{if(alertState.busy)return;alertState.busy=true;renderAlerts(tr('alertWorking'));
+ try{await ensureSubscribed();await sendTest();alertState.busy=false;renderAlerts(tr('alertTestSent'))}
+ catch(e){alertState.busy=false;renderAlerts(String(e&&e.message||'').slice(0,160)||tr('alertTestFail'),true)}};
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+boot();
+
+</script></body></html>
