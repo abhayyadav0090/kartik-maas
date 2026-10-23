@@ -45,9 +45,7 @@ function connectDB() {
     .catch(err => { dbPromise = null; throw err; });
   return dbPromise;
 }
-// Only routes that actually need MongoDB wait for a database connection.
-// Public config and logout must still work if the database is temporarily unavailable.
-app.use(['/api/auth/google', '/api/me', '/api/kartik', '/api/push/subscribe'], async (req, res, next) => {
+app.use(['/api/auth', '/api/me', '/api/kartik', '/api/push'], async (req, res, next) => {
   try { await connectDB(); next(); }
   catch (err) { console.error('Database connection failed:', err.message); res.status(503).json({ error: 'Database unavailable' }); }
 });
@@ -224,101 +222,32 @@ app.post('/api/kartik/alerts/test', requireAuth, wrap(async (req, res) => {
   res.json({ ok: true, delivered });
 }));
 let sweepRunning = false;
-async function forEachLimit(items, limit, task) {
-  let cursor = 0;
-  const count = Math.min(Math.max(1, limit), items.length);
-  const workers = Array.from({ length: count }, async () => {
-    while (true) {
-      const index = cursor++;
-      if (index >= items.length) return;
-      await task(items[index]);
-    }
-  });
-  await Promise.all(workers);
-}
 async function sweepAlerts() {
   if (!pushConfigured() || mongoose.connection.readyState !== 1 || sweepRunning) return { skipped: true };
-  sweepRunning = true;
-  const stats = { due: 0, sent: 0, complete: 0, noDevices: 0, failed: 0 };
+  sweepRunning = true; const stats = { due: 0, sent: 0, complete: 0 };
   try {
-    const now = new Date();
-    let dayIdx = dayIndexIndia();
-    if (process.env.KARTIK_ALERTS_ANYDAY === '1' && (dayIdx < 0 || dayIdx > 29)) dayIdx = 0;
+    const now = new Date(); let dayIdx = dayIndexIndia(); if (process.env.KARTIK_ALERTS_ANYDAY === '1' && (dayIdx < 0 || dayIdx > 29)) dayIdx = 0;
     if (dayIdx < 0 || dayIdx > 29) return { ...stats, outsideJourney: true };
     const alerts = await KartikAlert.find({ enabled: true }).lean();
-    // A small concurrency limit keeps reminders moving when many devotees choose the same time,
-    // without creating an unbounded burst of MongoDB and push-service requests on a Free instance.
-    await forEachLimit(alerts, 8, async (a) => {
-      const tz = validTimeZone(a.tz) ? a.tz : 'Asia/Kolkata';
-      const p = zonedParts(now, tz);
-      const key = dateKey(p);
-      const nowMin = p.h * 60 + p.min;
-      const dueMin = a.hour * 60 + a.minute;
-      if (nowMin < dueMin || nowMin >= dueMin + 240 || a.lastSentFor === key) return;
-      const claimed = await KartikAlert.findOneAndUpdate(
-        { _id: a._id, enabled: true, lastSentFor: { $ne: key } },
-        { $set: { lastSentFor: key } },
-        { new: false }
-      );
-      if (!claimed) return;
-      stats.due++;
+    for (const a of alerts) {
+      const tz = validTimeZone(a.tz) ? a.tz : 'Asia/Kolkata'; const p = zonedParts(now, tz); const key = dateKey(p); const nowMin = p.h * 60 + p.min; const dueMin = a.hour * 60 + a.minute;
+      if (nowMin < dueMin || nowMin >= dueMin + 240 || a.lastSentFor === key) continue;
+      const claimed = await KartikAlert.findOneAndUpdate({ _id: a._id, enabled: true, lastSentFor: { $ne: key } }, { $set: { lastSentFor: key } }, { new: false });
+      if (!claimed) continue; stats.due++;
       try {
-        const st = await KartikState.findOne({ userId: a.userId }).select('data').lean();
-        const payload = reminderPayload(st && st.data, dayIdx);
-        if (!payload) { stats.complete++; return; }
-        const subs = await PushSubscription.find({ userId: a.userId, app: 'kartik' });
-        if (!subs.length) {
-          // An enabled reminder without any registered device cannot be delivered. Mark it off
-          // instead of repeatedly checking a broken subscription state every minute.
-          await KartikAlert.updateOne({ _id: a._id, lastSentFor: key }, { $set: { enabled: false } });
-          stats.noDevices++;
-          return;
-        }
-        let transient = false;
-        const results = await Promise.all(subs.map(async (sub) => {
-          try {
-            await webpush.sendNotification(
-              { endpoint: sub.endpoint, keys: sub.keys }, JSON.stringify(payload),
-              { TTL: 7200, urgency: 'high' }
-            );
-            return true;
-          } catch (err) {
-            if (err.statusCode === 404 || err.statusCode === 410) {
-              await PushSubscription.deleteOne({ _id: sub._id });
-            } else {
-              if (!err.statusCode || err.statusCode >= 500 || err.statusCode === 429) transient = true;
-              console.warn('Reminder push failed:', err.message);
-            }
-            return false;
-          }
-        }));
-        const delivered = results.filter(Boolean).length;
-        if (delivered) stats.sent++;
-        else if (transient) {
-          // Allow a retry within the four-hour delivery window after transient provider failures.
-          await KartikAlert.updateOne(
-            { _id: a._id, lastSentFor: key },
-            { $set: { lastSentFor: claimed.lastSentFor || '' } }
-          );
-          stats.failed++;
-        } else stats.failed++;
-      } catch (err) {
-        console.warn('Reminder processing failed:', err && err.message ? err.message : err);
-        await KartikAlert.updateOne(
-          { _id: a._id, lastSentFor: key },
-          { $set: { lastSentFor: claimed.lastSentFor || '' } }
-        ).catch(() => {});
-        stats.failed++;
-      }
-    });
-  } finally {
-    sweepRunning = false;
-  }
+        const st = await KartikState.findOne({ userId: a.userId }).select('data').lean(); const payload = reminderPayload(st && st.data, dayIdx);
+        if (!payload) { stats.complete++; continue; }
+        const subs = await PushSubscription.find({ userId: a.userId, app: 'kartik' }); let delivered = 0; let transient = false;
+        for (const sub of subs) { try { await webpush.sendNotification({ endpoint: sub.endpoint, keys: sub.keys }, JSON.stringify(payload), { TTL: 7200, urgency: 'high' }); delivered++; } catch (err) { if (err.statusCode === 404 || err.statusCode === 410) await PushSubscription.deleteOne({ _id: sub._id }); else { if (!err.statusCode || err.statusCode >= 500 || err.statusCode === 429) transient = true; console.warn('Reminder push failed:', err.message); } } }
+        if (delivered) stats.sent++; else if (transient) await KartikAlert.updateOne({ _id: a._id, lastSentFor: key }, { $set: { lastSentFor: claimed.lastSentFor || '' } });
+      } catch (err) { console.warn('Reminder processing failed:', err.message); await KartikAlert.updateOne({ _id: a._id, lastSentFor: key }, { $set: { lastSentFor: claimed.lastSentFor || '' } }).catch(() => {}); }
+    }
+  } finally { sweepRunning = false; }
   return stats;
 }
-// Reminder checks execute only while this process is running. Render Free sleep/suspension pauses
-// this in-process timer; see SETUP-REMINDERS.md for the free-plan reliability/quota trade-off.
-// Checks run every minute; all journey-date calculations use the India calendar.
+// Reliable reminder checks while the web service process is running.
+// UptimeRobot should request /api/health every 5 minutes on the Render Free plan.
+// The scheduler checks every minute; all day calculations use the India calendar.
 let alertSchedulerStarted = false;
 let alertSchedulerRuns = 0;
 function startAlertScheduler() {
@@ -337,7 +266,7 @@ function startAlertScheduler() {
       await connectDB();
       const stats = await sweepAlerts();
       // Log every five minutes as well as any meaningful due/send/result event.
-      if (alertSchedulerRuns % 5 === 1 || stats.due || stats.sent || stats.complete || stats.noDevices || stats.failed || stats.skipped) {
+      if (alertSchedulerRuns % 5 === 1 || stats.due || stats.sent || stats.complete || stats.skipped) {
         console.log(`[Kartik scheduler] ${new Date().toISOString()} ${JSON.stringify(stats)}`);
       }
     } catch (err) {
