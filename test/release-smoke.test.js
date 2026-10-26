@@ -29,8 +29,8 @@ test('journey date is consistently 26 Oct–24 Nov 2026', () => {
 
 test('HTML loads split frontend assets and share preview image', () => {
   const html = read('site/kartik.html');
-  assert.match(html, /href="\/kartik\.css\?v=20261022-sky2"/);
-  assert.match(html, /src="\/kartik\.js\?v=20261022-sky2"/);
+  assert.match(html, /href="\/kartik\.css\?v=20261025-tabs"/);
+  assert.match(html, /src="\/kartik\.js\?v=20261025-tabs"/);
   assert.match(html, /og:image:alt/);
   assert.match(html, /twitter:image:alt/);
   assert.match(html, /id="alertHelp"/);
@@ -40,6 +40,13 @@ test('HTML loads split frontend assets and share preview image', () => {
   assert.equal(image.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(image.readUInt32BE(16), 1200);
   assert.equal(image.readUInt32BE(20), 630);
+});
+
+test('obsolete Day 1 testing UI and date override are gone; fixed dates unchanged', () => {
+  const html = read('site/kartik.html'); const browser = read('site/kartik.js'); const server = read('server.js'); const setup = read('SETUP-REMINDERS.md');
+  assert.doesNotMatch(html + browser, /clearTest|Clear Day 1 test|open for testing|Testing mode/);
+  assert.doesNotMatch(server + browser, /KARTIK_ALERTS_ANYDAY/);
+  assert.match(html, /data-t="home"[\s\S]*data-t="today"[\s\S]*data-t="vows"[\s\S]*data-t="stats"/);
 });
 
 test('reminder time saves even while reminders are off', () => {

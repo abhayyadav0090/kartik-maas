@@ -1,8 +1,8 @@
 {
   "name": "kartik-maas-tracker",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "private": true,
-  "description": "Standalone Kartik Maas / Damodar Vows tracker with Google sign-in and push reminders",
+  "description": "Standalone Kartik Maas / Damodar Vows tracker with Google sign-in, four-tab navigation and global + per-vow push reminders",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -25,5 +25,8 @@
     "mongoose": "^8.9.5",
     "morgan": "^1.10.0",
     "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
   }
 }

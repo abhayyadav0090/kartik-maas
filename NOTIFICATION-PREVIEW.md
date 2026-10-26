@@ -41,3 +41,11 @@ Notifications are sent only to a devotee who has enabled reminders and has a val
 > परीक्षण सफल रहा। यदि आज कोई व्रत अधूरा होगा, तो 6:00 PM पर रिमाइंडर मिलेगा।
 
 The test message's displayed time changes to match the time selected in the app (for example, selecting 10:46 AM displays 10:46 AM, and selecting 3:15 PM displays 3:15 PM). The times above are examples only. The scheduled reminder itself is sent only during the Kartik date window and only when at least one active vow is still incomplete.
+
+## Example: individual vow reminder (1.2.0)
+
+**Title:** 🪔 Hare Krishna — Day 3 vow reminder
+
+**Body:** Time for: Recite Damodarastakam. It isn’t marked complete yet.
+
+Vows due in the same minute are grouped ("2 vows are due now: …"). Tapping opens the Daily tab.

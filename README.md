@@ -25,3 +25,8 @@ Set the environment variables listed in `.env.example` in Render. Follow [`SETUP
 - Floating shloka animations respect the operating system's reduced-motion preference, and the timer runs less often to reduce unnecessary layout work on phones.
 - Social-preview metadata includes image alternative text; CSS and JavaScript URLs are versioned to help browsers fetch the latest deployed files.
 - Run `npm test` to perform offline smoke checks of the release files.
+
+## 1.2.0
+- Four tabs: Home, Daily, My Vows, Analysis (deep links `/kartik#home`, `#daily`, `#vows`, `#analysis`).
+- Individual vow reminders next to the global reminder; see `SETUP-REMINDERS.md`.
+- Testing mode, the Day 1 test banner and the clear-test button were removed. Run `npm test` (set `KARTIK_TEST_MONGO_URI` to include the MongoDB integration test).

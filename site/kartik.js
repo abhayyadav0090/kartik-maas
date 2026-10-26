@@ -2,24 +2,30 @@ const START=new Date(2026,9,26),N=30;
 // Background photos: keep your original bundled images and visual treatment.
 const BG=[];
 const SH=[["नमामीश्वरं सच्-चिद्-आनन्द-रूपं\nलसत्-कुण्डलं गोकुले भ्राजमानम्\nयशोदा-भियोलूखलाद् धावमानं\nपरामृष्टम् अत्यन्ततो द्रुत्य गोप्या","I bow to Lord Damodara, whose form is eternal, full of knowledge and bliss, whose earrings swing in Gokula, who runs in fear of Mother Yashoda yet is caught by her."],["रुदन्तं मुहुर् नेत्र-युग्मं मृजन्तम्\nकराम्भोज-युग्मेन सातङ्क-नेत्रम्\nमुहुः श्वास-कम्प-त्रिरेखाङ्क-कण्ठ\nस्थित-ग्रैवं दामोदरं भक्ति-बद्धम्","Crying, rubbing His eyes with lotus hands, trembling with fear, His neck marked with three lines, Damodara is bound by love."],["इतीदृक् स्वलीलाभिर् आनन्दकुण्डे\nस्वघोषं निमज्जन्तम् आख्यापयन्तम्\nतदीयेषितज्ञेषु भक्तैर् जितत्वं\nपुनः प्रेमतस्तं शतावृत्ति वन्दे","By such pastimes He shows He is conquered by His devotees’ love. With love I bow to Him hundreds of times."],["वरं देव मोक्षं न मोक्षावधिं वा\nन चान्यं वृणे ऽहं वरेषाद् अपीह\nइदं ते वपुर् नाथ गोपालबालं\nसदा मे मनस्य् आविरास्तां किमन्यैः","O Lord, I ask not for liberation, only that Your child form of Gopala always appear in my mind. What use is anything else?"],["इदं ते मुखाम्भोजम् अत्यन्त-नीलैर्\nवृतं कुन्तलैः स्निग्ध-रक्तैश् च गोप्या\nमुहुश् चुम्बितं बिम्ब-रक्ताधरं मे\nमनस्य् आविरास्ताम् अलं लक्ष-लाभैः","May Your lotus face, framed by dark curls and kissed again and again by Yashoda, always appear in my mind. Millions of other gains are enough to leave."],["नमो देव दामोदरानन्त विष्णो\nप्रसीद प्रभो दुःख जालाब्धिमग्नम्\nकृपादृष्टिवृष्ट्यातिदीनं बतानु\nगृहाणेष माम् अज्ञम् एध्य् अक्षिदृश्यः","O Damodara, be pleased with me, sunk in an ocean of sorrow. Shower Your merciful glance on this fool and let me see You."],["कुवेरात्मजौ बद्धमूर्त्यैव यद्वत्\nत्वया मोचितौ भक्तिभाजौ कृतौ च\nतथा प्रेम-भक्तिं स्वकां मे प्रयच्छ\nन मोक्षे ग्रहो मे ऽस्ति दामोदरेह","As You freed Kuvera’s sons and made them devotees, give me Your loving devotion. I have no desire for liberation."],["नमस् ते ‘स्तु दाम्ने स्फुरद्-दीप्ति-धाम्ने\nत्वदीयोदरायाथ विश्वस्य धाम्ने\nनमो राधिकायै त्वदीयप्रियायै\nनमो ऽनन्तलीलाय देवाय तुभ्यम्","I bow to the rope that bound You, to Your radiant form, to Radha, Your beloved, and to You of endless pastimes."]];
+// Default reminder times for the 12 original vows (24-hour). Reminders are created OFF: nobody is notified until they opt in.
+const DEF_REM=[[4,30],[20,0],[18,0],[18,30],[7,0],[19,30],[6,0],[20,30],[8,0],[17,0],[21,0],[10,0]],CUSTOM_REM=[19,0];
+const validRem=r=>!!r&&typeof r==='object'&&typeof r.enabled==='boolean'&&Number.isInteger(r.hour)&&r.hour>=0&&r.hour<=23&&Number.isInteger(r.minute)&&r.minute>=0&&r.minute<=59;
+function defaultReminder(id){const m=/^v(\d+)$/.exec(id||''),t=(m&&DEF_REM[Number(m[1])])||CUSTOM_REM;return {enabled:false,hour:t[0],minute:t[1]}}
 const CORE=['v0','v11','v7','v1','v2','v3']; // wake up, chanting, hearing, reading, lamp, Damodarastakam
 const byCore=a=>[...a].sort((x,y)=>(!!y.core)-(!!x.core));
 const DEF=["Wake up during Brahma Muhurta","Read Srila Prabhupada’s books","Offer a ghee lamp to Lord Damodara","Recite Damodarastakam","Offer water to Tulasi Maharani","Read prayers of Kunti Maharani & Gajendra Moksha","Read Bhagavad-gita","Hear Krishna-katha","Offer Tulasi leaves to the Lord","Organize or serve in a Damodara program","Vrajvas (visit or remember the holy land of Vraj)","Increase chanting"];
 const HDEF=["ब्रह्म मुहूर्त में उठें","श्रील प्रभुपाद की पुस्तकें पढ़ें","भगवान दामोदर को घी का दीप अर्पित करें","दामोदराष्टकम का पाठ करें","तुलसी महारानी को जल अर्पित करें","कुन्ती महारानी की प्रार्थनाएँ और गजेन्द्र मोक्ष पढ़ें","भगवद्-गीता पढ़ें","कृष्ण-कथा सुनें","भगवान को तुलसी दल अर्पित करें","दामोदर कार्यक्रम में सेवा करें","व्रजवास करें या व्रजधाम का स्मरण करें","हरिनाम-जप बढ़ाएँ"];
 const COPY={
- en:{heroTitle:'Damodar Vows',heroSubtitle:'Kartik Sadhana Tracker · 26 Oct – 24 Nov 2026 · 30 days',heroTagline:'A time for purity · A time for devotion · A time for Krishna',authTitle:'Hare Krishna 🙏',authDesc:'Sign in with Google. Your vows and progress are saved to your account and follow you on every device.',daily:'🪔 Daily',myVows:'⭐ My Vows',analysis:'📊 Analysis',share:'Share',install:'Install',logout:'Logout',beforeStart:'Kartik begins in',setVows:'— set your vows now',today:'Today is Kartik day',of:'of',ended:'Kartik has concluded — see your journey',testing:'Testing mode: Day 1 is open so you can try selecting and unselecting vows. Days 2–30 stay locked until their dates. Clear the Day 1 test entries before the journey begins.',locked:'Future days are locked. Today and past days can be edited; each next day unlocks on its date.',finished:'The 30-day journey has ended. You can review and edit any day in the journey.',clearTest:'Clear Day 1 test data',day:'Day',purnima:'Kartik Purnima 🌕',bonus:'Bonus / closing day ✨',core:'⭐ Core vows',japaLabel:'Rounds of japa today',reflectionLabel:'Reflection / realization',notePlaceholder:'One line of gratitude...',vowsTitle:'Choose & shape your vows',vowsDesc:'⭐ Priority vows appear first every day. Switch vows on or off, rename them, or add your own. Daily checkmarks remain stored, but changing the active vow list can alter historical percentages.',addVowPlaceholder:'Add your own vow (e.g. No sleeping after sunrise)',add:'Add',goalLabel:'Daily japa goal (rounds)',reset:'Restore the 12 vows',journey:'30-day journey',legend:'Green = all active vows done · Gold fill = partial · Gold ring = all ⭐ core vows done',consistency:'Vow-wise consistency',japaChart:'Japa rounds per day',export:'Export backup',import:'Import',saving:'Saving…',saved:'Saved to your account ✓',offline:'Offline / connection issue — local copy retained; retrying…',conflictTitle:'Progress conflict detected',conflictText:'Another device has newer progress. Your local edits remain on this device. Export a backup before reloading the latest saved data.',exportLocal:'Export local backup',reloadLatest:'Reload latest progress',coreAvg:'⭐ Core avg',coreStreak:'⭐ Core streak',corePerfect:'⭐ Core-perfect days',allAvg:'All-vow avg',currentStreak:'Current streak',bestStreak:'Best streak',perfectDays:'Perfect days',totalRounds:'Total rounds',avgRounds:'Avg rounds/day',dayLocked:'That day is not editable yet.',langButton:'हिन्दी'},
- hi:{heroTitle:'दामोदर व्रत',heroSubtitle:'कार्तिक साधना ट्रैकर · 26 अक्टूबर – 24 नवम्बर 2026 · 30 दिन',heroTagline:'शुद्धता का समय · भक्ति का समय · कृष्ण का समय',authTitle:'हरे कृष्ण 🙏',authDesc:'Google से साइन इन करें। आपके व्रत और प्रगति आपके खाते में सुरक्षित रहते हैं और हर डिवाइस पर उपलब्ध रहते हैं।',daily:'🪔 दैनिक',myVows:'⭐ मेरे व्रत',analysis:'📊 विश्लेषण',share:'शेयर करें',install:'ऐप इंस्टॉल',logout:'लॉग आउट',beforeStart:'कार्तिक शुरू होने में',setVows:'दिन शेष — अभी अपने व्रत तय करें',today:'आज कार्तिक का दिन',of:'में से',ended:'कार्तिक साधना पूरी हुई — अपनी यात्रा देखें',testing:'परीक्षण मोड: व्रत चुनने और हटाने का अभ्यास करने के लिए केवल दिन 1 खुला है। दिन 2–30 अपनी तारीख आने तक बंद रहेंगे। कार्तिक शुरू होने से पहले दिन 1 का परीक्षण डेटा साफ़ कर दें।',locked:'भविष्य के दिन बंद हैं। आज और पिछले दिनों में बदलाव कर सकते हैं; अगला दिन अपनी तारीख पर खुलेगा।',finished:'30 दिनों की यात्रा पूरी हो चुकी है। आप किसी भी दिन को देख और संपादित कर सकते हैं।',clearTest:'दिन 1 का परीक्षण डेटा साफ़ करें',day:'दिन',purnima:'कार्तिक पूर्णिमा 🌕',bonus:'अतिरिक्त / समापन दिवस ✨',core:'⭐ मुख्य व्रत',japaLabel:'आज जप की मालाएँ',reflectionLabel:'चिंतन / अनुभूति',notePlaceholder:'कृतज्ञता की एक पंक्ति…',vowsTitle:'अपने व्रत चुनें और व्यवस्थित करें',vowsDesc:'⭐ मुख्य व्रत रोज़ सबसे ऊपर दिखते हैं। व्रत चालू/बंद करें, नाम बदलें या अपना व्रत जोड़ें। सोच-समझकर व्रत चुनें।',addVowPlaceholder:'अपना व्रत जोड़ें (जैसे सूर्योदय के बाद न सोना)',add:'जोड़ें',goalLabel:'दैनिक जप लक्ष्य (मालाएँ)',reset:'12 व्रत पुनः रखें',journey:'30-दिन की यात्रा',legend:'हरा = सभी सक्रिय व्रत पूरे · सुनहरा = कुछ व्रत पूरे · सुनहरी सीमा = सभी ⭐ मुख्य व्रत पूरे',consistency:'व्रत के अनुसार निरंतरता',japaChart:'प्रतिदिन जप की मालाएँ',export:'बैकअप डाउनलोड',import:'आयात करें',saving:'सहेजा जा रहा है…',saved:'आपके खाते में सुरक्षित ✓',offline:'कनेक्शन नहीं है — स्थानीय कॉपी सुरक्षित है; फिर प्रयास होगा…',conflictTitle:'प्रगति में टकराव मिला',conflictText:'दूसरे डिवाइस पर नई प्रगति सेव हुई है। आपके स्थानीय बदलाव इसी डिवाइस पर सुरक्षित हैं। नवीनतम डेटा लोड करने से पहले बैकअप डाउनलोड करें।',exportLocal:'स्थानीय बैकअप डाउनलोड',reloadLatest:'नवीनतम प्रगति लोड करें',coreAvg:'⭐ मुख्य व्रत औसत',coreStreak:'⭐ मुख्य व्रत निरंतरता',corePerfect:'⭐ मुख्य व्रत-पूर्ण दिन',allAvg:'सभी व्रत औसत',currentStreak:'वर्तमान निरंतरता',bestStreak:'सर्वश्रेष्ठ निरंतरता',perfectDays:'सभी व्रत-पूर्ण दिन',totalRounds:'कुल मालाएँ',avgRounds:'प्रतिदिन औसत मालाएँ',dayLocked:'यह दिन अभी संपादित नहीं किया जा सकता।',langButton:'English'}
+ en:{heroTitle:'Damodar Vows',heroSubtitle:'Kartik Sadhana Tracker · 26 Oct – 24 Nov 2026 · 30 days',heroTagline:'A time for purity · A time for devotion · A time for Krishna',authTitle:'Hare Krishna 🙏',authDesc:'Sign in with Google. Your vows and progress are saved to your account and follow you on every device.',home:'🏠 Home',daily:'🪔 Daily',myVows:'⭐ My Vows',analysis:'📊 Analysis',share:'Share',install:'Install',logout:'Logout',beforeStart:'Kartik begins in',setVows:'— set your vows now',today:'Today is Kartik day',of:'of',ended:'Kartik has concluded — see your journey',preStart:'Kartik begins on 26 Oct 2026. Day 1 opens on its date; you can choose and shape your vows now in My Vows.',locked:'Future days are locked. Today and past days can be edited; each next day unlocks on its date.',finished:'The 30-day journey has ended. You can review and edit any day in the journey.',day:'Day',purnima:'Kartik Purnima 🌕',bonus:'Bonus / closing day ✨',core:'⭐ Core vows',japaLabel:'Rounds of japa today',reflectionLabel:'Reflection / realization',notePlaceholder:'One line of gratitude...',vowsTitle:'Choose & shape your vows',vowsDesc:'⭐ Priority vows appear first every day. Switch vows on or off, rename them, or add your own. Daily checkmarks remain stored, but changing the active vow list can alter historical percentages.',addVowPlaceholder:'Add your own vow (e.g. No sleeping after sunrise)',add:'Add',goalLabel:'Daily japa goal (rounds)',reset:'Restore the 12 vows',journey:'30-day journey',legend:'Green = all active vows done · Gold fill = partial · Gold ring = all ⭐ core vows done',consistency:'Vow-wise consistency',japaChart:'Japa rounds per day',export:'Export backup',import:'Import',saving:'Saving…',saved:'Saved to your account ✓',offline:'Offline / connection issue — local copy retained; retrying…',conflictTitle:'Progress conflict detected',conflictText:'Another device has newer progress. Your local edits remain on this device. Export a backup before reloading the latest saved data.',exportLocal:'Export local backup',reloadLatest:'Reload latest progress',coreAvg:'⭐ Core avg',coreStreak:'⭐ Core streak',corePerfect:'⭐ Core-perfect days',allAvg:'All-vow avg',currentStreak:'Current streak',bestStreak:'Best streak',perfectDays:'Perfect days',totalRounds:'Total rounds',avgRounds:'Avg rounds/day',dayLocked:'That day is not editable yet.',langButton:'हिन्दी'},
+ hi:{heroTitle:'दामोदर व्रत',heroSubtitle:'कार्तिक साधना ट्रैकर · 26 अक्टूबर – 24 नवम्बर 2026 · 30 दिन',heroTagline:'शुद्धता का समय · भक्ति का समय · कृष्ण का समय',authTitle:'हरे कृष्ण 🙏',authDesc:'Google से साइन इन करें। आपके व्रत और प्रगति आपके खाते में सुरक्षित रहते हैं और हर डिवाइस पर उपलब्ध रहते हैं।',home:'🏠 होम',daily:'🪔 दैनिक',myVows:'⭐ मेरे व्रत',analysis:'📊 विश्लेषण',share:'शेयर करें',install:'ऐप इंस्टॉल',logout:'लॉग आउट',beforeStart:'कार्तिक शुरू होने में',setVows:'दिन शेष — अभी अपने व्रत तय करें',today:'आज कार्तिक का दिन',of:'में से',ended:'कार्तिक साधना पूरी हुई — अपनी यात्रा देखें',preStart:'कार्तिक 26 अक्टूबर 2026 से शुरू होगा। दिन 1 अपनी तारीख पर खुलेगा; अभी आप मेरे व्रत में अपने व्रत चुन और तय कर सकते हैं।',locked:'भविष्य के दिन बंद हैं। आज और पिछले दिनों में बदलाव कर सकते हैं; अगला दिन अपनी तारीख पर खुलेगा।',finished:'30 दिनों की यात्रा पूरी हो चुकी है। आप किसी भी दिन को देख और संपादित कर सकते हैं।',day:'दिन',purnima:'कार्तिक पूर्णिमा 🌕',bonus:'अतिरिक्त / समापन दिवस ✨',core:'⭐ मुख्य व्रत',japaLabel:'आज जप की मालाएँ',reflectionLabel:'चिंतन / अनुभूति',notePlaceholder:'कृतज्ञता की एक पंक्ति…',vowsTitle:'अपने व्रत चुनें और व्यवस्थित करें',vowsDesc:'⭐ मुख्य व्रत रोज़ सबसे ऊपर दिखते हैं। व्रत चालू/बंद करें, नाम बदलें या अपना व्रत जोड़ें। सोच-समझकर व्रत चुनें।',addVowPlaceholder:'अपना व्रत जोड़ें (जैसे सूर्योदय के बाद न सोना)',add:'जोड़ें',goalLabel:'दैनिक जप लक्ष्य (मालाएँ)',reset:'12 व्रत पुनः रखें',journey:'30-दिन की यात्रा',legend:'हरा = सभी सक्रिय व्रत पूरे · सुनहरा = कुछ व्रत पूरे · सुनहरी सीमा = सभी ⭐ मुख्य व्रत पूरे',consistency:'व्रत के अनुसार निरंतरता',japaChart:'प्रतिदिन जप की मालाएँ',export:'बैकअप डाउनलोड',import:'आयात करें',saving:'सहेजा जा रहा है…',saved:'आपके खाते में सुरक्षित ✓',offline:'कनेक्शन नहीं है — स्थानीय कॉपी सुरक्षित है; फिर प्रयास होगा…',conflictTitle:'प्रगति में टकराव मिला',conflictText:'दूसरे डिवाइस पर नई प्रगति सेव हुई है। आपके स्थानीय बदलाव इसी डिवाइस पर सुरक्षित हैं। नवीनतम डेटा लोड करने से पहले बैकअप डाउनलोड करें।',exportLocal:'स्थानीय बैकअप डाउनलोड',reloadLatest:'नवीनतम प्रगति लोड करें',coreAvg:'⭐ मुख्य व्रत औसत',coreStreak:'⭐ मुख्य व्रत निरंतरता',corePerfect:'⭐ मुख्य व्रत-पूर्ण दिन',allAvg:'सभी व्रत औसत',currentStreak:'वर्तमान निरंतरता',bestStreak:'सर्वश्रेष्ठ निरंतरता',perfectDays:'सभी व्रत-पूर्ण दिन',totalRounds:'कुल मालाएँ',avgRounds:'प्रतिदिन औसत मालाएँ',dayLocked:'यह दिन अभी संपादित नहीं किया जा सकता।',langButton:'English'}
 };
 Object.assign(COPY.en,{prabhu:'PrabhuJi',mataji:'Mataji',addrAsk:'How would you like to be greeted?',addrNone:'Just my name',addrNote:'Optional. Used only for your greeting and reminders. You can change it anytime with the ✎ button.',
- alertTitle:'🔔 Vow reminder',alertHelp:'Daily reminders run only from 26 Oct to 24 Nov 2026, and only when at least one active vow is incomplete. Sound and vibration depend on your phone/browser settings.',alertOff:'Off. Turn it on to get a reminder when any of today’s vows are incomplete.',alertOn:'On. If any vow is incomplete, you’ll get a reminder at {t}.',
+ alertTitle:'🔔 Vow reminder',alertHelp:'Daily reminders run only from 26 Oct to 24 Nov 2026, and only when at least one active vow is incomplete. Vows that have their own reminder (My Vows) are not repeated here. Sound and vibration depend on your phone/browser settings.',alertOff:'Off. Turn it on to get a reminder when any of today’s vows are incomplete.',alertOn:'On. If any vow is incomplete, you’ll get a reminder at {t}.',
  alertBlocked:'Notifications are blocked for this site. Allow them in your browser settings, then try again.',alertUnsupported:'This browser cannot receive reminders. Please use Chrome or Edge, or install the app.',
  alertIos:'On iPhone: tap Share, then Add to Home Screen, open Damodar Vows from your home screen, then turn this on.',alertNotConfigured:'Reminders are not set up on the server yet.',
- alertWorking:'Setting up reminders…',alertTestSent:'Test reminder sent. Please check your notifications ✓',alertTestFail:'Could not send the test reminder. Please try again.',alertTimeSaved:'Reminder time saved ✓',alertSaveFail:'Could not save. Please try again.',alertTestBtn:'Send test reminder',alertOffDone:'Reminders turned off.'});
+ alertWorking:'Setting up reminders…',alertTestSent:'Test reminder sent. Please check your notifications ✓',alertTestFail:'Could not send the test reminder. Please try again.',alertTimeSaved:'Reminder time saved ✓',alertSaveFail:'Could not save. Please try again.',alertTestBtn:'Send test reminder',alertOffDone:'Reminders turned off.',
+ vowRemHelp:'🔔 Every vow has its own reminder time. Switch a vow’s bell on to be reminded at that time on days when it is still incomplete. A vow with its own reminder is not repeated in the daily reminder on Home.',vowRemLabel:'🔔 Reminder',vowRemTimeLabel:'Reminder time for',vowRemToggleLabel:'Reminder on or off for',vowRemSaved:'Vow reminder time saved ✓',vowRemOnDone:'Reminder on for {t}. It repeats daily while the vow is incomplete.',vowRemOffDone:'Reminder turned off for this vow.',vowRemFail:'Could not turn this reminder on. Please try again.'});
 Object.assign(COPY.hi,{prabhu:'प्रभु जी',mataji:'माता जी',addrAsk:'आप किस प्रकार संबोधित होना चाहेंगे?',addrNone:'केवल मेरा नाम',addrNote:'वैकल्पिक। इसका उपयोग केवल आपके अभिवादन और रिमाइंडर में होगा। आप कभी भी ✎ बटन से बदल सकते हैं।',
- alertTitle:'🔔 व्रत रिमाइंडर',alertHelp:'दैनिक रिमाइंडर केवल 26 अक्टूबर से 24 नवम्बर 2026 तक और तभी भेजा जाएगा जब कम-से-कम एक सक्रिय व्रत अधूरा हो। आवाज़ और कंपन आपके फोन/ब्राउज़र की सेटिंग पर निर्भर करते हैं।',alertOff:'बंद है। आज का कोई भी व्रत अधूरा रहने पर रिमाइंडर पाने के लिए इसे चालू करें।',alertOn:'चालू है। यदि कोई व्रत अधूरा होगा, तो {t} पर रिमाइंडर मिलेगा।',
+ alertTitle:'🔔 व्रत रिमाइंडर',alertHelp:'दैनिक रिमाइंडर केवल 26 अक्टूबर से 24 नवम्बर 2026 तक और तभी भेजा जाएगा जब कम-से-कम एक सक्रिय व्रत अधूरा हो। जिन व्रतों का अपना रिमाइंडर है वे यहाँ दोहराए नहीं जाते। आवाज़ और कंपन आपके फोन/ब्राउज़र की सेटिंग पर निर्भर करते हैं।',alertOff:'बंद है। आज का कोई भी व्रत अधूरा रहने पर रिमाइंडर पाने के लिए इसे चालू करें।',alertOn:'चालू है। यदि कोई व्रत अधूरा होगा, तो {t} पर रिमाइंडर मिलेगा।',
  alertBlocked:'इस साइट के लिए नोटिफिकेशन बंद हैं। ब्राउज़र सेटिंग में अनुमति दें, फिर दोबारा प्रयास करें।',alertUnsupported:'यह ब्राउज़र रिमाइंडर प्राप्त नहीं कर सकता। कृपया Chrome या Edge उपयोग करें, या ऐप इंस्टॉल करें।',
  alertIos:'iPhone पर: Share दबाकर “Add to Home Screen” चुनें, होम स्क्रीन से Damodar Vows खोलें, फिर इसे चालू करें।',alertNotConfigured:'सर्वर पर रिमाइंडर अभी सेट नहीं हैं।',
- alertWorking:'रिमाइंडर सेट हो रहे हैं…',alertTestSent:'टेस्ट रिमाइंडर भेज दिया गया। कृपया अपने नोटिफिकेशन देखें ✓',alertTestFail:'टेस्ट रिमाइंडर नहीं भेजा जा सका। कृपया दोबारा प्रयास करें।',alertTimeSaved:'रिमाइंडर का समय सेव हो गया ✓',alertSaveFail:'सेव नहीं हो सका। कृपया दोबारा प्रयास करें।',alertTestBtn:'टेस्ट रिमाइंडर भेजें',alertOffDone:'रिमाइंडर बंद कर दिए गए।'});
+ alertWorking:'रिमाइंडर सेट हो रहे हैं…',alertTestSent:'टेस्ट रिमाइंडर भेज दिया गया। कृपया अपने नोटिफिकेशन देखें ✓',alertTestFail:'टेस्ट रिमाइंडर नहीं भेजा जा सका। कृपया दोबारा प्रयास करें।',alertTimeSaved:'रिमाइंडर का समय सेव हो गया ✓',alertSaveFail:'सेव नहीं हो सका। कृपया दोबारा प्रयास करें।',alertTestBtn:'टेस्ट रिमाइंडर भेजें',alertOffDone:'रिमाइंडर बंद कर दिए गए।',
+ vowRemHelp:'🔔 हर व्रत का अपना रिमाइंडर समय है। जिस व्रत की घंटी चालू होगी, उसका रिमाइंडर उस समय मिलेगा जब वह व्रत अधूरा हो। अपना रिमाइंडर वाला व्रत होम के दैनिक रिमाइंडर में दोहराया नहीं जाता।',vowRemLabel:'🔔 रिमाइंडर',vowRemTimeLabel:'रिमाइंडर समय:',vowRemToggleLabel:'रिमाइंडर चालू/बंद:',vowRemSaved:'व्रत रिमाइंडर का समय सेव हो गया ✓',vowRemOnDone:'{t} पर रिमाइंडर चालू है। व्रत अधूरा रहने पर यह रोज़ मिलेगा।',vowRemOffDone:'इस व्रत का रिमाइंडर बंद कर दिया गया।',vowRemFail:'यह रिमाइंडर चालू नहीं हो सका। कृपया दोबारा प्रयास करें।'});
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const load=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
@@ -31,8 +37,9 @@ const pendingName=()=>`kv_pending_${cacheIdentity||me}`;
 function savePending(base=serverRevision){try{if(D)save(pendingName(),{state:JSON.parse(JSON.stringify(D)),baseRevision:base,updatedAt:Date.now()})}catch(e){}}
 function clearPending(){try{localStorage.removeItem(pendingName())}catch(e){}}
 function sameState(a,b){try{return JSON.stringify(a)===JSON.stringify(b)}catch(e){return false}}
-function trimFutureLogs(){if(!D||!D.log)return;const t=todayIdx(),last=t<0?0:Math.min(t,29);for(const key of Object.keys(D.log)){const i=Number(key);if(!Number.isInteger(i)||i<0||i>=30||i>last)delete D.log[key];}}
-const fresh=()=>({vows:byCore(DEF.map((t,i)=>({id:'v'+i,t,on:true,core:CORE.includes('v'+i)}))),goal:16,log:{},lang:preferredLanguage});
+function trimFutureLogs(){if(!D||!D.log)return;const t=todayIdx(),last=t<0?-1:Math.min(t,29);
+ const d1=D.log['0'];if(t<0&&d1&&((Array.isArray(d1.done)&&d1.done.length)||Number(d1.rounds)>0||(typeof d1.note==='string'&&d1.note.trim())))save(`kv_day1_prestart_backup_${cacheIdentity||me}`,d1);for(const key of Object.keys(D.log)){const i=Number(key);if(!Number.isInteger(i)||i<0||i>=30||i>last)delete D.log[key];}}
+const fresh=()=>({vows:byCore(DEF.map((t,i)=>({id:'v'+i,t,on:true,core:CORE.includes('v'+i),reminder:defaultReminder('v'+i)}))),goal:16,log:{},lang:preferredLanguage});
 function migrate(){
  if(!D||typeof D!=='object')D=fresh();
  if(!Array.isArray(D.vows))D.vows=fresh().vows;
@@ -40,7 +47,7 @@ function migrate(){
  if(!Number.isFinite(Number(D.goal)))D.goal=16;
  if(D.lang!=='hi')D.lang='en';
   if(!['prabhu','mataji','none'].includes(D.addr))delete D.addr;
- D.vows=D.vows.filter(v=>v&&typeof v==='object').slice(0,60).map((v,i)=>({id:typeof v.id==='string'?v.id:'v'+i,t:typeof v.t==='string'&&v.t.trim()?v.t:('Vow '+(i+1)),on:v.on!==false,core:!!v.core}));
+ D.vows=D.vows.filter(v=>v&&typeof v==='object').slice(0,60).map((v,i)=>{const id=typeof v.id==='string'?v.id:'v'+i;return {id,t:typeof v.t==='string'&&v.t.trim()?v.t:('Vow '+(i+1)),on:v.on!==false,core:!!v.core,reminder:validRem(v.reminder)?{enabled:v.reminder.enabled,hour:v.reminder.hour,minute:v.reminder.minute}:defaultReminder(id)}});
  D.vows=byCore(D.vows);
  for(const [k,v] of Object.entries(D.log)){if(!v||typeof v!=='object'||Array.isArray(v)){delete D.log[k];continue;}if(!Array.isArray(v.done))v.done=[];if(!Number.isFinite(Number(v.rounds)))v.rounds=0;if(typeof v.note!=='string')v.note='';}
 }
@@ -48,9 +55,9 @@ const lang=()=>D?(D.lang==='hi'?'hi':'en'):preferredLanguage;
 const tr=k=>(COPY[lang()]&&COPY[lang()][k])||COPY.en[k]||k;
 const fmt=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d.toLocaleDateString(lang()==='hi'?'hi-IN':'en-IN',{day:'numeric',month:'short'})};
 const todayIdx=()=>{const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date()).reduce((o,x)=>{if(x.type!=='literal')o[x.type]=Number(x.value);return o},{});return Math.floor((Date.UTC(p.year,p.month-1,p.day)-Date.UTC(2026,9,26))/864e5)};
-function dayEditable(i){const t=todayIdx();if(t<0)return i===0;return i>=0&&i<N&&i<=Math.min(t,N-1)}
+function dayEditable(i){const t=todayIdx();return i>=0&&i<N&&i<=Math.min(t,N-1)}
 const api=(u,o={})=>fetch(u,{credentials:'same-origin',headers:{'Content-Type':'application/json'},...o});
-function setSync(key){const e=$('#sync');if(e)e.textContent=tr(key)}
+function setSync(key){const e=$('#sync');if(e)e.textContent=tr(key);const m=$('#syncMirror');if(m)m.textContent=tr(key)}
 function persist(){
  if(!D||conflicted)return;
  D.vows=byCore(D.vows);save(cacheName(),D);dirty=true;savePending(serverRevision);
@@ -73,7 +80,7 @@ async function push(){
  try{
   while(dirty&&!conflicted){
    const snapshot=JSON.parse(JSON.stringify(D));const baseRevision=serverRevision;dirty=false;
-   const r=await api('/api/kartik',{method:'PUT',body:JSON.stringify({state:snapshot,revision:baseRevision})});
+   const r=await api('/api/kartik',{method:'PUT',body:JSON.stringify({state:snapshot,revision:baseRevision,tz:myTz()})});
    let payload={};try{payload=await r.json()}catch{}
    if(r.status===409){serverRevision=Number.isSafeInteger(payload.revision)?payload.revision:serverRevision;dirty=false;showConflict(payload.error);return}
    if(r.status===400&&payload.code==='FUTURE_DAY_LOCKED'){dirty=false;showConflict(payload.error);return}
@@ -159,13 +166,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAddress()});
 function enter(){const t=todayIdx();sel=Math.min(Math.max(t,0),N-1);
  $('#authV').classList.add('hide');$('#appV').classList.remove('hide');
  $('#hello').textContent=helloText();
- applyLanguage();shloka();loadAlerts();askAddress(false)}
+ const slogan=$('#heroTagline'),slot=$('#sloganSlot');if(slogan&&slot&&slogan.parentNode!==slot)slot.appendChild(slogan);
+ applyLanguage();shloka();showTab(tabFromHash(),{scroll:false});loadAlerts();askAddress(false)}
 function applyLanguage(){
  document.documentElement.lang=lang();document.title=lang()==='hi'?'दामोदर व्रत – कार्तिक साधना ट्रैकर':'Damodar Vows – Kartik Sadhana Tracker';
- const ids=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journeyTitle','legend','consistencyTitle','japaChartTitle'];
- const keys=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journey','legend','consistency','japaChart'];
+ const ids=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journeyTitle','legend','consistencyTitle','japaChartTitle','vowRemHelp'];
+ const keys=['heroTitle','heroSubtitle','heroTagline','authTitle','authDesc','vowsTitle','vowsDesc','journey','legend','consistency','japaChart','vowRemHelp'];
  ids.forEach((id,i)=>{const el=$('#'+id);if(el)el.textContent=tr(keys[i])});
- $('#tabToday').textContent=tr('daily');$('#tabVows').textContent=tr('myVows');$('#tabStats').textContent=tr('analysis');
+ $('#tabHome').textContent=tr('home');$('#tabToday').textContent=tr('daily');$('#tabVows').textContent=tr('myVows');$('#tabStats').textContent=tr('analysis');
  if(me&&D)$('#hello').textContent=helloText();
  $('#coreLabel').textContent=tr('core');
  $('#langBtn').textContent=tr('langButton');$('#authLangBtn').textContent=tr('langButton');$('#shareBtn').textContent=tr('share');$('#installBtn').textContent=tr('install');$('#out').textContent=tr('logout');
@@ -174,7 +182,7 @@ function applyLanguage(){
  $('#note').placeholder=tr('notePlaceholder');$('#nv').placeholder=tr('addVowPlaceholder');$('#addV').textContent=tr('add');
  $('#goalLabel').childNodes[0].nodeValue=tr('goalLabel')+' ';$('#reset').textContent=tr('reset');
  $('#exp').textContent=tr('export');$('#importLabel').childNodes[0].nodeValue=tr('import')+' ';
- $('#clearTest').textContent=tr('clearTest');$('#exportLocal').textContent=tr('exportLocal');$('#reloadLatest').textContent=tr('reloadLatest');
+ $('#exportLocal').textContent=tr('exportLocal');$('#reloadLatest').textContent=tr('reloadLatest');
  $('#conflictTitle').textContent=tr('conflictTitle');if(!conflicted)$('#conflictText').textContent=tr('conflictText');if(me&&D){renderAlerts();applyAddrCopy()}
  updateWhen();render();
 }
@@ -186,8 +194,7 @@ function coreOf(i){const l=D.log[i],a=act().filter(v=>v.core);if(!l||!a.length)r
 function render(){if(!D)return;renderDays();renderList();renderVows();renderStats()}
 function renderDays(){const t=todayIdx();$('#days').innerHTML=Array.from({length:N},(_,i)=>{const p=pctOf(i),locked=!dayEditable(i)||conflicted;return `<button class="d ${i==sel?'sel':''} ${i==t?'today':''} ${p>=1?'full':p>0?'part':''}" data-i="${i}" ${locked?'disabled':''} aria-label="${tr('day')} ${i+1}, ${fmt(i)}${locked?' — '+tr('dayLocked'):''}"><b>${i+1}</b>${fmt(i).split(' ')[0]}</button>`}).join('');
  $$('.d').forEach(b=>b.onclick=()=>{if(b.disabled)return;sel=+b.dataset.i;render()});
- const clear=$('#clearTest');clear.classList.toggle('hide',todayIdx()>=0);clear.disabled=conflicted;
- $('#lockHint').textContent=t<0?tr('testing'):t>=N?tr('finished'):tr('locked');}
+ $('#lockHint').textContent=t<0?tr('preStart'):t>=N?tr('finished'):tr('locked');}
 function renderList(){const editable=dayEditable(sel)&&!conflicted;const l=D.log[sel]||{done:[],rounds:0,note:''};const a=act();
  let title=`${tr('day')} ${sel+1} · ${fmt(sel)}`;if(sel===28)title+=' · '+tr('purnima');if(sel===29)title+=' · '+tr('bonus');$('#dayT').textContent=title;
  const p=Math.round(pctOf(sel)*100);$('#dayPct').textContent=p+'%';$('#dayBar').style.width=p+'%';const cp=Math.round(coreOf(sel)*100);$('#corePct').textContent=cp+'%';$('#coreBar').style.width=cp+'%';
@@ -197,13 +204,34 @@ function renderList(){const editable=dayEditable(sel)&&!conflicted;const l=D.log
  $('#rounds').oninput=e=>{if(!dayEditable(sel)||conflicted)return;const next=D.log[sel]||{done:[],rounds:0,note:''};next.rounds=Math.max(0,Math.min(64,Number(e.target.value)||0));D.log[sel]=next;persist();renderStats()};
  $('#note').onchange=e=>{if(!dayEditable(sel)||conflicted)return;const next=D.log[sel]||{done:[],rounds:0,note:''};next.note=String(e.target.value||'').slice(0,1000);D.log[sel]=next;persist()};}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function renderVows(){$('#vlist').innerHTML=D.vows.map((v,i)=>`<div class="vow"><input type="checkbox" ${v.on?'checked':''} data-on="${i}" ${conflicted?'disabled':''}><span class="t"><input value="${esc(displayVow(v))}" data-ed="${i}" ${conflicted?'disabled':''}></span><button class="g sm" data-core="${i}" ${conflicted?'disabled':''}>${v.core?'⭐ '+(lang()==='hi'?'मुख्य':'Priority'):'☆ '+(lang()==='hi'?'मुख्य बनाएँ':'Make priority')}</button><button class="g sm" data-del="${i}" ${conflicted?'disabled':''}>${lang()==='hi'?'हटाएँ':'Remove'}</button></div>`).join('');
+function renderVows(){$('#vlist').innerHTML=D.vows.map((v,i)=>`<div class="vow has-rem"><input type="checkbox" ${v.on?'checked':''} data-on="${i}" ${conflicted?'disabled':''}><span class="t"><input value="${esc(displayVow(v))}" data-ed="${i}" ${conflicted?'disabled':''}></span><button class="g sm" data-core="${i}" ${conflicted?'disabled':''}>${v.core?'⭐ '+(lang()==='hi'?'मुख्य':'Priority'):'☆ '+(lang()==='hi'?'मुख्य बनाएँ':'Make priority')}</button><button class="g sm" data-del="${i}" ${conflicted?'disabled':''}>${lang()==='hi'?'हटाएँ':'Remove'}</button>${vowRemRow(v,i)}</div>`).join('');
  $$('[data-on]').forEach(c=>c.onchange=()=>{D.vows[c.dataset.on].on=c.checked;persist();render()});
  $$('[data-ed]').forEach(c=>c.onchange=()=>{D.vows[c.dataset.ed].t=c.value.trim()||D.vows[c.dataset.ed].t;persist();render()});
  $$('[data-core]').forEach(c=>c.onclick=()=>{const v=D.vows[c.dataset.core];v.core=!v.core;persist();render()});
- $$('[data-del]').forEach(c=>c.onclick=()=>{D.vows.splice(Number(c.dataset.del),1);persist();render()});
+ $$('[data-del]').forEach(c=>c.onclick=()=>{D.vows.splice(Number(c.dataset.del),1);persist();render();releaseDeviceIfIdle()});
+ $$('[data-rt]').forEach(c=>c.onchange=()=>{const v=D.vows[c.dataset.rt],m=/^(\d{2}):(\d{2})$/.exec(c.value||'');if(!v||conflicted)return;if(!m){renderVows();return}v.reminder={enabled:!!(v.reminder&&v.reminder.enabled),hour:Number(m[1]),minute:Number(m[2])};persist();vowRemMsg(tr('vowRemSaved'));renderVows()});
+ $$('[data-rv]').forEach(c=>c.onchange=()=>toggleVowReminder(Number(c.dataset.rv),c.checked,c));
  $('#nv').disabled=conflicted;$('#addV').disabled=conflicted;$('#reset').disabled=conflicted;$('#goal').disabled=conflicted;$('#imp').disabled=conflicted;
  $('#goal').value=D.goal;$('#goal').onchange=e=>{D.goal=Math.max(1,Math.min(64,Number(e.target.value)||16));persist();renderStats()}}
+function vowRemRow(v,i){const r=validRem(v.reminder)?v.reminder:defaultReminder(v.id),name=esc(displayVow(v));
+ return `<div class="vow-rem"><span>${tr('vowRemLabel')}</span><input type="time" value="${pad2(r.hour)}:${pad2(r.minute)}" data-rt="${i}" aria-label="${tr('vowRemTimeLabel')} ${name}" ${conflicted?'disabled':''}><label class="switch" title="${tr('vowRemLabel')}"><input type="checkbox" data-rv="${i}" ${r.enabled?'checked':''} aria-label="${tr('vowRemToggleLabel')} ${name}" ${conflicted?'disabled':''}><span class="slider"></span></label></div>`}
+function vowRemMsg(t,bad){const e=$('#vowRemStatus');if(!e)return;e.textContent=t||'';e.style.color=bad?'#ff9a9a':''}
+let vowRemBusy=false;
+async function toggleVowReminder(i,want,el){
+ const v=D.vows[i];if(!v||conflicted)return;if(vowRemBusy){el.checked=!want;return}
+ const base=validRem(v.reminder)?v.reminder:defaultReminder(v.id);
+ if(!want){v.reminder={enabled:false,hour:base.hour,minute:base.minute};persist();vowRemMsg(tr('vowRemOffDone'));renderVows();releaseDeviceIfIdle();return}
+ vowRemBusy=true;let msg='',bad=false;
+ try{
+  if(!PUSH_OK){const e=new Error('unsupported');e.code='unsupported';throw e}
+  if(!alertState.configured){const e=new Error('notconfigured');e.code='notconfigured';throw e}
+  let perm=Notification.permission;if(perm==='default')perm=await Notification.requestPermission();
+  if(perm!=='granted'){const e=new Error('blocked');e.code='blocked';throw e}
+  vowRemMsg(tr('alertWorking'));await ensureSubscribed();
+  v.reminder={enabled:true,hour:base.hour,minute:base.minute};persist();msg=tr('vowRemOnDone').replace('{t}',timeLabel(base.hour,base.minute))
+ }catch(err){bad=true;el.checked=false;
+  msg=err.code==='blocked'?tr('alertBlocked'):err.code==='unsupported'?(IS_IOS?tr('alertIos'):tr('alertUnsupported')):err.code==='notconfigured'?tr('alertNotConfigured'):tr('vowRemFail')}
+ finally{vowRemBusy=false;renderVows();vowRemMsg(msg,bad)}}
 function renderStats(){const t=Math.min(todayIdx(),N-1);const upto=Math.max(t,-1);
  let full=0,sum=0,rounds=0,streak=0,best=0,run=0,cfull=0,csum=0,cs=0;
  for(let i=0;i<=upto;i++){const c=coreOf(i);csum+=c;if(c>=1)cfull++;const p=pctOf(i);sum+=p;if(p>=1){full++;run++;best=Math.max(best,run)}else run=0;rounds+=(D.log[i]?.rounds)||0}
@@ -231,7 +259,20 @@ function floatOne(txt,x){
 const tick=()=>{if(!document.hidden)floatOne()};setInterval(tick,1000);
 (function tryBg(list){if(!list.length)return;const u=list.splice(Math.floor(Math.random()*list.length),1)[0],im=new Image();im.onload=()=>{$('#bg').style.backgroundImage=`url(${u})`};im.onerror=()=>tryBg(list);im.src=u})([...BG]);
 $('#out').onclick=async()=>{if(!confirm(lang()==='hi'?'क्या आप लॉग आउट करना चाहते हैं?':'Log out of your account?'))return;try{await api('/api/auth/logout',{method:'POST'});if(window.google)google.accounts.id.disableAutoSelect()}catch(e){}location.reload()};
-$$('.tabs [data-t]').forEach(b=>b.onclick=()=>{$$('.tabs [data-t]').forEach(x=>x.classList.remove('on'));b.classList.add('on');['today','vows','stats'].forEach(s=>$('#'+s).classList.toggle('hide',s!==b.dataset.t));render()});
+/* ===== Four-tab navigation: Home · Daily · My Vows · Analysis (each shows only its own content) ===== */
+const TAB_SECTIONS=['home','today','vows','stats'],TAB_HASH={home:'home',today:'daily',vows:'vows',stats:'analysis'};
+const tabFromHash=()=>{const h=String(location.hash||'').replace('#','').toLowerCase();return TAB_SECTIONS.find(s=>TAB_HASH[s]===h)||'home'};
+let activeTab='home';
+function showTab(name,opt={}){
+ if(!TAB_SECTIONS.includes(name))name='home';activeTab=name;
+ $$('.tabs [data-t]').forEach(b=>{const on=b.dataset.t===name;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ TAB_SECTIONS.forEach(s=>$('#'+s).classList.toggle('hide',s!==name));
+ $('#hero').classList.toggle('hide',name!=='home');$('#syncMirror').classList.toggle('hide',name==='home');
+ render();
+ if(opt.scroll!==false){const calm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:calm?'auto':'smooth'})}
+ const h='#'+TAB_HASH[name];if(location.hash!==h)try{history.replaceState(null,'',location.pathname+location.search+h)}catch(e){}}
+$$('.tabs [data-t]').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
+window.addEventListener('hashchange',()=>{if(me&&D){const t=tabFromHash();if(t!==activeTab)showTab(t)}});
 function toggleLanguage(){preferredLanguage=lang()==='hi'?'en':'hi';languageSelected=true;save('kv_preferred_lang',preferredLanguage);if(D){D.lang=preferredLanguage;persist()}applyLanguage()}
 $('#langBtn').onclick=()=>{if(conflicted)return;toggleLanguage()};$('#authLangBtn').onclick=()=>toggleLanguage();
 let deferredInstallPrompt=null;
@@ -239,10 +280,9 @@ window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();def
 window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;});
 $('#installBtn').onclick=async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();try{await deferredInstallPrompt.userChoice}catch(e){}deferredInstallPrompt=null;return}const ios=/iPad|iPhone|iPod/.test(navigator.userAgent);alert(ios?(lang()==='hi'?'Safari में Share बटन दबाएँ और “Add to Home Screen” चुनें।':'In Safari, tap Share, then choose “Add to Home Screen”.'):(lang()==='hi'?'ब्राउज़र मेन्यू खोलें और “Install app” या “Add to Home screen” चुनें।':'Open your browser menu and choose “Install app” or “Add to Home screen”.'))};
 $('#shareBtn').onclick=async()=>{const url=location.origin+'/kartik',data={title:'Damodar Vows – Kartik Sadhana Tracker',text:'Join a 30-day Kartik Sadhana journey of daily vows, japa and reflection. Hare Krishna!'};try{if(navigator.share)await navigator.share({...data,url});else if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);alert(lang()==='hi'?'ट्रैकर लिंक कॉपी हो गया।':'Tracker link copied. Share it on WhatsApp.')}else prompt('Copy the tracker link',url)}catch(e){if(e&&e.name!=='AbortError'){try{prompt('Copy the tracker link',url)}catch{}}}};
-$('#clearTest').onclick=()=>{if(todayIdx()>=0||conflicted)return;if(!confirm(lang()==='hi'?'दिन 1 का परीक्षण डेटा हटाएँ?':'Clear all Day 1 test entries?'))return;D.log[0]={done:[],rounds:0,note:''};persist();render()};
 $('#exportLocal').onclick=()=>exportData('kartik-vows-local-backup.json');$('#reloadLatest').onclick=()=>{clearPending();location.reload()};
-$('#addV').onclick=()=>{if(conflicted)return;const t=$('#nv').value.trim();if(!t)return;if(D.vows.length>=60){alert('Maximum 60 vows.');return}D.vows.push({id:'c'+Date.now(),t,on:true,core:false});$('#nv').value='';persist();render()};
-$('#reset').onclick=()=>{if(conflicted)return;const have=new Set(D.vows.map(v=>v.t));DEF.forEach((t,i)=>{if(!have.has(t))D.vows.push({id:'v'+i,t,on:true,core:CORE.includes('v'+i)})});persist();render()};
+$('#addV').onclick=()=>{if(conflicted)return;const t=$('#nv').value.trim();if(!t)return;if(D.vows.length>=60){alert('Maximum 60 vows.');return}{const id='c'+Date.now();D.vows.push({id,t,on:true,core:false,reminder:defaultReminder(id)})}$('#nv').value='';persist();render()};
+$('#reset').onclick=()=>{if(conflicted)return;const have=new Set(D.vows.map(v=>v.t));DEF.forEach((t,i)=>{if(!have.has(t))D.vows.push({id:'v'+i,t,on:true,core:CORE.includes('v'+i),reminder:defaultReminder('v'+i)})});persist();render()};
 $('#exp').onclick=()=>exportData();
 $('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.vows)||d.vows.length>60||!d.log||typeof d.log!=='object')throw new Error('Invalid backup');D=d;migrate();trimFutureLogs();persist();applyLanguage();alert(lang()==='hi'?'बैकअप आयात हो गया।':'Backup imported. Future-day entries were removed.')}catch(x){alert(lang()==='hi'?'यह बैकअप फ़ाइल मान्य नहीं है।':'This backup file is not valid.')}finally{e.target.value=''}};r.readAsText(f)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncOnVisible()});window.addEventListener('focus',syncOnVisible);window.addEventListener('pageshow',syncOnVisible);
@@ -273,15 +313,20 @@ async function ensureSubscribed(){
  if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
  const r=await api('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),app:'kartik'})});
  if(!r.ok)throw new Error('subscribe failed');return sub}
-async function saveAlertSettings(enabled){const t=alertTimeValue();
+async function saveAlertSettings(enabled,time){const t=time||alertTimeValue();
  const r=await api('/api/kartik/alerts',{method:'PUT',body:JSON.stringify({enabled,hour:t.hour,minute:t.minute,tz:myTz()})});
  if(!r.ok)throw new Error('settings failed');const j=await r.json();Object.assign(alertState,{configured:j.configured,enabled:j.enabled,hour:j.hour,minute:j.minute})}
+const anyVowReminderOn=()=>!!D&&D.vows.some(v=>validRem(v.reminder)&&v.reminder.enabled);
+async function dropDeviceSubscription(){
+ try{const reg=await navigator.serviceWorker.getRegistration('/sw.js'),sub=reg&&await reg.pushManager.getSubscription();
+  if(sub){await api('/api/push/subscribe',{method:'DELETE',body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe()}}catch(e){}}
+async function releaseDeviceIfIdle(){if(alertState.enabled||anyVowReminderOn()||!PUSH_OK)return;await dropDeviceSubscription()}
 async function sendTest(){const r=await api('/api/kartik/alerts/test',{method:'POST'});if(!r.ok){let j={};try{j=await r.json()}catch(e){}const e=new Error(j.error||'test failed');e.code=j.code;throw e}}
 async function loadAlerts(){
  try{const r=await api('/api/kartik/alerts');if(r.ok){const j=await r.json();Object.assign(alertState,{configured:j.configured,enabled:j.enabled,hour:j.hour,minute:j.minute});
-  if(j.enabled&&j.tz!==myTz())saveAlertSettings(true).catch(()=>{})}}catch(e){}
+  if((j.enabled||anyVowReminderOn())&&j.tz!==myTz())saveAlertSettings(j.enabled,{hour:j.hour,minute:j.minute}).catch(()=>{})}}catch(e){}
  renderAlerts();
- if(alertState.enabled&&PUSH_OK&&Notification.permission==='granted')ensureSubscribed().catch(()=>{})}   /* keeps this device's subscription fresh */
+ if((alertState.enabled||anyVowReminderOn())&&PUSH_OK&&Notification.permission==='granted')ensureSubscribed().catch(()=>{})}   /* keeps this device's subscription fresh */
 $('#alertToggle').onchange=async ev=>{const want=ev.target.checked;if(alertState.busy){ev.target.checked=!want;return}
  alertState.busy=true;let msg='',bad=false;
  try{
@@ -293,8 +338,7 @@ $('#alertToggle').onchange=async ev=>{const want=ev.target.checked;if(alertState
    renderAlerts(tr('alertWorking'));await ensureSubscribed();await saveAlertSettings(true);await sendTest();msg=tr('alertTestSent')
   }else{
    await saveAlertSettings(false);
-   try{const reg=await navigator.serviceWorker.getRegistration('/sw.js'),sub=reg&&await reg.pushManager.getSubscription();
-    if(sub){await api('/api/push/subscribe',{method:'DELETE',body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe()}}catch(e){}
+   if(!anyVowReminderOn())await dropDeviceSubscription();
    msg=tr('alertOffDone')}
  }catch(err){ev.target.checked=!want;bad=true;
   if(want){alertState.enabled=false;try{await saveAlertSettings(false)}catch(e){}}
